@@ -1,0 +1,19 @@
+public static void main(String[] args) {
+    // Declaración de variables
+    int numeroEntero = 42;
+    float numeroFlotante = 3.14f;
+    double numeroDoble = 2.718281828;
+    char caracter = 'A';
+    boolean esVerdadero = true;
+    String cadenaTexto = "Resultado";
+
+    final int PI = 3;
+    final int CONSTANTE_MAXIMA = 100;
+    final String MENSAJE_SISTEMA = "Calculadora Científica v1.0";
+
+    numeroEntero = 100;
+    numeroFlotante = 5.67f;
+    caracter = 'Z';
+    esVerdadero = false;
+    cadenaTexto = "Nuevo resultado";
+}

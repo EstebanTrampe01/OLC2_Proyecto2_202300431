@@ -1,0 +1,13 @@
+public static void main(String[] args) {
+    int numeroEntero = 100;
+    float numeroFlotante = 5.67f;
+    char caracter = 'Z';
+    boolean esVerdadero = false;
+    String cadenaTexto = "Nuevo resultado";
+
+    System.out.println("Entero: " + String.valueOf(numeroEntero));
+    System.out.println("Flotante: " + String.valueOf(numeroFlotante));
+    System.out.println("Carácter: " + caracter);
+    System.out.println("Booleano: " + String.valueOf(esVerdadero));
+    System.out.println("Cadena: " + cadenaTexto);
+}

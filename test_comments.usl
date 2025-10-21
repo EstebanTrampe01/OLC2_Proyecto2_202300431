@@ -1,0 +1,4 @@
+// Este es un comentario de línea
+/* Este es un comentario multilínea */
+int a = 5;
+print(a);

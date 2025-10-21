@@ -1,0 +1,7 @@
+public static void main(String[] args) {
+    int x = 12;
+    int y = 10;
+    System.out.println("x & y (AND): " + String.valueOf(x & y));
+    System.out.println("x | y (OR): " + String.valueOf(x | y));
+    System.out.println("x ^ y (XOR): " + String.valueOf(x ^ y));
+}

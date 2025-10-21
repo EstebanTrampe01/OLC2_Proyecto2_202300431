@@ -1,0 +1,9 @@
+public static void main(String[] args) {
+    double valorGrande = 75.89;
+    float valorMedio = (float) valorGrande;   
+    int valorEntero = (int) valorMedio;        
+    char caracterFinal = (char) valorEntero;   
+    System.out.println("double " + String.valueOf(valorGrande) + " -> float " + String.valueOf(valorMedio));
+    System.out.println("float " + String.valueOf(valorMedio) + " -> int " + String.valueOf(valorEntero));
+    System.out.println("int " + String.valueOf(valorEntero) + " -> char '" + String.valueOf(caracterFinal) + "'");
+}

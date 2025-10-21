@@ -1,0 +1,10 @@
+public static void main(String[] args) {
+    int a = 25;
+    int b = 7;
+    System.out.println("a = " + String.valueOf(a) + ", b = " + String.valueOf(b));
+    System.out.println("Suma (a + b): " + String.valueOf(a + b));
+    System.out.println("Resta (a - b): " + String.valueOf(a - b));
+    System.out.println("Multiplicación (a * b): " + String.valueOf(a * b));
+    System.out.println("División (a / b): " + String.valueOf(a / b));
+    System.out.println("Módulo (a % b): " + String.valueOf(a % b));
+}
