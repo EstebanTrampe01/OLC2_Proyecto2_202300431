@@ -1,0 +1,10 @@
+// test5: globals and assignment
+int numeroEntero = 10;
+String cadena = "antes";
+System.out.println("-- Test5 assignment --");
+System.out.println(numeroEntero);
+numeroEntero = 99;
+System.out.println(numeroEntero);
+System.out.println(cadena);
+cadena = "despues";
+System.out.println(cadena);

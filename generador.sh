@@ -49,6 +49,11 @@ if [ -x "$COMPILER_BIN" ]; then
     echo "[debug] invocando: $COMPILER_BIN --codegen-out=$OUT_S $USL_FILE"
     export CODEGEN_DEBUG=1
   fi
+  # Intentar rebuild con make si Makefile existe
+  if [ -f "${ROOT_DIR}/Makefile" ]; then
+    echo "[info] Makefile detectado, ejecutando make (puede tardar)"
+    (cd "${ROOT_DIR}" && make) || echo "[warn] make devolvió error, continuando con binario existente"
+  fi
   "$COMPILER_BIN" --codegen-out="$OUT_S" "$USL_FILE" || { echo "[error] el compilador devolvió error"; exit 1; }
 else
   echo "[warn] compilador no encontrado en $COMPILER_BIN — generando fallback"

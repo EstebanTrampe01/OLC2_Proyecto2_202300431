@@ -1,0 +1,16 @@
+int numeroEntero = 42;
+float numeroFlotante = 3.14f;
+double numeroDoble = 2.718281828;
+char caracter = 'A';
+boolean esVerdadero = true;
+String cadenaTexto = "Hola global";
+
+public static void main(String[] args) {
+    System.out.println("-- Test4 globals --");
+    System.out.println(numeroEntero);
+    System.out.println(numeroFlotante);
+    System.out.println(numeroDoble);
+    System.out.println(caracter);
+    System.out.println(esVerdadero);
+    System.out.println(cadenaTexto);
+}
