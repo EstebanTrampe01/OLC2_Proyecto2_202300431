@@ -1,0 +1,5 @@
+// simple test to print doubles
+System.out.println(3.14159);
+// call add_double(1.5, 2.25) and print result via print_double (via native call)
+add_double(1.5, 2.25);
+print_double( add_double(1.5, 2.25) );

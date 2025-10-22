@@ -14,6 +14,11 @@
 
 Result interpretDeclaracionVariable(AbstractExpresion* nodo, Context* context) {
     DeclaracionVariable* self = (DeclaracionVariable*) nodo;
+    /* No permitir redeclaración en el mismo ámbito: buscarSymbol revisa la lista local */
+    if (context && self->nombre && buscarSymbol(context->ultimoSymbol, self->nombre)) {
+        report_semantic_error(nodo, context, "La variable '%s' ya está declarada en este ambito", self->nombre);
+        return nuevoValorResultadoVacio();
+    }
     
     if (nodo->numHijos > 0) {
         Result resultado = nodo->hijos[0]->interpret(nodo->hijos[0], context);

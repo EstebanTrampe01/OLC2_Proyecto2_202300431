@@ -1,0 +1,17 @@
+
+public static void main(String[] args) {
+	int numeroEntero = 42;
+	String texto = "hola";
+
+	System.out.println("-- ANTES --");
+	System.out.println(numeroEntero);
+	System.out.println(texto);
+
+	// Cambiar valores mediante asignaciones (no redeclaraciones)
+	numeroEntero = 100;
+	texto = "mundo";
+
+	System.out.println("-- DESPUES --");
+	System.out.println(numeroEntero);
+	System.out.println(texto);
+}

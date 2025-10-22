@@ -65,6 +65,8 @@ AbstractExpresion* nuevoPrintExpresion(AbstractExpresion* listaExpresiones, int 
     PrintExpresion* nodo = malloc(sizeof(PrintExpresion));
     if (!nodo) return NULL; 
     buildAbstractExpresion(&nodo->base, interpretPrintExpresion);
+    // mark for codegen: print can be implemented by helper
+    nodo->base.gen_strategy = GEN_CALL_HELPER;
     nodo->newline = newline;
     if (listaExpresiones) agregarHijo((AbstractExpresion*) nodo, listaExpresiones);
     else agregarHijo((AbstractExpresion*) nodo, nuevoListaExpresiones());

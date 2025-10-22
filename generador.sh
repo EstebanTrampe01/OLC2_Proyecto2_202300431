@@ -99,7 +99,32 @@ LD_CROSS=$(command -v aarch64-linux-gnu-ld || true)
 
 if [ -n "$CC_CROSS" ]; then
   echo "[info] enlazando con cross-compiler: $CC_CROSS"
-  "$CC_CROSS" -nostartfiles -static "$OUT_S" -o "$OUT_BIN" || { echo "[error] falló la compilación con $CC_CROSS"; exit 1; }
+  # Compile helper C files for AArch64 (if any) and collect object files
+  HELPER_DIR="$ROOT_DIR/src/codegen/helpers"
+  OBJ_LIST=()
+  if [ -d "$HELPER_DIR" ]; then
+    TMP_HELPER_DIR=$(mktemp -d)
+    for src in "$HELPER_DIR"/*.c; do
+      if [ -f "$src" ]; then
+        obj="$TMP_HELPER_DIR/$(basename "$src" .c).o"
+        echo "[info] compilando helper $src -> $obj"
+        "$CC_CROSS" -c -o "$obj" "$src" || { echo "[error] compilación helper falló: $src"; exit 1; }
+        OBJ_LIST+=("$obj")
+      fi
+    done
+  fi
+
+  # Link generated assembly together with helper objects
+  if [ ${#OBJ_LIST[@]} -gt 0 ]; then
+    echo "[info] linkeando out.s con helpers: ${OBJ_LIST[*]}"
+    # out.s defines _start; avoid linking CRT start files to prevent duplicate _start, but keep standard libraries
+    "$CC_CROSS" -nostartfiles "$OUT_S" "${OBJ_LIST[@]}" -o "$OUT_BIN" || { echo "[error] falló la compilación con $CC_CROSS"; exit 1; }
+  else
+    # No helpers: link the assembly into an executable using the cross-compiler but avoid CRT start files
+    "$CC_CROSS" -nostartfiles "$OUT_S" -o "$OUT_BIN" || { echo "[error] falló la compilación con $CC_CROSS"; exit 1; }
+  fi
+  # cleanup temp helper objects
+  if [ -n "${TMP_HELPER_DIR:-}" ]; then rm -rf "$TMP_HELPER_DIR"; fi
 elif [ -n "$AS_CROSS" ] && [ -n "$LD_CROSS" ]; then
   echo "[info] ensamblando con as + ld"
   TMP_O="/tmp/out_arm64.o"

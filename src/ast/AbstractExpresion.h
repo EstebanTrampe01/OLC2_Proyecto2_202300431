@@ -25,7 +25,15 @@ struct AbstractExpresion {
     size_t numHijos;
     int linea;   // línea de inicio (parser)
     int columna; // columna de inicio (parser)
+    // Codegen strategy: how this node should be handled by codegen
+    // use GEN_INTERPRET / GEN_CALL_HELPER / GEN_ARM_NATIVE
+    int gen_strategy;
 };
+
+// gen strategy macros
+#define GEN_INTERPRET 0
+#define GEN_CALL_HELPER 1
+#define GEN_ARM_NATIVE 2
 
 void agregarHijo(AbstractExpresion* padre, AbstractExpresion* hijo);
 void liberarAST(AbstractExpresion* raiz);

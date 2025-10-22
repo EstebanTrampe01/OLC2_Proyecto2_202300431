@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200809L
 #include "funcion.h"
 #include "ast/nodos/builders.h"
 #include "context/context.h"
@@ -169,5 +170,10 @@ AbstractExpresion* nuevoLlamadaFuncion(char* nombre, AbstractExpresion* args){
     buildAbstractExpresion(&l->base, interpretLlamadaFuncion);
     l->nombre = nombre;
     l->args = args ? args : nuevoListaExpresiones();
+    /* If this function name is a registered native helper, mark for codegen */
+    extern int codegen_is_native(const char*);
+    if (codegen_is_native(nombre)) {
+        l->base.gen_strategy = GEN_CALL_HELPER;
+    }
     return (AbstractExpresion*) l;
 }

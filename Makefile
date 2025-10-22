@@ -24,7 +24,8 @@ SRC_FILES := $(shell find $(SRC) -name '*.c' \
 	! -name 'array_element_utils.c' \
 	! -path '$(SRC)/codegen/generadorARM/expr_*.c' \
 	! -path '$(SRC)/codegen/generadorARM/instr_*.c' \
-	! -name 'compat_impl.c')
+	! -name 'compat_impl.c' \
+	! -name '*_test.c')
 
 # Archivos generados por Bison y Flex
 BISON_C := $(BUILD)/parser.tab.c

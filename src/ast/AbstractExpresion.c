@@ -52,4 +52,6 @@ void buildAbstractExpresion(AbstractExpresion* base, Interpret interpretPuntero)
     base->hijos = NULL;
     base->linea = 0; base->columna = 0;
     base->numHijos = 0;
+    /* Default codegen strategy: interpret unless a builder overrides it */
+    base->gen_strategy = GEN_INTERPRET;
 }
