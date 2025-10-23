@@ -49,7 +49,7 @@ CodegenContext* nuevo_codegen_context(FILE* out) {
     if (!ctx) return NULL;
     ctx->out = out;
     ctx->symbol_ctx = NULL;
-    ctx->debug = 0;
+    ctx->debug = getenv("CODEGEN_DEBUG") ? 1 : 0;
     return ctx;
 }
 // Recursively emit code to evaluate an expression and place its result in x<target_reg>.
@@ -106,20 +106,20 @@ void codegen_programa(CodegenContext* ctx, AbstractExpresion* root) {
 
     // Emit STRLITs registered during collection
     codegen_emit_all_strlits(f);
-    // Emit numeric literals (doubles)
-    codegen_emit_all_numlits(f);
+    // NO emitir numeric literals aquí - se emitirán después de la fase .text
 
     // Emit GV_ symbols now, using emitted_types to choose directive
     for (int i = 0; i < emitted_count; ++i) {
         if (!emitted_names[i]) continue;
         int t = (emitted_types && i>=0) ? emitted_types[i] : -1;
+        printf("DEBUG: generando variable '%s' tipo=%d (emitted_types[%d]=%d)\n", emitted_names[i], t, i, emitted_types ? emitted_types[i] : -999);
         if (t == DOUBLE) {
             // if we have a textual initializer, use .double, else emit zero
             if (emitted_init_values[i]) fprintf(f, "GV_%s: .double %s\n\n", emitted_names[i], emitted_init_values[i]);
             else fprintf(f, "GV_%s: .double 0.0\n\n", emitted_names[i]);
         } else if (t == FLOAT) {
-            if (emitted_init_values[i]) fprintf(f, "GV_%s: .float %s\n\n", emitted_names[i], emitted_init_values[i]);
-            else fprintf(f, "GV_%s: .float 0.0f\n\n", emitted_names[i]);
+            if (emitted_init_values[i]) fprintf(f, "GV_%s: .single %s\n\n", emitted_names[i], emitted_init_values[i]);
+            else fprintf(f, "GV_%s: .single 0.0\n\n", emitted_names[i]);
         } else if (t == STRING && emitted_init_ids[i] > 0) {
             fprintf(f, "GV_%s: .quad STRLIT_%d\n\n", emitted_names[i], emitted_init_ids[i]);
         } else if (t == CHAR) {
@@ -165,13 +165,24 @@ void codegen_programa(CodegenContext* ctx, AbstractExpresion* root) {
         }
     }
 
-    // PASADA 2: .text
     fprintf(f, "    .section .text\n");
     fprintf(f, "    .global _start\n");
     fprintf(f, "_start:\n");
+    
+    // Inicializar la pila para operaciones con expresiones complejas
+    fprintf(f, "    // Inicializar pila para operaciones complejas\n");
+    fprintf(f, "    mov x0, sp\n");  // Guardar stack pointer inicial
+    fprintf(f, "    sub sp, sp, #1024\n");  // Reservar espacio en la pila
 
     arm_emit_runtime_nodes(root, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
 
+    // Volver a la sección .data para emitir literales numéricos registrados durante la fase .text
+    fprintf(f, "    .section .data\n");
+    codegen_emit_all_numlits(f);
+
+    // Volver a la sección .text para el exit
+    fprintf(f, "    .section .text\n");
+    
     // exit
     fprintf(f, "    mov x0, #0\n");
     fprintf(f, "    mov x8, #93\n");
@@ -180,7 +191,20 @@ void codegen_programa(CodegenContext* ctx, AbstractExpresion* root) {
     // cleanup
     free(label_nodes); free(label_ids);
     free(assign_nodes);
-    for (int i=0;i<emitted_count;++i) { if (emitted_names[i]) free(emitted_names[i]); if (emitted_init_values[i]) free(emitted_init_values[i]); }
+    
+    // NO liberar emitted_init_values[i] aquí porque apuntan a memoria que fue asignada
+    // por el AST y será liberada cuando se libere el AST completo
+    // Solo liberamos los arrays en sí
+    for (int i=0;i<emitted_count;++i) { 
+        if (emitted_names[i]) {
+            printf("DEBUG: liberando emitted_names[%d] = %p\n", i, emitted_names[i]);
+            free(emitted_names[i]); 
+        }
+        // NO liberar emitted_init_values[i] - estos punteros apuntan a memoria del AST
+        if (emitted_init_values[i]) {
+            printf("DEBUG: NO liberando emitted_init_values[%d] = %p (es memoria del AST o ya liberada)\n", i, emitted_init_values[i]);
+        }
+    }
     free(emitted_names);
     free(emitted_init_ids);
     free(emitted_init_values);

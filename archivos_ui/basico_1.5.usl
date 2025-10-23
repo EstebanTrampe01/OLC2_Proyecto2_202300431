@@ -1,9 +1,0 @@
-public static void main(String[] args) {
-    boolean condicion1 = true;
-    boolean condicion2 = false;
-    System.out.println("condicion1 = " + String.valueOf(condicion1));
-    System.out.println("condicion2 = " + String.valueOf(condicion2));
-    System.out.println("condicion1 && condicion2: " + String.valueOf(condicion1 && condicion2));
-    System.out.println("condicion1 || condicion2: " + String.valueOf(condicion1 || condicion2));
-    System.out.println("!condicion1: " + String.valueOf(!condicion1));
-}

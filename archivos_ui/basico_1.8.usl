@@ -1,4 +1,0 @@
-public static void main(String[] args) {
-    double resultadoFinal = 3 * (75 + 77) / 2.0;
-    System.out.println("Resultado científico: " + String.valueOf(resultadoFinal));
-}

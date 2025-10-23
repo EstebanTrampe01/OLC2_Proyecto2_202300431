@@ -95,6 +95,57 @@ static void dump_print_ast_recursive(CodegenContext* ctx, AbstractExpresion* n, 
     for (size_t i = 0; i < n->numHijos; ++i) dump_print_ast_recursive(ctx, n->hijos[i], depth+1);
 }
 
+static char* escape_string_for_comment(const char* str) {
+    if (!str) return strdup("(null)");
+    
+    size_t len = strlen(str);
+    char* result = malloc(len * 4 + 1); // Espacio suficiente para escapes
+    size_t j = 0;
+    
+    for (size_t i = 0; i < len; i++) {
+        char c = str[i];
+        switch (c) {
+            case '\n': 
+                result[j++] = '\\'; 
+                result[j++] = 'n'; 
+                break;
+            case '\r': 
+                result[j++] = '\\'; 
+                result[j++] = 'r'; 
+                break;
+            case '\t': 
+                result[j++] = '\\'; 
+                result[j++] = 't'; 
+                break;
+            case '\\': 
+                result[j++] = '\\'; 
+                result[j++] = '\\'; 
+                break;
+            case '"': 
+                result[j++] = '\\'; 
+                result[j++] = '"'; 
+                break;
+            case '\'': 
+                result[j++] = '\\'; 
+                result[j++] = '\''; 
+                break;
+            default:
+                if (c >= 32 && c <= 126) {
+                    result[j++] = c; // Carácter imprimible
+                } else {
+                    // Carácter de control - mostrar como \xXX
+                    result[j++] = '\\';
+                    result[j++] = 'x';
+                    result[j++] = "0123456789ABCDEF"[(c >> 4) & 0xF];
+                    result[j++] = "0123456789ABCDEF"[c & 0xF];
+                }
+                break;
+        }
+    }
+    result[j] = '\0';
+    return result;
+}
+
 static int emit_print_part(CodegenContext* ctx, AbstractExpresion* n, int nl, char** emitted_names, int* emitted_types, int emitted_count) {
     if (!ctx || !ctx->out || !n) return 0;
     AbstractExpresion* cur = n;
@@ -111,28 +162,41 @@ static int emit_print_part(CodegenContext* ctx, AbstractExpresion* n, int nl, ch
         if (L>=2 && raw[0]=='"' && raw[L-1]=='"') stripped = strndup(raw+1, L-2);
         else stripped = strdup(raw);
         int sId = codegen_find_strlit(stripped);
-        if (sId <= 0) sId = codegen_register_strlit(NULL, stripped);
+        if (sId <= 0) {
+            // ERROR: STRLIT no encontrado - debería haber sido registrado en fase .data
+            fprintf(stderr, "ERROR: STRLIT no encontrado para '%s'\n", stripped);
+            fprintf(ctx->out, "    // ERROR: STRLIT no encontrado para '%s'\n", stripped);
+            free(stripped);
+            return 0;
+        }
+        
+        // Crear representación legible para el comentario
+        char* escaped = escape_string_for_comment(stripped);
+        fprintf(ctx->out, "    // Imprimir string literal '%s'\n", escaped);
+        free(escaped);
         free(stripped);
-        fprintf(ctx->out, "    adrp x0, STRLIT_%d\n", sId);
-        fprintf(ctx->out, "    add x0, x0, :lo12:STRLIT_%d\n", sId);
-        fprintf(ctx->out, "    mov x1, #%d\n", nl);
-        fprintf(ctx->out, "    bl print_string\n\n");
+        
+        fprintf(ctx->out, "    adrp x0, STRLIT_%d\n", sId);  // Cargar dirección alta del string literal
+        fprintf(ctx->out, "    add x0, x0, :lo12:STRLIT_%d\n", sId);  // Completar dirección del string literal
+        fprintf(ctx->out, "    mov x1, #%d\n", nl);  // Parámetro: agregar nueva línea (0 o 1)
+        fprintf(ctx->out, "    bl print_string\n\n");  // Llamar función helper para imprimir string
         return 1;
     }
     if (cur->interpret == interpretIdentificadorExpresion) {
         IdentificadorExpresion* id = (IdentificadorExpresion*) cur;
-        fprintf(ctx->out, "    adrp x0, GV_%s\n", id->nombre);
-        fprintf(ctx->out, "    add x0, x0, :lo12:GV_%s\n", id->nombre);
+        fprintf(ctx->out, "    // Imprimir variable global '%s'\n", id->nombre);
+        fprintf(ctx->out, "    adrp x0, GV_%s\n", id->nombre);  // Cargar dirección alta de la variable
+        fprintf(ctx->out, "    add x0, x0, :lo12:GV_%s\n", id->nombre);  // Completar dirección de la variable
         int tag = 0;
         if (emitted_names && emitted_types) {
             for (int ii = 0; ii < emitted_count; ++ii) {
                 if (emitted_names[ii] && strcmp(emitted_names[ii], id->nombre) == 0) { tag = emitted_types[ii]; break; }
             }
         }
-        fprintf(ctx->out, "    // tipo tag=%d\n", tag);
-        fprintf(ctx->out, "    mov x1, #%d\n", tag);
-        fprintf(ctx->out, "    mov x2, #%d\n", nl);
-        fprintf(ctx->out, "    bl print_any_gv\n\n");
+        fprintf(ctx->out, "    // tipo tag=%d\n", tag);  // Tag del tipo de dato
+        fprintf(ctx->out, "    mov x1, #%d\n", tag);  // Parámetro: tipo de dato
+        fprintf(ctx->out, "    mov x2, #%d\n", nl);  // Parámetro: agregar nueva línea (0 o 1)
+        fprintf(ctx->out, "    bl print_any_gv\n\n");  // Llamar función helper para imprimir variable global
         return 1;
     }
     if (cur->interpret == interpretExpresionLenguaje) {
@@ -176,6 +240,7 @@ static int emit_print_part(CodegenContext* ctx, AbstractExpresion* n, int nl, ch
             extern Operacion tablaOperacionesAnd[TIPO_COUNT][TIPO_COUNT];
             extern Operacion tablaOperacionesOr[TIPO_COUNT][TIPO_COUNT];
             extern Operacion tablaOperacionesNot[TIPO_COUNT][TIPO_COUNT];
+            extern Operacion tablaOperacionesModulo[TIPO_COUNT][TIPO_COUNT];
             extern Operacion tablaOperacionesBitAnd[TIPO_COUNT][TIPO_COUNT];
             extern Operacion tablaOperacionesBitOr[TIPO_COUNT][TIPO_COUNT];
             extern Operacion tablaOperacionesBitXor[TIPO_COUNT][TIPO_COUNT];
@@ -192,8 +257,15 @@ static int emit_print_part(CodegenContext* ctx, AbstractExpresion* n, int nl, ch
                 el->tablaOperaciones == &tablaOperacionesOr ||
                 el->tablaOperaciones == &tablaOperacionesNot) {
                 tag = 4; // BOOLEAN para operaciones relacionales y lógicas
+            } else if (el->tablaOperaciones == &tablaOperacionesBitAnd ||
+                       el->tablaOperaciones == &tablaOperacionesBitOr ||
+                       el->tablaOperaciones == &tablaOperacionesBitXor ||
+                       el->tablaOperaciones == &tablaOperacionesShiftLeft ||
+                       el->tablaOperaciones == &tablaOperacionesShiftRight ||
+                       el->tablaOperaciones == &tablaOperacionesModulo) {
+                tag = 1; // INT para operaciones de bits y módulo
             } else {
-                tag = 1; // INT para operaciones aritméticas y de bits
+                tag = 2; // DOUBLE para operaciones aritméticas (suma, resta, multiplicación, división)
             }
         } else if (a && a->interpret == interpretUnarioLenguaje) {
             // Expresiones unarias (como NOT): evaluar y poner resultado en x1
@@ -209,10 +281,15 @@ static int emit_print_part(CodegenContext* ctx, AbstractExpresion* n, int nl, ch
                     if (L>=2 && raw[0]=='"' && raw[L-1]=='"') stripped = strndup(raw+1, L-2);
                     else stripped = strdup(raw);
                     int sId = codegen_find_strlit(stripped);
-                    if (sId <= 0) sId = codegen_register_strlit(NULL, stripped);
+                    if (sId <= 0) {
+                        fprintf(stderr, "ERROR: STRLIT no encontrado para '%s' en concatenación\n", stripped);
+                        fprintf(ctx->out, "    // ERROR: STRLIT no encontrado\n");
+                        tag = -1; // Indicar error
+                    } else {
+                        fprintf(ctx->out, "    adrp x1, STRLIT_%d\n", sId);
+                        fprintf(ctx->out, "    add x1, x1, :lo12:STRLIT_%d\n", sId);
+                    }
                     free(stripped);
-                    fprintf(ctx->out, "    adrp x1, STRLIT_%d\n", sId);
-                    fprintf(ctx->out, "    add x1, x1, :lo12:STRLIT_%d\n", sId);
                 } else if (p->tipo == INT) {
                     fprintf(ctx->out, "    mov x1, #%s\n", p->valor);
                 } else if (p->tipo == DOUBLE) {
@@ -282,12 +359,15 @@ void emit_print_text(CodegenContext* ctx, AbstractExpresion* printNode, int labe
         AbstractExpresion* lista = printNode->hijos[0];
         int add_newline = 1;
         if (printNode->interpret == interpretPrintExpresion) { PrintExpresion* p = (PrintExpresion*) printNode; add_newline = p->newline ? 1 : 0; }
+        
+        fprintf(ctx->out, "    // ===== System.out.println =====\n");
         for (size_t i = 0; i < lista->numHijos; ++i) dump_print_ast_recursive(ctx, lista->hijos[i], 0);
         for (size_t i = 0; i < lista->numHijos; ++i) {
             int is_last = (i == (lista->numHijos - 1));
             int want_nl = is_last ? add_newline : 0;
             emit_print_traverse_and_emit(ctx, lista->hijos[i], want_nl, emitted_names, emitted_types, emitted_count);
         }
+        fprintf(ctx->out, "    // ===== Fin System.out.println =====\n\n");
     }
 }
 

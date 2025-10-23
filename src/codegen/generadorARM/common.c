@@ -14,7 +14,8 @@ void arm_add_emitted_name(char*** names_ptr, int* count_ptr, int* cap_ptr, const
         *names_ptr = names;
         *cap_ptr = cap;
     }
-    names[count++] = strdup(name);
+    names[count] = strdup(name);
+    count++;
     *count_ptr = count;
 }
 

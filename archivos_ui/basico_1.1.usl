@@ -1,4 +1,0 @@
-public static void main(String[] args) {
-	System.out.println("=== SISTEMA DE CALCULO CIENTIFICO ===");
-	System.out.println("Calculadora Científica v1.0");
-}
