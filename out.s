@@ -1,7 +1,7 @@
     .section .data
     .align 3
 L1:
-    .asciz "-- Test4 globals --\n"
+    .asciz "=== SISTEMA DE CALCULO CIENTIFICO ===\n"
 
 L1_end:
 
@@ -21,7 +21,7 @@ L4:
 L4_end:
 
 L5:
-    .asciz "\n"
+    .asciz "\n--- VALORES ASIGNADOS ---\n"
 
 L5_end:
 
@@ -36,7 +36,7 @@ L7:
 L7_end:
 
 L8:
-    .asciz "-- Test4 globals CAMBIADO --\n"
+    .asciz "\n"
 
 L8_end:
 
@@ -50,31 +50,41 @@ L10:
 
 L10_end:
 
-L11:
-    .asciz "\n"
-
-L11_end:
-
-L12:
-    .asciz "\n"
-
-L12_end:
-
-L13:
-    .asciz "\n"
-
-L13_end:
-
-L14:
-    .asciz "\n"
-
-L14_end:
-
 STRLIT_1:
-    .asciz "Hola global"
+    .asciz "=== SISTEMA DE CALCULO CIENTIFICO ==="
 
 STRLIT_2:
-    .asciz "Hola global CAMBIADO"
+    .asciz "Resultado"
+
+STRLIT_3:
+    .asciz "Calculadora Científica v1.0"
+
+STRLIT_4:
+    .asciz "Constante PI: "
+
+STRLIT_5:
+    .asciz "Constante máxima: "
+
+STRLIT_6:
+    .asciz "Nuevo resultado"
+
+STRLIT_7:
+    .asciz "\n--- VALORES ASIGNADOS ---"
+
+STRLIT_8:
+    .asciz "Entero: "
+
+STRLIT_9:
+    .asciz "Flotante: "
+
+STRLIT_10:
+    .asciz "Carácter: "
+
+STRLIT_11:
+    .asciz "Booleano: "
+
+STRLIT_12:
+    .asciz "Cadena: "
 
 GV_numeroEntero: .quad 42
 
@@ -86,7 +96,13 @@ GV_caracter: .byte 65
 
 GV_esVerdadero: .quad 1
 
-GV_cadenaTexto: .quad STRLIT_1
+GV_cadenaTexto: .quad STRLIT_2
+
+GV_PI: .quad 3
+
+GV_CONSTANTE_MAXIMA: .quad 100
+
+GV_MENSAJE_SISTEMA: .quad STRLIT_3
 
 GV_numeroEntero_str:
     .asciz "42"
@@ -114,63 +130,90 @@ GV_esVerdadero_str:
 GV_esVerdadero_str_end:
 
 GV_cadenaTexto_str:
-    .asciz "Hola global"
+    .asciz "Resultado"
 
 GV_cadenaTexto_str_end:
+
+GV_PI_str:
+    .asciz "3"
+
+GV_PI_str_end:
+
+GV_CONSTANTE_MAXIMA_str:
+    .asciz "100"
+
+GV_CONSTANTE_MAXIMA_str_end:
+
+GV_MENSAJE_SISTEMA_str:
+    .asciz "Calculadora Científica v1.0"
+
+GV_MENSAJE_SISTEMA_str_end:
 
     .section .text
     .global _start
 _start:
-    adrp x1, L1
-    add x1, x1, :lo12:L1
-    adrp x2, L1_end
-    add x2, x2, :lo12:L1_end
-    sub x2, x2, x1
-    mov x0, #1
-    mov x8, #64
-    svc #0
+# interpret_map:
+#   PRIMITIVO=0x629a783ee0af
+#   IDENTIFICADOR=0x629a783edfb2
+#   EXPRESION_LENGUAJE=0x629a783ed91c
+#   LLAMADA_FUNCION=0x629a783f6384
+#   LISTA_EXPRESIONES=0x629a783e78e8
+#   CAST=0x629a783ed2c7
+#   UNARIO_LENGUAJE=0x629a783edd7c
+#   BUILTIN_STRING_VALUEOF=0x629a783e8f4d
+#   PRINT_EXPR=0x629a783f5b0d
+# AST node: PRIMITIVO iptr=0x629a783ee0af children=0
+#   prim tipo=9 valor==== SISTEMA DE CALCULO CIENTIFICO ===
+    adrp x0, STRLIT_1
+    add x0, x0, :lo12:STRLIT_1
+    mov x1, #1
+    bl print_string
 
-    adrp x0, GV_numeroEntero
-    add x0, x0, :lo12:GV_numeroEntero
+# AST node: IDENTIFICADOR iptr=0x629a783edfb2 children=0
+#   id nombre=MENSAJE_SISTEMA
+    adrp x0, GV_MENSAJE_SISTEMA
+    add x0, x0, :lo12:GV_MENSAJE_SISTEMA
+    // tipo tag=9
+    mov x1, #9
+    mov x2, #1
+    bl print_any_gv
+
+# AST node: EXPRESION_LENGUAJE iptr=0x629a783ed91c children=2
+#   expresion tipo=0
+# # AST node: PRIMITIVO iptr=0x629a783ee0af children=0
+# #   prim tipo=9 valor=Constante PI: 
+# # AST node: IDENTIFICADOR iptr=0x629a783edfb2 children=0
+# #   id nombre=PI
+    adrp x0, STRLIT_4
+    add x0, x0, :lo12:STRLIT_4
+    mov x1, #0
+    bl print_string
+
+    adrp x0, GV_PI
+    add x0, x0, :lo12:GV_PI
     // tipo tag=5
     mov x1, #5
     mov x2, #1
     bl print_any_gv
 
-    adrp x0, GV_numeroFlotante
-    add x0, x0, :lo12:GV_numeroFlotante
-    // tipo tag=7
-    mov x1, #7
-    mov x2, #1
-    bl print_any_gv
+# AST node: EXPRESION_LENGUAJE iptr=0x629a783ed91c children=2
+#   expresion tipo=-1215389040
+# # AST node: PRIMITIVO iptr=0x629a783ee0af children=0
+# #   prim tipo=9 valor=Constante máxima: 
+# # AST node: UNKNOWN iptr=0x629a783e8f4d children=0
+    adrp x0, STRLIT_5
+    add x0, x0, :lo12:STRLIT_5
+    mov x1, #0
+    bl print_string
 
-    adrp x0, GV_numeroDoble
-    add x0, x0, :lo12:GV_numeroDoble
-    // tipo tag=8
-    mov x1, #8
-    mov x2, #1
-    bl print_any_gv
-
-    adrp x0, GV_caracter
-    add x0, x0, :lo12:GV_caracter
-    // tipo tag=2
-    mov x1, #2
-    mov x2, #1
-    bl print_any_gv
-
-    adrp x0, GV_esVerdadero
-    add x0, x0, :lo12:GV_esVerdadero
-    // tipo tag=1
-    mov x1, #1
-    mov x2, #1
-    bl print_any_gv
-
-    adrp x0, GV_cadenaTexto
-    add x0, x0, :lo12:GV_cadenaTexto
-    // tipo tag=9
-    mov x1, #9
-    mov x2, #1
-    bl print_any_gv
+    adrp x1, L4
+    add x1, x1, :lo12:L4
+    adrp x2, L4_end
+    add x2, x2, :lo12:L4_end
+    sub x2, x2, x1
+    mov x0, #1
+    mov x8, #64
+    svc #0
 
     // store integer 100 into GV_numeroEntero
     adrp x1, GV_numeroEntero
@@ -192,39 +235,65 @@ _start:
 
     adrp x1, GV_cadenaTexto
     add x1, x1, :lo12:GV_cadenaTexto
-    adrp x2, STRLIT_2
-    add x2, x2, :lo12:STRLIT_2
+    adrp x2, STRLIT_6
+    add x2, x2, :lo12:STRLIT_6
     str x2, [x1]
 
-    adrp x1, L8
-    add x1, x1, :lo12:L8
-    adrp x2, L8_end
-    add x2, x2, :lo12:L8_end
+# AST node: PRIMITIVO iptr=0x629a783ee0af children=0
+#   prim tipo=9 valor=\n--- VALORES ASIGNADOS ---
+    adrp x0, STRLIT_7
+    add x0, x0, :lo12:STRLIT_7
+    mov x1, #1
+    bl print_string
+
+# AST node: EXPRESION_LENGUAJE iptr=0x629a783ed91c children=2
+#   expresion tipo=0
+# # AST node: PRIMITIVO iptr=0x629a783ee0af children=0
+# #   prim tipo=9 valor=Entero: 
+# # AST node: UNKNOWN iptr=0x629a783e8f4d children=0
+    adrp x0, STRLIT_8
+    add x0, x0, :lo12:STRLIT_8
+    mov x1, #0
+    bl print_string
+
+    adrp x1, L6
+    add x1, x1, :lo12:L6
+    adrp x2, L6_end
+    add x2, x2, :lo12:L6_end
     sub x2, x2, x1
     mov x0, #1
     mov x8, #64
     svc #0
 
-    adrp x0, GV_numeroEntero
-    add x0, x0, :lo12:GV_numeroEntero
-    // tipo tag=5
-    mov x1, #5
-    mov x2, #1
-    bl print_any_gv
+# AST node: EXPRESION_LENGUAJE iptr=0x629a783ed91c children=2
+#   expresion tipo=0
+# # AST node: PRIMITIVO iptr=0x629a783ee0af children=0
+# #   prim tipo=9 valor=Flotante: 
+# # AST node: UNKNOWN iptr=0x629a783e8f4d children=0
+    adrp x0, STRLIT_9
+    add x0, x0, :lo12:STRLIT_9
+    mov x1, #0
+    bl print_string
 
-    adrp x0, GV_numeroFlotante
-    add x0, x0, :lo12:GV_numeroFlotante
-    // tipo tag=7
-    mov x1, #7
-    mov x2, #1
-    bl print_any_gv
+    adrp x1, L7
+    add x1, x1, :lo12:L7
+    adrp x2, L7_end
+    add x2, x2, :lo12:L7_end
+    sub x2, x2, x1
+    mov x0, #1
+    mov x8, #64
+    svc #0
 
-    adrp x0, GV_numeroDoble
-    add x0, x0, :lo12:GV_numeroDoble
-    // tipo tag=8
-    mov x1, #8
-    mov x2, #1
-    bl print_any_gv
+# AST node: EXPRESION_LENGUAJE iptr=0x629a783ed91c children=2
+#   expresion tipo=0
+# # AST node: PRIMITIVO iptr=0x629a783ee0af children=0
+# #   prim tipo=9 valor=Carácter: 
+# # AST node: IDENTIFICADOR iptr=0x629a783edfb2 children=0
+# #   id nombre=caracter
+    adrp x0, STRLIT_10
+    add x0, x0, :lo12:STRLIT_10
+    mov x1, #0
+    bl print_string
 
     adrp x0, GV_caracter
     add x0, x0, :lo12:GV_caracter
@@ -233,12 +302,35 @@ _start:
     mov x2, #1
     bl print_any_gv
 
-    adrp x0, GV_esVerdadero
-    add x0, x0, :lo12:GV_esVerdadero
-    // tipo tag=1
-    mov x1, #1
-    mov x2, #1
-    bl print_any_gv
+# AST node: EXPRESION_LENGUAJE iptr=0x629a783ed91c children=2
+#   expresion tipo=0
+# # AST node: PRIMITIVO iptr=0x629a783ee0af children=0
+# #   prim tipo=9 valor=Booleano: 
+# # AST node: UNKNOWN iptr=0x629a783e8f4d children=0
+    adrp x0, STRLIT_11
+    add x0, x0, :lo12:STRLIT_11
+    mov x1, #0
+    bl print_string
+
+    adrp x1, L9
+    add x1, x1, :lo12:L9
+    adrp x2, L9_end
+    add x2, x2, :lo12:L9_end
+    sub x2, x2, x1
+    mov x0, #1
+    mov x8, #64
+    svc #0
+
+# AST node: EXPRESION_LENGUAJE iptr=0x629a783ed91c children=2
+#   expresion tipo=0
+# # AST node: PRIMITIVO iptr=0x629a783ee0af children=0
+# #   prim tipo=9 valor=Cadena: 
+# # AST node: IDENTIFICADOR iptr=0x629a783edfb2 children=0
+# #   id nombre=cadenaTexto
+    adrp x0, STRLIT_12
+    add x0, x0, :lo12:STRLIT_12
+    mov x1, #0
+    bl print_string
 
     adrp x0, GV_cadenaTexto
     add x0, x0, :lo12:GV_cadenaTexto

@@ -6,6 +6,7 @@
 #include "ast/ast_to_dot.h"
 #include "context/error_reporting.h"
 #include "codegen/codegen.h"
+#include "codegen/native_init.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -36,6 +37,9 @@ int main(int argc, char** argv) {
         if (!yyin) { perror("fopen"); return 1; }
     }
 
+    // register core native helpers before parsing so nuevoLlamadaFuncion can mark nodes
+    register_core_natives();
+
     if (yyparse() == 0) {
         if (ast_root) {
             if(astOut){
@@ -64,6 +68,55 @@ int main(int argc, char** argv) {
                 if(instruccion && instruccion->interpret == interpretDeclaracionVariable) {
                     instruccion->interpret(instruccion, contextPadre);
                 }
+            }
+
+            /* Scan AST for assignments that target a 'final' symbol and report semantic errors
+               This promotes the runtime check (in obtener_variable_modificable) to a semantic error
+               detected before code generation. */
+            extern Result interpretAsignacionExpresion(AbstractExpresion*, Context*);
+            int found_errors = 0;
+            // simple DFS with dynamic stack resizing to avoid overflow
+            int ast_stack_cap = (int)ast_root->numHijos + 8;
+            if (ast_stack_cap < 16) ast_stack_cap = 16;
+            AbstractExpresion** ast_stack = malloc(sizeof(AbstractExpresion*) * ast_stack_cap);
+            int sp = 0;
+            for (size_t i=0;i<ast_root->numHijos;++i) {
+                if (sp >= ast_stack_cap) {
+                    ast_stack_cap *= 2;
+                    ast_stack = realloc(ast_stack, sizeof(AbstractExpresion*) * ast_stack_cap);
+                }
+                ast_stack[sp++] = ast_root->hijos[i];
+            }
+            while (sp>0) {
+                AbstractExpresion* n = ast_stack[--sp]; if (!n) continue;
+                if (n->interpret == interpretAsignacionExpresion) {
+                    typedef struct { AbstractExpresion base; char* nombre; } AsignLocal;
+                    AsignLocal* a = (AsignLocal*) n;
+                    if (a && a->nombre) {
+                        Symbol* s = buscarTablaSimbolos(contextPadre, a->nombre);
+                        if (s && s->isFinal) {
+                            report_semantic_error(n, contextPadre, "No se puede reasignar la constante 'final' '%s'", a->nombre);
+                            found_errors++;
+                        }
+                    }
+                }
+                for (size_t i=0;i<n->numHijos;++i) {
+                    if (sp >= ast_stack_cap) {
+                        ast_stack_cap *= 2;
+                        ast_stack = realloc(ast_stack, sizeof(AbstractExpresion*) * ast_stack_cap);
+                    }
+                    ast_stack[sp++] = n->hijos[i];
+                }
+            }
+            free(ast_stack);
+            if (found_errors>0) {
+                // Abort: semantic errors were emitted
+                fprintf(stderr, "Errores semanticos detectados: %d\n", found_errors);
+                // print accumulated errors (if any) and exit with failure
+                print_error_list();
+                liberarAST(ast_root);
+                ast_root = NULL;
+                return 1;
             }
             
             if (codegenOut) {

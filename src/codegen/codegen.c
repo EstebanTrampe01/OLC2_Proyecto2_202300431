@@ -91,6 +91,77 @@ static void emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int tar
             const char* helper = codegen_get_native_helper(call->nombre);
             if (!helper) helper = call->nombre;
             if (call->args) {
+                // Special handling: if this native is String.valueOf, emit (tag, value) pair
+                if (strcmp(call->nombre, "String.valueOf") == 0) {
+                    // Expect one argument
+                    AbstractExpresion* a = (call->args && call->args->numHijos>0) ? call->args->hijos[0] : NULL;
+                    if (!a) {
+                        fprintf(f, "    mov x%d, #0\n", target_reg);
+                        return;
+                    }
+                    // Determine tag and evaluate value into x1 (value_bits)
+                    extern Result interpretPrimitivoExpresion(AbstractExpresion*, Context*);
+                    extern Result interpretIdentificadorExpresion(AbstractExpresion*, Context*);
+                    int tag = 0;
+                    if (a->interpret == interpretPrimitivoExpresion) {
+                        typedef struct { AbstractExpresion base; int tipo; char* valor; } Pr;
+                        Pr* p = (Pr*) a;
+                        if (p) {
+                            if (p->tipo == INT) tag = 1;
+                            else if (p->tipo == DOUBLE) tag = 2;
+                            else if (p->tipo == FLOAT) tag = 3;
+                            else if (p->tipo == BOOLEAN) tag = 4;
+                            else if (p->tipo == CHAR) tag = 5;
+                            else if (p->tipo == STRING) tag = 6;
+                        }
+                    } else if (a->interpret == interpretIdentificadorExpresion) {
+                        typedef struct { AbstractExpresion base; char* nombre; } Id;
+                        Id* id = (Id*) a;
+                        if (id && id->nombre && ctx && ctx->symbol_ctx) {
+                            Symbol* s = buscarTablaSimbolos(ctx->symbol_ctx, id->nombre);
+                            if (s) tag = s->tipo == STRING ? 6 : (s->tipo == DOUBLE ? 2 : (s->tipo == FLOAT ? 3 : (s->tipo == BOOLEAN ? 4 : 1)));
+                        }
+                    }
+                    // Evaluate argument into x1 (for pointer/int bits). For doubles/floats move into d0 then fmov -> x1
+                    if (a->interpret == interpretPrimitivoExpresion) {
+                        typedef struct { AbstractExpresion base; int tipo; char* valor; } Pr2;
+                        Pr2* p2 = (Pr2*) a;
+                        if (p2 && p2->valor) {
+                            if (p2->tipo == STRING) {
+                                int id = codegen_register_strlit(NULL, p2->valor);
+                                fprintf(f, "    adrp x1, STRLIT_%d@PAGE\n", id);
+                                fprintf(f, "    add x1, x1, STRLIT_%d@PAGEOFF\n", id);
+                            } else if (p2->tipo == INT) {
+                                fprintf(f, "    mov x1, #%s\n", p2->valor);
+                            } else if (p2->tipo == DOUBLE) {
+                                int id = codegen_register_numlit(NULL, p2->valor);
+                                fprintf(f, "    adrp x1, NUMLIT_%d@PAGE\n", id);
+                                fprintf(f, "    ldr x1, [x1, :lo12:NUMLIT_%d]\n", id);
+                                // move d0 <- x1 then fmov d0->x1 done by helper expectation
+                            } else if (p2->tipo == FLOAT) {
+                                fprintf(f, "    mov w1, #%s\n", p2->valor);
+                            } else if (p2->tipo == BOOLEAN) {
+                                fprintf(f, "    mov x1, #%s\n", (p2->valor && strcmp(p2->valor, "true")==0)?"1":"0");
+                            } else if (p2->tipo == CHAR) {
+                                fprintf(f, "    mov w1, #%d\n", p2->valor? (int)p2->valor[0] : 0);
+                            } else {
+                                fprintf(f, "    mov x1, #0\n");
+                            }
+                        } else {
+                            fprintf(f, "    mov x1, #0\n");
+                        }
+                    } else {
+                        // identifier or complex expr: evaluate into x1
+                        emit_eval_expr(ctx, a, 1, f);
+                    }
+                    // put tag into w0
+                    fprintf(f, "    mov w0, #%d\n", tag);
+                    // call helper
+                    fprintf(f, "    bl %s\n", helper);
+                    // result in x0 (char*); move to target
+                    if (target_reg != 0) fprintf(f, "    mov x%d, x0\n", target_reg);
+                    return;
+                }
                 for (size_t ai = 0; ai < call->args->numHijos && ai < 8; ++ai) {
                     AbstractExpresion* a = call->args->hijos[ai];
                     extern Result interpretPrimitivoExpresion(AbstractExpresion*, Context*);
