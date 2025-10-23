@@ -20,6 +20,13 @@ extern Result interpretStringValueOf(AbstractExpresion*, Context*);
 #include "../../../../src/ast/nodos/expresiones/expresiones.h"
 #include "../../../../src/ast/nodos/instrucciones/instruccion/funcion.h"
 
+/* Local view of unary wrapper nodes used by builtins so we can access the
+ * inner expression when the AST node doesn't use hijos[] (many builtin
+ * wrappers store their child in an `a` field). This mirrors the layout in
+ * src/ast/nodos/expresiones/builtins.c: typedef struct { AbstractExpresion base; AbstractExpresion* a; } UnaryWrap;
+*/
+typedef struct { AbstractExpresion base; AbstractExpresion* a; } UnaryWrapLocal;
+
 // Counter simple para etiquetas de mensajes
 static int next_label_id = 0;
 
@@ -334,7 +341,97 @@ static int emit_print_part(CodegenContext* ctx, AbstractExpresion* n, int nl, ch
         fprintf(ctx->out, "    bl free\n\n");
         return 1;
     }
+    // Builtin unary wrapper: interpretStringValueOf may be represented as a UnaryWrap
+    if (cur->interpret == interpretStringValueOf) {
+        UnaryWrapLocal* uw = (UnaryWrapLocal*) cur;
+        AbstractExpresion* a = uw->a;
+        int tag = 1;
+        if (a && a->interpret == interpretPrimitivoExpresion) {
+            PrimitivoExpresion* p = (PrimitivoExpresion*) a;
+            if (p) {
+                if (p->tipo == STRING) tag = 6; else if (p->tipo == INT) tag = 1; else if (p->tipo == DOUBLE) tag = 2; else if (p->tipo == FLOAT) tag = 3; else if (p->tipo == BOOLEAN) tag = 4; else if (p->tipo == CHAR) tag = 5;
+            }
+        } else if (a && a->interpret == interpretIdentificadorExpresion) {
+            IdentificadorExpresion* id = (IdentificadorExpresion*) a;
+            for (int ii = 0; ii < emitted_count; ++ii) if (emitted_names[ii] && strcmp(emitted_names[ii], id->nombre) == 0) { tag = emitted_types[ii]; break; }
+            if (tag == STRING) tag = 6; else if (tag == DOUBLE) tag = 2; else if (tag == FLOAT) tag = 3; else if (tag == BOOLEAN) tag = 4; else if (tag == CHAR) tag = 5; else tag = 1;
+            if (id && id->nombre) {
+                fprintf(ctx->out, "    adrp x1, GV_%s\n", id->nombre);
+                fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", id->nombre);
+                fprintf(ctx->out, "    ldr x1, [x1]\n");
+            }
+        }
+        if (a && a->interpret == interpretPrimitivoExpresion) {
+            PrimitivoExpresion* p = (PrimitivoExpresion*) a;
+            if (p && p->valor) {
+                if (p->tipo == STRING) {
+                    const char* raw = p->valor; size_t L = strlen(raw);
+                    char* stripped = NULL;
+                    if (L>=2 && raw[0]=='"' && raw[L-1]=='"') stripped = strndup(raw+1, L-2);
+                    else stripped = strdup(raw);
+                    int sId = codegen_find_strlit(stripped);
+                    if (sId <= 0) sId = codegen_register_strlit(NULL, stripped);
+                    free(stripped);
+                    fprintf(ctx->out, "    adrp x1, STRLIT_%d\n", sId);
+                    fprintf(ctx->out, "    add x1, x1, :lo12:STRLIT_%d\n", sId);
+                } else if (p->tipo == INT) {
+                    fprintf(ctx->out, "    mov x1, #%s\n", p->valor);
+                } else if (p->tipo == DOUBLE) {
+                    int id = codegen_register_numlit(NULL, p->valor);
+                    fprintf(ctx->out, "    adrp x1, NUMLIT_%d@PAGE\n", id);
+                    fprintf(ctx->out, "    ldr x1, [x1, :lo12:NUMLIT_%d]\n", id);
+                } else if (p->tipo == FLOAT) {
+                    fprintf(ctx->out, "    mov w1, #%s\n", p->valor);
+                } else if (p->tipo == BOOLEAN) {
+                    fprintf(ctx->out, "    mov x1, #%s\n", (p->valor && strcmp(p->valor, "true")==0)?"1":"0");
+                } else if (p->tipo == CHAR) {
+                    int ch = (p->valor && strlen(p->valor)>0) ? (int)p->valor[0] : 0;
+                    fprintf(ctx->out, "    mov w1, #%d\n", ch);
+                }
+            }
+        }
+        fprintf(ctx->out, "    mov w0, #%d\n", tag);
+        fprintf(ctx->out, "    bl string_value_of_any\n");
+        fprintf(ctx->out, "    mov x9, x0\n");
+        fprintf(ctx->out, "    mov x0, x9\n");
+        fprintf(ctx->out, "    mov x1, #%d\n", nl);
+        fprintf(ctx->out, "    bl print_string\n");
+        fprintf(ctx->out, "    mov x0, x9\n");
+        fprintf(ctx->out, "    bl free\n\n");
+        return 1;
+    }
     return 0;
+}
+
+// Fallback: traverse the tree in-order and emit printers for primitives, identifiers,
+// and String.valueOf(...) calls as they appear. Returns number of emitted parts.
+static int emit_print_traverse_and_emit(CodegenContext* ctx, AbstractExpresion* n, int nl, char** emitted_names, int* emitted_types, int emitted_count) {
+    if (!ctx || !ctx->out || !n) return 0;
+    int emitted = 0;
+    // If node is primitive/ident/llamada, try to emit directly
+    if (n->interpret == interpretPrimitivoExpresion) {
+        if (emit_print_part(ctx, n, nl, emitted_names, emitted_types, emitted_count)) return 1;
+        return 0;
+    }
+    if (n->interpret == interpretIdentificadorExpresion) {
+        if (emit_print_part(ctx, n, nl, emitted_names, emitted_types, emitted_count)) return 1;
+        return 0;
+    }
+    if (n->interpret == interpretLlamadaFuncion) {
+        // Try to handle String.valueOf here
+        LlamadaFuncion* call = (LlamadaFuncion*) n;
+        if (call && call->nombre && strcmp(call->nombre, "String.valueOf") == 0) {
+            if (emit_print_part(ctx, n, nl, emitted_names, emitted_types, emitted_count)) return 1;
+            return 0;
+        }
+    }
+    // Otherwise traverse children in order
+    for (size_t i = 0; i < n->numHijos; ++i) {
+        int is_last_child = (i == n->numHijos - 1);
+        int child_nl = is_last_child ? nl : 0;
+        emitted += emit_print_traverse_and_emit(ctx, n->hijos[i], child_nl, emitted_names, emitted_types, emitted_count);
+    }
+    return emitted;
 }
 
 void emit_print_text(CodegenContext* ctx, AbstractExpresion* printNode, int label_id, char** emitted_names, int* emitted_types, int emitted_count) {
