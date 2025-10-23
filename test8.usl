@@ -41,4 +41,25 @@ public static void main(String[] args) {
     System.out.println("Multiplicación (a * b): " + String.valueOf(a * b));
     System.out.println("División (a / b): " + String.valueOf(a / b));
     System.out.println("Módulo (a % b): " + String.valueOf(a % b));
+    
+    // Operaciones relacionales
+    System.out.println("\n--- OPERACIONES RELACIONALES ---");
+    System.out.println("a > b: " + String.valueOf(a > b));
+    System.out.println("a < b: " + String.valueOf(a < b));
+    System.out.println("a >= b: " + String.valueOf(a >= b));
+    System.out.println("a <= b: " + String.valueOf(a <= b));
+    System.out.println("a == b: " + String.valueOf(a == b));
+    System.out.println("a != b: " + String.valueOf(a != b));
+
+    // Operaciones lógicas
+    boolean condicion1 = true;
+    boolean condicion2 = false;
+    
+    System.out.println("\n--- OPERACIONES LOGICAS ---");
+    System.out.println("condicion1 = " + String.valueOf(condicion1));
+    System.out.println("condicion2 = " + String.valueOf(condicion2));
+    System.out.println("condicion1 && condicion2: " + String.valueOf(condicion1 && condicion2));
+    System.out.println("condicion1 || condicion2: " + String.valueOf(condicion1 || condicion2));
+    System.out.println("!condicion1: " + String.valueOf(!condicion1));
+    System.out.println("!condicion2: " + String.valueOf(!condicion2));
 }
