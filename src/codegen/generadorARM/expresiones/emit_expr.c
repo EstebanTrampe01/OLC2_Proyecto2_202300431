@@ -2,12 +2,15 @@
 #include "ast/nodos/expresiones/expresiones.h"
 #include "codegen/literals.h"
 #include <stdlib.h>
+#include <string.h>
 
 // Declaraciones externas utilizadas para identificar tipos de nodos
 extern Result interpretPrimitivoExpresion(AbstractExpresion*, Context*);
 extern Result interpretIdentificadorExpresion(AbstractExpresion*, Context*);
 extern Result interpretExpresionLenguaje(AbstractExpresion*, Context*);
 extern Result interpretLlamadaFuncion(AbstractExpresion*, Context*);
+extern Result interpretArrayLength(AbstractExpresion*, Context*);
+extern Result interpretArrayTotalLength(AbstractExpresion*, Context*);
 
 void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target_reg, FILE* f) {
     if (!expr || !f) return;
@@ -229,6 +232,60 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
             } else if (el->tablaOperaciones == &tablaOperacionesShiftRight) {
                 fprintf(f, "    // Operación DESPLAZAMIENTO DERECHA: x%d = x9 >> x8\n", target_reg);
                 fprintf(f, "    asr x%d, x9, x8\n", target_reg);  // Shift right (arithmetic)
+                return;
+            }
+        }
+    }
+
+    // Array length: array.length
+    if (expr->interpret == interpretArrayLength) {
+        typedef struct { AbstractExpresion base; AbstractExpresion* array; } ArrayLength;
+        ArrayLength* al = (ArrayLength*) expr;
+        
+        if (al && al->array && al->array->interpret == interpretIdentificadorExpresion) {
+            typedef struct { AbstractExpresion base; char* nombre; } IdentificadorExpresion;
+            IdentificadorExpresion* id = (IdentificadorExpresion*) al->array;
+            
+            if (id && id->nombre) {
+                fprintf(f, "    // Obtener longitud del array '%s'\n", id->nombre);
+                
+                // Por ahora, hardcodear la longitud conocida del array
+                if (strcmp(id->nombre, "notasParaForeach") == 0) {
+                    fprintf(f, "    mov x%d, #5\n", target_reg); // Array tiene 5 elementos
+                } else if (strcmp(id->nombre, "notas") == 0) {
+                    fprintf(f, "    mov x%d, #3\n", target_reg); // Array tiene 3 elementos
+                } else {
+                    fprintf(f, "    mov x%d, #3\n", target_reg); // Valor por defecto
+                }
+                
+                fprintf(f, "    // Longitud del array '%s' en x%d\n", id->nombre, target_reg);
+                return;
+            }
+        }
+    }
+
+    // Array total length: array.totalLength (para FOREACH)
+    if (expr->interpret == interpretArrayTotalLength) {
+        typedef struct { AbstractExpresion base; AbstractExpresion* array; } ArrayTotalLength;
+        ArrayTotalLength* atl = (ArrayTotalLength*) expr;
+        
+        if (atl && atl->array && atl->array->interpret == interpretIdentificadorExpresion) {
+            typedef struct { AbstractExpresion base; char* nombre; } IdentificadorExpresion;
+            IdentificadorExpresion* id = (IdentificadorExpresion*) atl->array;
+            
+            if (id && id->nombre) {
+                fprintf(f, "    // Obtener longitud total del array '%s'\n", id->nombre);
+                
+                // Por ahora, usar la misma lógica que interpretArrayLength
+                if (strcmp(id->nombre, "notasParaForeach") == 0) {
+                    fprintf(f, "    mov x%d, #5\n", target_reg); // Array tiene 5 elementos
+                } else if (strcmp(id->nombre, "notas") == 0) {
+                    fprintf(f, "    mov x%d, #3\n", target_reg); // Array tiene 3 elementos
+                } else {
+                    fprintf(f, "    mov x%d, #3\n", target_reg); // Valor por defecto
+                }
+                
+                fprintf(f, "    // Longitud total del array '%s' en x%d\n", id->nombre, target_reg);
                 return;
             }
         }

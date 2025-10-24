@@ -127,19 +127,27 @@ void arm_add_emitted_name(char*** names_ptr, int* count_ptr, int* cap_ptr, const
 char* arm_get_unique_var_name(const char* original_name) {
     if (!original_name) return NULL;
     
+    printf("DEBUG: arm_get_unique_var_name llamado con '%s'\n", original_name);
+    
     // Para variables de FOR, verificar si están activas
     if (strlen(original_name) == 1 && ((original_name[0] >= 'a' && original_name[0] <= 'z') || (original_name[0] >= 'A' && original_name[0] <= 'Z'))) {
         if (arm_is_for_variable_active(original_name)) {
             // Variable FOR activa, usar nombre original
-            return strdup(original_name);
+            char* result = strdup(original_name);
+            printf("DEBUG: Variable FOR activa '%s' -> '%s'\n", original_name, result);
+            return result;
         } else {
             // Variable FOR no activa, usar nombre original (se reiniciará)
-            return strdup(original_name);
+            char* result = strdup(original_name);
+            printf("DEBUG: Variable FOR no activa '%s' -> '%s'\n", original_name, result);
+            return result;
         }
     }
     
     // Variable normal, usar nombre original
-    return strdup(original_name);
+    char* result = strdup(original_name);
+    printf("DEBUG: Variable normal '%s' -> '%s'\n", original_name, result);
+    return result;
 }
 
 

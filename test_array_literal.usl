@@ -1,0 +1,7 @@
+public static void main(String[] args) {
+    System.out.println("Test array literal:");
+    
+    int[] notas = {85, 92, 78, 95, 88};
+    
+    System.out.println("Array creado con " + String.valueOf(notas.length) + " elementos");
+}

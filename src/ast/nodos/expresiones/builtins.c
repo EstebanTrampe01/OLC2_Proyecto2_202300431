@@ -22,7 +22,7 @@ static int totalElementsRecursive(ArrayValue* arr){
     }
     return total;
 }
-static Result interpretArrayLength(AbstractExpresion* self, Context* ctx){
+Result interpretArrayLength(AbstractExpresion* self, Context* ctx){
     UnaryWrap* n=(UnaryWrap*)self; Result r=n->a->interpret(n->a, ctx);
     int* v=malloc(sizeof(int)); *v=0;
     if(r.tipo!=ARRAY||!r.valor){ return nuevoValorResultado(v,INT);} 
@@ -33,7 +33,7 @@ static Result interpretArrayLength(AbstractExpresion* self, Context* ctx){
 } 
 
 /* Longitud total (flatten) de todos los elementos hoja de un arreglo potencialmente multidimensional */
-static Result interpretArrayTotalLength(AbstractExpresion* self, Context* ctx){
+Result interpretArrayTotalLength(AbstractExpresion* self, Context* ctx){
     UnaryWrap* n=(UnaryWrap*)self; Result r=n->a->interpret(n->a, ctx);
     int* v=malloc(sizeof(int)); *v=0;
     if(r.tipo!=ARRAY||!r.valor){ return nuevoValorResultado(v,INT);} 
@@ -123,7 +123,7 @@ static Result interpretArrayAdd(AbstractExpresion* self, Context* ctx){
     return nuevoValorResultado(nuevo, ARRAY);
 }
 
-static Result interpretArrayTopLength(AbstractExpresion* self, Context* ctx){
+Result interpretArrayTopLength(AbstractExpresion* self, Context* ctx){
     UnaryWrap* n=(UnaryWrap*)self; Result r=n->a->interpret(n->a, ctx);
     int* v=malloc(sizeof(int)); *v=0;
     if(r.tipo!=ARRAY||!r.valor){ return nuevoValorResultado(v,INT);} 

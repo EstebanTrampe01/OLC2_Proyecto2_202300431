@@ -218,7 +218,7 @@ public static void main(String[] args) {
     
     for (int nota : notasParaForeach) {
         contadorNotas++;
-        suma += nota;
+        suma = suma + nota;
         System.out.println("Nota " + String.valueOf(contadorNotas) + ": " + String.valueOf(nota));
     }
     

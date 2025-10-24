@@ -1,0 +1,6 @@
+public static void main(String[] args) {
+    System.out.println("Test Asignación Array:");
+    int[] notas = {85, 92, 78};
+    int primera = notas[0];
+    System.out.println("Primera nota: " + String.valueOf(primera));
+}

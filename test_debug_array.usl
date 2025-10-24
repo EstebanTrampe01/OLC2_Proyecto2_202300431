@@ -1,0 +1,7 @@
+public static void main(String[] args) {
+    System.out.println("Debug Array Access:");
+    int[] notas = {85, 92, 78};
+    System.out.println("Array creado");
+    int primera = notas[0];
+    System.out.println("Primera nota: " + String.valueOf(primera));
+}

@@ -448,6 +448,8 @@ GV_j: .quad 1
 
 GV_resultado: .quad 0
 
+GV_notasParaForeach: .quad 0
+
 GV_suma: .quad 0
 
 GV_contadorNotas: .quad 0
@@ -618,16 +620,16 @@ _start:
     sub sp, sp, #1024
     // ===== System.out.println =====
 # interpret_map:
-#   PRIMITIVO=0x62f1036b2597
-#   IDENTIFICADOR=0x62f1036b249a
-#   EXPRESION_LENGUAJE=0x62f1036b1e04
-#   LLAMADA_FUNCION=0x62f1036ba86c
-#   LISTA_EXPRESIONES=0x62f1036abdd0
-#   CAST=0x62f1036b17af
-#   UNARIO_LENGUAJE=0x62f1036b2264
-#   BUILTIN_STRING_VALUEOF=0x62f1036ad435
-#   PRINT_EXPR=0x62f1036b9ff5
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+#   PRIMITIVO=0x589db612fd01
+#   IDENTIFICADOR=0x589db612fc04
+#   EXPRESION_LENGUAJE=0x589db612f56e
+#   LLAMADA_FUNCION=0x589db6137fd6
+#   LISTA_EXPRESIONES=0x589db612953a
+#   CAST=0x589db612ef19
+#   UNARIO_LENGUAJE=0x589db612f9ce
+#   BUILTIN_STRING_VALUEOF=0x589db612ab9f
+#   PRINT_EXPR=0x589db613775f
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor==== SISTEMA DE GESTION DE NOTAS INDIVIDUAL ===
     // Imprimir string literal '=== SISTEMA DE GESTION DE NOTAS INDIVIDUAL ==='
     adrp x0, STRLIT_1
@@ -733,7 +735,7 @@ _start:
     str x2, [x1]
 
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Procesando 5 estudiantes individuales
     // Imprimir string literal 'Procesando 5 estudiantes individuales'
     adrp x0, STRLIT_7
@@ -744,7 +746,7 @@ _start:
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=\n--- EVALUACION CON IF/ELSE ---
     // Imprimir string literal '\n--- EVALUACION CON IF/ELSE ---'
     adrp x0, STRLIT_8
@@ -755,11 +757,11 @@ _start:
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
-#   expresion tipo=1056481120
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
+#   expresion tipo=-959090848
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=Evaluando: 
-# # AST node: IDENTIFICADOR iptr=0x62f1036b249a children=0
+# # AST node: IDENTIFICADOR iptr=0x589db612fc04 children=0
 # #   id nombre=estudiante1
     // Imprimir string literal 'Evaluando: '
     adrp x0, STRLIT_9
@@ -793,7 +795,7 @@ _start:
     b.eq else_0
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: SOBRESALIENTE
     // Imprimir string literal 'Clasificacion: SOBRESALIENTE'
     adrp x0, STRLIT_10
@@ -822,7 +824,7 @@ else_0:
     b.eq else_2
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: NOTABLE
     // Imprimir string literal 'Clasificacion: NOTABLE'
     adrp x0, STRLIT_11
@@ -851,7 +853,7 @@ else_2:
     b.eq else_4
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: BIEN
     // Imprimir string literal 'Clasificacion: BIEN'
     adrp x0, STRLIT_12
@@ -880,7 +882,7 @@ else_4:
     b.eq else_6
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: SUFICIENTE
     // Imprimir string literal 'Clasificacion: SUFICIENTE'
     adrp x0, STRLIT_13
@@ -894,7 +896,7 @@ else_4:
 else_6:
     // Bloque ELSE
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: INSUFICIENTE
     // Imprimir string literal 'Clasificacion: INSUFICIENTE'
     adrp x0, STRLIT_14
@@ -928,7 +930,7 @@ endif_1:
     b.eq endif_9
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Estado: Mayor de edad completa
     // Imprimir string literal 'Estado: Mayor de edad completa'
     adrp x0, STRLIT_15
@@ -956,7 +958,7 @@ endif_9:
     b.eq else_10
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Resultado: Apto para beca
     // Imprimir string literal 'Resultado: Apto para beca'
     adrp x0, STRLIT_16
@@ -970,7 +972,7 @@ endif_9:
 else_10:
     // Bloque ELSE
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Resultado: No apto para beca
     // Imprimir string literal 'Resultado: No apto para beca'
     adrp x0, STRLIT_17
@@ -983,11 +985,11 @@ else_10:
 endif_11:
     // Fin IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=\nEvaluando: 
-# # AST node: IDENTIFICADOR iptr=0x62f1036b249a children=0
+# # AST node: IDENTIFICADOR iptr=0x589db612fc04 children=0
 # #   id nombre=estudiante2
     // Imprimir string literal '\nEvaluando: '
     adrp x0, STRLIT_18
@@ -1021,7 +1023,7 @@ endif_11:
     b.eq else_12
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: SOBRESALIENTE
     // Imprimir string literal 'Clasificacion: SOBRESALIENTE'
     adrp x0, STRLIT_10
@@ -1050,7 +1052,7 @@ else_12:
     b.eq else_14
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: NOTABLE
     // Imprimir string literal 'Clasificacion: NOTABLE'
     adrp x0, STRLIT_11
@@ -1064,7 +1066,7 @@ else_12:
 else_14:
     // Bloque ELSE
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: REGULAR
     // Imprimir string literal 'Clasificacion: REGULAR'
     adrp x0, STRLIT_19
@@ -1094,7 +1096,7 @@ endif_13:
     b.eq else_16
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Resultado: Apto para beca
     // Imprimir string literal 'Resultado: Apto para beca'
     adrp x0, STRLIT_16
@@ -1108,7 +1110,7 @@ endif_13:
 else_16:
     // Bloque ELSE
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Resultado: No apto para beca
     // Imprimir string literal 'Resultado: No apto para beca'
     adrp x0, STRLIT_17
@@ -1121,11 +1123,11 @@ else_16:
 endif_17:
     // Fin IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=\nEvaluando: 
-# # AST node: IDENTIFICADOR iptr=0x62f1036b249a children=0
+# # AST node: IDENTIFICADOR iptr=0x589db612fc04 children=0
 # #   id nombre=estudiante3
     // Imprimir string literal '\nEvaluando: '
     adrp x0, STRLIT_18
@@ -1159,7 +1161,7 @@ endif_17:
     b.eq else_18
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: NOTABLE
     // Imprimir string literal 'Clasificacion: NOTABLE'
     adrp x0, STRLIT_11
@@ -1188,7 +1190,7 @@ else_18:
     b.eq else_20
     // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: BIEN
     // Imprimir string literal 'Clasificacion: BIEN'
     adrp x0, STRLIT_12
@@ -1202,7 +1204,7 @@ else_18:
 else_20:
     // Bloque ELSE
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Clasificacion: REGULAR
     // Imprimir string literal 'Clasificacion: REGULAR'
     adrp x0, STRLIT_19
@@ -1217,7 +1219,7 @@ endif_21:
 endif_19:
     // Fin IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=\n--- PROCESAMIENTO CON WHILE ---
     // Imprimir string literal '\n--- PROCESAMIENTO CON WHILE ---'
     adrp x0, STRLIT_20
@@ -1240,7 +1242,7 @@ endif_19:
     str x2, [x1]
 
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Buscando estudiantes con nota >= 90:
     // Imprimir string literal 'Buscando estudiantes con nota >= 90:'
     adrp x0, STRLIT_21
@@ -1457,18 +1459,18 @@ endif_27:
 endif_25:
     // Fin IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # #   expresion tipo=0
-# # # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # # #   prim tipo=9 valor=Revisando estudiante 
-# # # # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
-# # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # AST node: UNKNOWN iptr=0x589db612ab9f children=0
+# # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # #   prim tipo=9 valor=: 
-# # AST node: IDENTIFICADOR iptr=0x62f1036b249a children=0
+# # AST node: IDENTIFICADOR iptr=0x589db612fc04 children=0
 # #   id nombre=nombreActual
     // Imprimir string literal 'Revisando estudiante '
     adrp x0, STRLIT_23
@@ -1520,19 +1522,19 @@ endif_25:
     b.eq endif_35
     // Bloque IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # #   expresion tipo=0
-# # # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # # #   prim tipo=9 valor=Destacado encontrado: 
-# # # # AST node: IDENTIFICADOR iptr=0x62f1036b249a children=0
+# # # # AST node: IDENTIFICADOR iptr=0x589db612fc04 children=0
 # # # #   id nombre=nombreActual
-# # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # #   prim tipo=9 valor= con 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     // Imprimir string literal 'Destacado encontrado: '
     adrp x0, STRLIT_25
     add x0, x0, :lo12:STRLIT_25
@@ -1603,11 +1605,11 @@ endif_35:
 while_end_23:
     // Fin WHILE
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=Total de estudiantes destacados: 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     // Imprimir string literal 'Total de estudiantes destacados: '
     adrp x0, STRLIT_27
     add x0, x0, :lo12:STRLIT_27
@@ -1629,7 +1631,7 @@ while_end_23:
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=\nContador regresivo:
     // Imprimir string literal '\nContador regresivo:'
     adrp x0, STRLIT_28
@@ -1662,14 +1664,14 @@ while_loop_36:
     b.eq while_end_37
     // Bloque WHILE
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # #   expresion tipo=0
-# # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # #   prim tipo=9 valor=Quedan: 
-# # # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # AST node: UNKNOWN iptr=0x589db612ab9f children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor= estudiantes por procesar
     // Imprimir string literal 'Quedan: '
     adrp x0, STRLIT_29
@@ -1716,7 +1718,7 @@ while_loop_36:
 while_end_37:
     // Fin WHILE
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=\nBusqueda de estudiante joven con buena nota:
     // Imprimir string literal '\nBusqueda de estudiante joven con buena nota:'
     adrp x0, STRLIT_31
@@ -2036,29 +2038,29 @@ endif_41:
     b.eq endif_51
     // Bloque IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # #   expresion tipo=0
-# # # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # # #   expresion tipo=0
-# # # # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # # # #   expresion tipo=0
-# # # # # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # # # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # # # # #   expresion tipo=0
-# # # # # # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # # # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # # # # # #   prim tipo=9 valor=Estudiante joven destacado: 
-# # # # # # # AST node: IDENTIFICADOR iptr=0x62f1036b249a children=0
+# # # # # # # AST node: IDENTIFICADOR iptr=0x589db612fc04 children=0
 # # # # # # #   id nombre=nombre
-# # # # # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # # # # #   prim tipo=9 valor= (Edad: 
-# # # # # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
-# # # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # # AST node: UNKNOWN iptr=0x589db612ab9f children=0
+# # # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # # #   prim tipo=9 valor=, Nota: 
-# # # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # AST node: UNKNOWN iptr=0x589db612ab9f children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=)
     // Imprimir string literal 'Estudiante joven destacado: '
     adrp x0, STRLIT_32
@@ -2139,7 +2141,7 @@ endif_51:
 while_end_39:
     // Fin WHILE
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=\n--- PROCESAMIENTO CON FOR CLASICO ---
     // Imprimir string literal '\n--- PROCESAMIENTO CON FOR CLASICO ---'
     adrp x0, STRLIT_36
@@ -2150,7 +2152,7 @@ while_end_39:
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Listado numerado:
     // Imprimir string literal 'Listado numerado:'
     adrp x0, STRLIT_37
@@ -2379,22 +2381,22 @@ endif_57:
 endif_55:
     // Fin IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # #   expresion tipo=0
-# # # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # # #   expresion tipo=0
-# # # # # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
-# # # # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # # AST node: UNKNOWN iptr=0x589db612ab9f children=0
+# # # # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # # # #   prim tipo=9 valor=. 
-# # # # AST node: IDENTIFICADOR iptr=0x62f1036b249a children=0
+# # # # AST node: IDENTIFICADOR iptr=0x589db612fc04 children=0
 # # # #   id nombre=nombre
-# # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # #   prim tipo=9 valor= - Nota: 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     adrp x1, GV_i
     add x1, x1, :lo12:GV_i
     ldr x1, [x1]
@@ -2461,7 +2463,7 @@ endif_55:
 for_end_53:
     // Fin FOR
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=\nProceso inverso:
     // Imprimir string literal '\nProceso inverso:'
     adrp x0, STRLIT_40
@@ -2500,11 +2502,11 @@ for_loop_64:
     b.eq for_end_65
     // Bloque FOR
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=Procesando posicion: 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     // Imprimir string literal 'Procesando posicion: '
     adrp x0, STRLIT_41
     add x0, x0, :lo12:STRLIT_41
@@ -2545,7 +2547,7 @@ for_loop_64:
 for_end_65:
     // Fin FOR
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=\nTabla de multiplicar (1-3 x 1-4):
     // Imprimir string literal '\nTabla de multiplicar (1-3 x 1-4):'
     adrp x0, STRLIT_42
@@ -2629,21 +2631,21 @@ for_loop_68:
     str x2, [x11]
 
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # #   expresion tipo=0
-# # # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # # #   expresion tipo=0
-# # # # # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
-# # # # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # # AST node: UNKNOWN iptr=0x589db612ab9f children=0
+# # # # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # # # #   prim tipo=9 valor= x 
-# # # # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
-# # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # AST node: UNKNOWN iptr=0x589db612ab9f children=0
+# # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # #   prim tipo=9 valor= = 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     adrp x1, GV_i
     add x1, x1, :lo12:GV_i
     ldr x1, [x1]
@@ -2733,7 +2735,7 @@ for_end_69:
 for_end_67:
     // Fin FOR
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=\n--- FOREACH CON ARRAY SIMPLE ---
     // Imprimir string literal '\n--- FOREACH CON ARRAY SIMPLE ---'
     adrp x0, STRLIT_45
@@ -2743,18 +2745,51 @@ for_end_67:
 
     // ===== Fin System.out.println =====
 
-    // Cargar entero literal 85 en registro x2
+    // Crear array literal 'notasParaForeach' con 5 elementos
+    // Asignar memoria para array 'notasParaForeach' (tamaño: 40 bytes)
+    mov x0, #40
+    bl malloc
+    adrp x1, GV_notasParaForeach
+    add x1, x1, :lo12:GV_notasParaForeach
+    str x0, [x1]
+    // Inicializar elemento 0 del array 'notasParaForeach'
+    adrp x1, GV_notasParaForeach
+    add x1, x1, :lo12:GV_notasParaForeach
+    ldr x1, [x1]
+    add x1, x1, #0
     mov x2, #85
-    // Cargar entero literal 92 en registro x2
+    str x2, [x1]
+    // Inicializar elemento 1 del array 'notasParaForeach'
+    adrp x1, GV_notasParaForeach
+    add x1, x1, :lo12:GV_notasParaForeach
+    ldr x1, [x1]
+    add x1, x1, #8
     mov x2, #92
-    // Cargar entero literal 78 en registro x2
+    str x2, [x1]
+    // Inicializar elemento 2 del array 'notasParaForeach'
+    adrp x1, GV_notasParaForeach
+    add x1, x1, :lo12:GV_notasParaForeach
+    ldr x1, [x1]
+    add x1, x1, #16
     mov x2, #78
-    // Cargar entero literal 95 en registro x2
+    str x2, [x1]
+    // Inicializar elemento 3 del array 'notasParaForeach'
+    adrp x1, GV_notasParaForeach
+    add x1, x1, :lo12:GV_notasParaForeach
+    ldr x1, [x1]
+    add x1, x1, #24
     mov x2, #95
-    // Cargar entero literal 88 en registro x2
+    str x2, [x1]
+    // Inicializar elemento 4 del array 'notasParaForeach'
+    adrp x1, GV_notasParaForeach
+    add x1, x1, :lo12:GV_notasParaForeach
+    ldr x1, [x1]
+    add x1, x1, #32
     mov x2, #88
+    str x2, [x1]
+    // Array 'notasParaForeach' inicializado correctamente
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=Procesando notas con forEach:
     // Imprimir string literal 'Procesando notas con forEach:'
     adrp x0, STRLIT_46
@@ -2790,8 +2825,9 @@ for_end_67:
     str x2, [x1]
 
 for_loop_70:
-    // Expresión no reconocida, usar valor por defecto: 0
-    mov x8, #0
+    // Obtener longitud total del array 'notasParaForeach'
+    mov x8, #5
+    // Longitud total del array 'notasParaForeach' en x8
     str x8, [sp, #-16]!
     // Cargar variable global '__idx_fe_nota' (única: '__idx_fe_nota') en registro x9
     adrp x9, GV___idx_fe_nota
@@ -2804,6 +2840,22 @@ for_loop_70:
     cmp x9, #0
     b.eq for_end_71
     // Bloque FOR
+    // Declaración con acceso lineal a array (FOREACH): nota = array[índice]
+    // Acceso lineal a array 'notasParaForeach'[índice]
+    // Cargar variable global '__idx_fe_nota' (única: '__idx_fe_nota') en registro x9
+    adrp x9, GV___idx_fe_nota
+    add x9, x9, :lo12:GV___idx_fe_nota
+    ldr x9, [x9]
+    adrp x1, GV_notasParaForeach
+    add x1, x1, :lo12:GV_notasParaForeach
+    ldr x1, [x1]
+    lsl x9, x9, #3
+    add x1, x1, x9
+    ldr x9, [x1]
+    // Valor del array 'notasParaForeach'[índice] cargado en x9
+    adrp x1, GV_nota
+    add x1, x1, :lo12:GV_nota
+    str x9, [x1]
     // Evaluar expresión compleja para 'contadorNotas' (única: 'contadorNotas')
     adrp x11, GV_contadorNotas
     add x11, x11, :lo12:GV_contadorNotas
@@ -2819,19 +2871,36 @@ for_loop_70:
     add x2, x9, x8
     str x2, [x11]
 
+    // Evaluar expresión compleja para 'suma' (única: 'suma')
+    adrp x11, GV_suma
+    add x11, x11, :lo12:GV_suma
+    // Cargar variable global 'nota' (única: 'nota') en registro x8
+    adrp x8, GV_nota
+    add x8, x8, :lo12:GV_nota
+    ldr x8, [x8]
+    str x8, [sp, #-16]!
+    // Cargar variable global 'suma' (única: 'suma') en registro x9
+    adrp x9, GV_suma
+    add x9, x9, :lo12:GV_suma
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación SUMA de enteros
+    add x2, x9, x8
+    str x2, [x11]
+
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# # # AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 # # #   expresion tipo=0
-# # # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # # #   prim tipo=9 valor=Nota 
-# # # # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
-# # # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # # # AST node: UNKNOWN iptr=0x589db612ab9f children=0
+# # # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # # #   prim tipo=9 valor=: 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     // Imprimir string literal 'Nota '
     adrp x0, STRLIT_47
     add x0, x0, :lo12:STRLIT_47
@@ -2909,11 +2978,11 @@ for_end_71:
     str x2, [x11]
 
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=Promedio calculado con forEach: 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     // Imprimir string literal 'Promedio calculado con forEach: '
     adrp x0, STRLIT_48
     add x0, x0, :lo12:STRLIT_48
@@ -2935,7 +3004,7 @@ for_end_71:
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 #   prim tipo=9 valor=\nConteo de categorias con forEach:
     // Imprimir string literal '\nConteo de categorias con forEach:'
     adrp x0, STRLIT_49
@@ -2971,8 +3040,9 @@ for_end_71:
     str x2, [x1]
 
 for_loop_72:
-    // Expresión no reconocida, usar valor por defecto: 0
-    mov x8, #0
+    // Obtener longitud total del array 'notasParaForeach'
+    mov x8, #5
+    // Longitud total del array 'notasParaForeach' en x8
     str x8, [sp, #-16]!
     // Cargar variable global '__idx_fe_nota' (única: '__idx_fe_nota') en registro x9
     adrp x9, GV___idx_fe_nota
@@ -2985,6 +3055,22 @@ for_loop_72:
     cmp x9, #0
     b.eq for_end_73
     // Bloque FOR
+    // Declaración con acceso lineal a array (FOREACH): nota = array[índice]
+    // Acceso lineal a array 'notasParaForeach'[índice]
+    // Cargar variable global '__idx_fe_nota' (única: '__idx_fe_nota') en registro x9
+    adrp x9, GV___idx_fe_nota
+    add x9, x9, :lo12:GV___idx_fe_nota
+    ldr x9, [x9]
+    adrp x1, GV_notasParaForeach
+    add x1, x1, :lo12:GV_notasParaForeach
+    ldr x1, [x1]
+    lsl x9, x9, #3
+    add x1, x1, x9
+    ldr x9, [x1]
+    // Valor del array 'notasParaForeach'[índice] cargado en x9
+    adrp x1, GV_nota
+    add x1, x1, :lo12:GV_nota
+    str x9, [x1]
     // IF statement
     // Cargar entero literal 90 en registro x8
     mov x8, #90
@@ -3016,11 +3102,11 @@ for_loop_72:
     str x2, [x11]
 
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=Nota alta encontrada: 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     // Imprimir string literal 'Nota alta encontrada: '
     adrp x0, STRLIT_50
     add x0, x0, :lo12:STRLIT_50
@@ -3075,11 +3161,11 @@ else_74:
     str x2, [x11]
 
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=Nota baja encontrada: 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     // Imprimir string literal 'Nota baja encontrada: '
     adrp x0, STRLIT_51
     add x0, x0, :lo12:STRLIT_51
@@ -3124,11 +3210,11 @@ endif_75:
 for_end_73:
     // Fin FOR
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=Total notas altas (>=90): 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     // Imprimir string literal 'Total notas altas (>=90): '
     adrp x0, STRLIT_52
     add x0, x0, :lo12:STRLIT_52
@@ -3150,11 +3236,11 @@ for_end_73:
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x62f1036b1e04 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x589db612f56e children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x62f1036b2597 children=0
+# # AST node: PRIMITIVO iptr=0x589db612fd01 children=0
 # #   prim tipo=9 valor=Total notas bajas (<80): 
-# # AST node: UNKNOWN iptr=0x62f1036ad435 children=0
+# # AST node: UNKNOWN iptr=0x589db612ab9f children=0
     // Imprimir string literal 'Total notas bajas (<80): '
     adrp x0, STRLIT_53
     add x0, x0, :lo12:STRLIT_53

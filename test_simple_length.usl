@@ -1,0 +1,6 @@
+public static void main(String[] args) {
+    System.out.println("Test Simple Length:");
+    int[] notas = {85, 92, 78};
+    int len = notas.length;
+    System.out.println("Length: " + String.valueOf(len));
+}

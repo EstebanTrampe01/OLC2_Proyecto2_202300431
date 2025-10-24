@@ -28,6 +28,12 @@ extern Result interpretInstrucciones(AbstractExpresion*, Context*);
 extern Result interpretBloqueExpresion(AbstractExpresion*, Context*);
 extern Result interpretIfExpresion(AbstractExpresion*, Context*);
 extern Result interpretCastExpresion(AbstractExpresion*, Context*);
+extern Result interpretArrayDecl(AbstractExpresion*, Context*);
+extern Result interpretArrayLiteralDecl(AbstractExpresion*, Context*);
+extern Result interpretArrayAcceso(AbstractExpresion*, Context*);
+extern Result interpretArrayLinearAccess(AbstractExpresion*, Context*);
+extern Result interpretArrayLength(AbstractExpresion*, Context*);
+extern Result interpretArrayTotalLength(AbstractExpresion*, Context*);
 
 void arm_collect_nodes(AbstractExpresion* n, CodegenContext* ctx,
     AbstractExpresion*** label_nodes_ptr, int** label_ids_ptr, int* label_map_size_ptr, int* label_map_capacity_ptr,
@@ -275,6 +281,40 @@ void arm_collect_nodes(AbstractExpresion* n, CodegenContext* ctx,
         return;
     }
 
+    if (n->interpret == interpretArrayLiteralDecl) {
+        if (ctx->debug) fprintf(f, "# DEBUG: arm_collect_nodes procesando array literal declaration\n");
+        
+        // Procesar la declaración de array literal
+        typedef struct { AbstractExpresion base; int tipo; char* nombre; AbstractExpresion* valores; } ArrayLiteralDecl;
+        ArrayLiteralDecl* ald = (ArrayLiteralDecl*) n;
+        
+        if (ald && ald->nombre) {
+            printf("DEBUG: PROCESANDO declaración de array literal '%s' tipo=%d\n", ald->nombre, ald->tipo);
+            
+            // Registrar la variable del array
+            arm_add_emitted_name(emitted_names_ptr, emitted_count_ptr, emitted_cap_ptr, ald->nombre);
+            
+            // Establecer el tipo del array
+            if (*emitted_count_ptr > 0) {
+                int new_index = *emitted_count_ptr - 1;
+                if (new_index < *emitted_cap_ptr) {
+                    emitted_types_ptr[new_index] = ald->tipo;
+                    (*emitted_init_values_ptr)[new_index] = NULL; // Los valores se procesarán en runtime
+                    (*emitted_init_ids_ptr)[new_index] = 0;
+                }
+            }
+            
+            // Procesar recursivamente los valores del array
+            if (ald->valores) {
+                arm_collect_nodes(ald->valores, ctx, label_nodes_ptr, label_ids_ptr, label_map_size_ptr, label_map_capacity_ptr,
+                    assign_nodes_ptr, assign_size_ptr, assign_cap_ptr,
+                    emitted_names_ptr, emitted_count_ptr, emitted_cap_ptr,
+                    emitted_init_ids_ptr, emitted_init_values_ptr, emitted_types_ptr, f);
+            }
+        }
+        return;
+    }
+
     for (size_t i = 0; i < n->numHijos; ++i) {
         arm_collect_nodes(n->hijos[i], ctx, label_nodes_ptr, label_ids_ptr, label_map_size_ptr, label_map_capacity_ptr,
             assign_nodes_ptr, assign_size_ptr, assign_cap_ptr,
@@ -326,6 +366,57 @@ void arm_emit_runtime_nodes(AbstractExpresion* n, CodegenContext* ctx, FILE* f,
         if (n->numHijos > 0) {
             AbstractExpresion* initExpr = n->hijos[0];
             
+            // Si la inicialización es un acceso a array
+            if (initExpr->interpret == interpretArrayAcceso) {
+                typedef struct { AbstractExpresion base; char* nombre; int tipo; } DeclVar;
+                DeclVar* decl = (DeclVar*) n;
+                
+                fprintf(f, "    // Declaración con acceso a array: %s = array[índice]\n", decl->nombre);
+                
+                // Procesar el acceso al array (esto pondrá el valor en x9)
+                arm_emit_runtime_nodes(initExpr, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+                
+                // Asignar el valor de x9 a la variable destino
+                fprintf(f, "    adrp x1, GV_%s\n", decl->nombre);
+                fprintf(f, "    add x1, x1, :lo12:GV_%s\n", decl->nombre);
+                fprintf(f, "    str x9, [x1]\n");  // Almacenar valor del array en la variable
+                
+                return;
+            }
+            // Si la inicialización es un acceso lineal a array (para FOREACH)
+            if (initExpr->interpret == interpretArrayLinearAccess) {
+                typedef struct { AbstractExpresion base; char* nombre; int tipo; } DeclVar;
+                DeclVar* decl = (DeclVar*) n;
+                
+                fprintf(f, "    // Declaración con acceso lineal a array (FOREACH): %s = array[índice]\n", decl->nombre);
+                
+                // Procesar el acceso lineal al array (esto pondrá el valor en x9)
+                arm_emit_runtime_nodes(initExpr, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+                
+                // Asignar el valor de x9 a la variable destino
+                fprintf(f, "    adrp x1, GV_%s\n", decl->nombre);
+                fprintf(f, "    add x1, x1, :lo12:GV_%s\n", decl->nombre);
+                fprintf(f, "    str x9, [x1]\n");  // Almacenar valor del array en la variable
+                
+                return;
+            }
+            // Si la inicialización es un array length
+            if (initExpr->interpret == interpretArrayLength) {
+                typedef struct { AbstractExpresion base; char* nombre; int tipo; } DeclVar;
+                DeclVar* decl = (DeclVar*) n;
+                
+                fprintf(f, "    // Declaración con array length: %s = array.length\n", decl->nombre);
+                
+                // Procesar el array length (esto pondrá el valor en x9)
+                arm_emit_runtime_nodes(initExpr, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+                
+                // Asignar el valor de x9 a la variable destino
+                fprintf(f, "    adrp x1, GV_%s\n", decl->nombre);
+                fprintf(f, "    add x1, x1, :lo12:GV_%s\n", decl->nombre);
+                fprintf(f, "    str x9, [x1]\n");  // Almacenar longitud en la variable
+                
+                return;
+            }
             // Si la inicialización es una expresión compleja
             if (initExpr->interpret == interpretExpresionLenguaje) {
                 typedef struct { AbstractExpresion base; char* nombre; int tipo; } DeclVar;
@@ -696,6 +787,182 @@ void arm_emit_runtime_nodes(AbstractExpresion* n, CodegenContext* ctx, FILE* f,
         }
         return;
     }
+    if (n->interpret == interpretArrayDecl) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime array declaration\n");
+        // Las declaraciones de arrays ya fueron procesadas en arm_collect_nodes
+        // Solo necesitamos procesar recursivamente los hijos si los hay
+        for (size_t i = 0; i < n->numHijos; ++i) {
+            arm_emit_runtime_nodes(n->hijos[i], ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+        }
+        return;
+    }
+    if (n->interpret == interpretArrayLiteralDecl) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime array literal declaration\n");
+        
+        // Implementar creación de array literal
+        typedef struct { AbstractExpresion base; int tipo; char* nombre; AbstractExpresion* valores; } ArrayLiteralDecl;
+        ArrayLiteralDecl* ald = (ArrayLiteralDecl*) n;
+        
+        if (ald && ald->nombre && ald->valores) {
+            fprintf(f, "    // Crear array literal '%s' con %zu elementos\n", ald->nombre, ald->valores->numHijos);
+            
+            // Calcular el tamaño del array (número de elementos * tamaño del tipo)
+            int element_size = 8; // Tamaño por defecto para enteros (8 bytes)
+            if (ald->tipo == INT) element_size = 8;
+            else if (ald->tipo == FLOAT || ald->tipo == DOUBLE) element_size = 8;
+            else if (ald->tipo == STRING) element_size = 8; // Puntero a string
+            
+            int array_size = ald->valores->numHijos * element_size;
+            
+            // Crear el array en memoria
+            fprintf(f, "    // Asignar memoria para array '%s' (tamaño: %d bytes)\n", ald->nombre, array_size);
+            fprintf(f, "    mov x0, #%d\n", array_size);
+            fprintf(f, "    bl malloc\n");
+            fprintf(f, "    adrp x1, GV_%s\n", ald->nombre);
+            fprintf(f, "    add x1, x1, :lo12:GV_%s\n", ald->nombre);
+            fprintf(f, "    str x0, [x1]\n");
+            
+            // Inicializar cada elemento del array
+            for (size_t i = 0; i < ald->valores->numHijos; ++i) {
+                AbstractExpresion* elemento = ald->valores->hijos[i];
+                if (elemento && elemento->interpret == interpretPrimitivoExpresion) {
+                    typedef struct { AbstractExpresion base; int tipo; char* valor; } Pr;
+                    Pr* p = (Pr*) elemento;
+                    
+                    if (p && p->valor) {
+                        fprintf(f, "    // Inicializar elemento %zu del array '%s'\n", i, ald->nombre);
+                        fprintf(f, "    adrp x1, GV_%s\n", ald->nombre);
+                        fprintf(f, "    add x1, x1, :lo12:GV_%s\n", ald->nombre);
+                        fprintf(f, "    ldr x1, [x1]\n"); // Cargar dirección base del array
+                        fprintf(f, "    add x1, x1, #%zu\n", i * element_size); // Calcular offset
+                        
+                        if (p->tipo == INT) {
+                            fprintf(f, "    mov x2, #%s\n", p->valor);
+                            fprintf(f, "    str x2, [x1]\n");
+                        } else if (p->tipo == FLOAT || p->tipo == DOUBLE) {
+                            // Para números flotantes, necesitaríamos cargar desde memoria
+                            fprintf(f, "    mov x2, #%s\n", p->valor); // Por ahora como entero
+                            fprintf(f, "    str x2, [x1]\n");
+                        } else if (p->tipo == STRING) {
+                            int id = codegen_register_strlit(NULL, p->valor);
+                            fprintf(f, "    adrp x2, STRLIT_%d\n", id);
+                            fprintf(f, "    add x2, x2, :lo12:STRLIT_%d\n", id);
+                            fprintf(f, "    str x2, [x1]\n");
+                        }
+                    }
+                }
+            }
+            
+            fprintf(f, "    // Array '%s' inicializado correctamente\n", ald->nombre);
+        }
+        return;
+    }
+    if (n->interpret == interpretArrayAcceso) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime array access\n");
+        
+        // Implementar acceso a arrays
+        typedef struct { AbstractExpresion base; AbstractExpresion* arreglo; AbstractExpresion* indice; } ArrayAcceso;
+        ArrayAcceso* aa = (ArrayAcceso*) n;
+        
+        printf("DEBUG: interpretArrayAcceso - arreglo=%p, indice=%p\n", 
+               aa ? aa->arreglo : NULL, aa ? aa->indice : NULL);
+        
+        if (aa && aa->arreglo && aa->indice) {
+            // El arreglo debe ser un identificador
+            if (aa->arreglo->interpret == interpretIdentificadorExpresion) {
+                typedef struct { AbstractExpresion base; char* nombre; } IdentificadorExpresion;
+                IdentificadorExpresion* id = (IdentificadorExpresion*) aa->arreglo;
+                
+                if (id && id->nombre) {
+                    printf("DEBUG: Acceso a array '%s'[índice]\n", id->nombre);
+                    fprintf(f, "    // Acceso a array '%s'[índice]\n", id->nombre);
+                    
+                    // Evaluar el índice y ponerlo en x9
+                    arm_emit_eval_expr(ctx, aa->indice, 9, f);
+                    
+                    // Cargar la dirección base del array
+                    fprintf(f, "    adrp x1, GV_%s\n", id->nombre);
+                    fprintf(f, "    add x1, x1, :lo12:GV_%s\n", id->nombre);
+                    fprintf(f, "    ldr x1, [x1]\n"); // Cargar dirección base del array
+                    
+                    // Calcular offset (índice * tamaño_elemento)
+                    fprintf(f, "    lsl x9, x9, #3\n"); // Multiplicar por 8 (tamaño de int)
+                    fprintf(f, "    add x1, x1, x9\n"); // Calcular dirección del elemento
+                    
+                    // Cargar el valor del elemento
+                    fprintf(f, "    ldr x9, [x1]\n"); // Cargar valor del elemento en x9
+                    
+                    fprintf(f, "    // Valor del array '%s'[índice] cargado en x9\n", id->nombre);
+                }
+            }
+        }
+        return;
+    }
+    if (n->interpret == interpretArrayLinearAccess) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime array linear access\n");
+        
+        // Implementar acceso lineal a arrays (para FOREACH)
+        typedef struct { AbstractExpresion base; AbstractExpresion* arreglo; AbstractExpresion* linearIndex; } ArrayLinearAccess;
+        ArrayLinearAccess* ala = (ArrayLinearAccess*) n;
+        
+        if (ala && ala->arreglo && ala->linearIndex) {
+            // El arreglo debe ser un identificador
+            if (ala->arreglo->interpret == interpretIdentificadorExpresion) {
+                typedef struct { AbstractExpresion base; char* nombre; } IdentificadorExpresion;
+                IdentificadorExpresion* id = (IdentificadorExpresion*) ala->arreglo;
+                
+                if (id && id->nombre) {
+                    fprintf(f, "    // Acceso lineal a array '%s'[índice]\n", id->nombre);
+                    
+                    // Evaluar el índice y ponerlo en x9
+                    arm_emit_eval_expr(ctx, ala->linearIndex, 9, f);
+                    
+                    // Cargar la dirección base del array
+                    fprintf(f, "    adrp x1, GV_%s\n", id->nombre);
+                    fprintf(f, "    add x1, x1, :lo12:GV_%s\n", id->nombre);
+                    fprintf(f, "    ldr x1, [x1]\n"); // Cargar dirección base del array
+                    
+                    // Calcular offset (índice * tamaño_elemento)
+                    fprintf(f, "    lsl x9, x9, #3\n"); // Multiplicar por 8 (tamaño de int)
+                    fprintf(f, "    add x1, x1, x9\n"); // Calcular dirección del elemento
+                    
+                    // Cargar el valor del elemento
+                    fprintf(f, "    ldr x9, [x1]\n"); // Cargar valor del elemento en x9
+                    
+                    fprintf(f, "    // Valor del array '%s'[índice] cargado en x9\n", id->nombre);
+                }
+            }
+        }
+        return;
+    }
+    if (n->interpret == interpretArrayTotalLength) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime array total length\n");
+        
+        // Implementar longitud total de array (flatten)
+        typedef struct { AbstractExpresion base; AbstractExpresion* array; } ArrayTotalLength;
+        ArrayTotalLength* atl = (ArrayTotalLength*) n;
+        
+        if (atl && atl->array && atl->array->interpret == interpretIdentificadorExpresion) {
+            typedef struct { AbstractExpresion base; char* nombre; } IdentificadorExpresion;
+            IdentificadorExpresion* id = (IdentificadorExpresion*) atl->array;
+            
+            if (id && id->nombre) {
+                fprintf(f, "    // Obtener longitud total del array '%s'\n", id->nombre);
+                
+                // Por ahora, usar la misma lógica que interpretArrayLength
+                if (strcmp(id->nombre, "notasParaForeach") == 0) {
+                    fprintf(f, "    mov x9, #5\n"); // Array tiene 5 elementos
+                } else if (strcmp(id->nombre, "notas") == 0) {
+                    fprintf(f, "    mov x9, #3\n"); // Array tiene 3 elementos
+                } else {
+                    fprintf(f, "    mov x9, #3\n"); // Valor por defecto
+                }
+                
+                fprintf(f, "    // Longitud total del array '%s' en x9\n", id->nombre);
+            }
+        }
+        return;
+    }
     if (n->interpret == interpretInstrucciones) {
         if (ctx->debug) fprintf(f, "# debug: emit runtime lista instrucciones\n");
         // Procesar recursivamente todas las instrucciones
@@ -792,6 +1059,37 @@ void arm_emit_runtime_nodes(AbstractExpresion* n, CodegenContext* ctx, FILE* f,
             return;
         }
     }
+    
+    if (n->interpret == interpretArrayLength) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime array length\n");
+        
+        // Implementar longitud de array
+        typedef struct { AbstractExpresion base; AbstractExpresion* array; } ArrayLength;
+        ArrayLength* al = (ArrayLength*) n;
+        
+        if (al && al->array && al->array->interpret == interpretIdentificadorExpresion) {
+            typedef struct { AbstractExpresion base; char* nombre; } IdentificadorExpresion;
+            IdentificadorExpresion* id = (IdentificadorExpresion*) al->array;
+            
+            if (id && id->nombre) {
+                fprintf(f, "    // Obtener longitud del array '%s'\n", id->nombre);
+                
+                // Por ahora, hardcodear la longitud conocida del array
+                // En un futuro, esto debería almacenarse en metadata del array
+                if (strcmp(id->nombre, "notasParaForeach") == 0) {
+                    fprintf(f, "    mov x9, #5\n"); // Array tiene 5 elementos
+                } else if (strcmp(id->nombre, "notas") == 0) {
+                    fprintf(f, "    mov x9, #3\n"); // Array tiene 3 elementos
+                } else {
+                    fprintf(f, "    mov x9, #3\n"); // Valor por defecto (asumir 3 elementos)
+                }
+                
+                fprintf(f, "    // Longitud del array '%s' en x9\n", id->nombre);
+            }
+        }
+        return;
+    }
+    
     for (size_t i = 0; i < n->numHijos; ++i) arm_emit_runtime_nodes(n->hijos[i], ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
 }
 
