@@ -7,6 +7,7 @@
 #include "codegen/generadorARM/expresiones/emit_expr.h"
 #include "codegen/native_impls.h"
 #include "codegen/literals.h"
+#include "control_flow.h"
 
 // Declaraciones externas usadas en detección/emisión
 extern int emit_print_data(CodegenContext*, AbstractExpresion*);
@@ -640,10 +641,8 @@ void arm_emit_runtime_nodes(AbstractExpresion* n, CodegenContext* ctx, FILE* f,
     }
     if (n->interpret == interpretIfExpresion) {
         if (ctx->debug) fprintf(f, "# debug: emit runtime if statement\n");
-        // Procesar recursivamente la condición y los bloques del if
-        for (size_t i = 0; i < n->numHijos; ++i) {
-            arm_emit_runtime_nodes(n->hijos[i], ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
-        }
+        // Usar la nueva función especializada para IF/ELSE
+        arm_emit_if_statement(ctx, n, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
         return;
     }
     if (n->interpret == interpretCastExpresion) {
