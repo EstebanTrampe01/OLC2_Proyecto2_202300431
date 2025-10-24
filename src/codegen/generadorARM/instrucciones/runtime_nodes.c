@@ -3,6 +3,7 @@
 #include "ast/nodos/instrucciones/instruccion/asignaciones/asignacion.h"
 #include "ast/nodos/expresiones/terminales/identificadores.h"
 #include "ast/nodos/instrucciones/instruccion/while.h"
+#include "ast/nodos/instrucciones/instruccion/for.h"
 
 #include "codegen/generadorARM/common.h"
 #include "codegen/generadorARM/expresiones/emit_expr.h"
@@ -634,10 +635,64 @@ void arm_emit_runtime_nodes(AbstractExpresion* n, CodegenContext* ctx, FILE* f,
             }
         }
         
+        // Manejar inicialización con primitivo
+        if (n->numHijos > 0) {
+            AbstractExpresion* initExpr = n->hijos[0];
+            
+            if (initExpr->interpret == interpretPrimitivoExpresion) {
+                typedef struct { AbstractExpresion base; int tipo; char* valor; } Pr;
+                typedef struct { AbstractExpresion base; char* nombre; int tipo; } DeclVar;
+                Pr* p = (Pr*) initExpr;
+                DeclVar* decl = (DeclVar*) n;
+                
+                if (p && p->valor && decl && decl->nombre) {
+                    fprintf(f, "    // Declaración con primitivo: %s = %s\n", decl->nombre, p->valor);
+                    fprintf(f, "    adrp x1, GV_%s\n", decl->nombre);  // Cargar dirección alta de la variable destino
+                    fprintf(f, "    add x1, x1, :lo12:GV_%s\n", decl->nombre);  // Completar dirección de la variable destino
+                    
+                    if (p->tipo == INT) {
+                        fprintf(f, "    mov x2, #%s\n", p->valor);  // Cargar valor entero
+                        fprintf(f, "    str x2, [x1]\n\n");  // Almacenar en la variable destino
+                    } else if (p->tipo == DOUBLE) {
+                        fprintf(f, "    mov x2, #%s\n", p->valor);  // Cargar valor double
+                        fprintf(f, "    str x2, [x1]\n\n");  // Almacenar en la variable destino
+                    } else if (p->tipo == STRING) {
+                        int id = codegen_register_strlit(NULL, p->valor);
+                        fprintf(f, "    adrp x2, STRLIT_%d\n", id);  // Cargar dirección del string
+                        fprintf(f, "    add x2, x2, :lo12:STRLIT_%d\n", id);
+                        fprintf(f, "    str x2, [x1]\n\n");  // Almacenar en la variable destino
+                    }
+                    return;
+                }
+            }
+        }
+        
         // Las declaraciones de variables ya fueron procesadas en arm_collect_nodes
         // Solo necesitamos procesar recursivamente los hijos si los hay
         for (size_t i = 0; i < n->numHijos; ++i) {
             arm_emit_runtime_nodes(n->hijos[i], ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+        }
+        return;
+    }
+    if (n->interpret == interpretPrimitivoExpresion) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime primitivo\n");
+        
+        typedef struct { AbstractExpresion base; int tipo; char* valor; } Pr;
+        Pr* p = (Pr*) n;
+        
+        if (p && p->valor) {
+            if (p->tipo == INT) {
+                fprintf(f, "    // Cargar entero literal %s en registro x2\n", p->valor);
+                fprintf(f, "    mov x2, #%s\n", p->valor);
+            } else if (p->tipo == DOUBLE) {
+                fprintf(f, "    // Cargar double literal %s en registro x2\n", p->valor);
+                fprintf(f, "    mov x2, #%s\n", p->valor);
+            } else if (p->tipo == STRING) {
+                int id = codegen_register_strlit(NULL, p->valor);
+                fprintf(f, "    // Cargar string literal '%s' en registro x2\n", p->valor);
+                fprintf(f, "    adrp x2, STRLIT_%d\n", id);
+                fprintf(f, "    add x2, x2, :lo12:STRLIT_%d\n", id);
+            }
         }
         return;
     }
@@ -667,6 +722,12 @@ void arm_emit_runtime_nodes(AbstractExpresion* n, CodegenContext* ctx, FILE* f,
         if (ctx->debug) fprintf(f, "# debug: emit runtime while statement\n");
         // Usar la nueva función especializada para WHILE
         arm_emit_while_statement(ctx, n, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+        return;
+    }
+    if (n->interpret == interpretForExpresion) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime for statement\n");
+        // Usar la función especializada para FOR
+        arm_emit_for_statement(ctx, n, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
         return;
     }
     if (n->interpret == interpretCastExpresion) {

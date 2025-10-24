@@ -1,0 +1,17 @@
+public static void main(String[] args) {
+    System.out.println("Test FOR debug:");
+    
+    // Primer FOR: 1 a 3
+    for (int i = 1; i <= 3; i++) {
+        System.out.println("FOR 1 - i: " + String.valueOf(i));
+    }
+    
+    System.out.println("Entre FORs");
+    
+    // Segundo FOR: 5 a 1 (decremento)
+    for (int i = 5; i >= 1; i--) {
+        System.out.println("FOR 2 - i: " + String.valueOf(i));
+    }
+    
+    System.out.println("Después de ambos FORs");
+}

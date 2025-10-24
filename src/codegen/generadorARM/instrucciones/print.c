@@ -73,17 +73,27 @@ void emit_asignacion_text(CodegenContext* ctx, AbstractExpresion* asignNode) {
     // Manejar asignaciones de identificadores (nombreActual = estudiante1)
     if (rhs->interpret == interpretIdentificadorExpresion) {
         IdentificadorExpresion* idExpr = (IdentificadorExpresion*)rhs;
-        fprintf(ctx->out, "    // Asignar identificador '%s' a variable '%s'\n", idExpr->nombre, a->nombre);
+        
+        // Obtener nombres únicos para variables FOR
+        extern char* arm_get_unique_var_name(const char* original_name);
+        char* unique_source = arm_get_unique_var_name(idExpr->nombre);
+        char* unique_dest = arm_get_unique_var_name(a->nombre);
+        
+        fprintf(ctx->out, "    // Asignar identificador '%s' (único: '%s') a variable '%s' (única: '%s')\n", 
+                idExpr->nombre, unique_source, a->nombre, unique_dest);
         
         // Cargar valor del identificador fuente
-        fprintf(ctx->out, "    adrp x1, GV_%s\n", idExpr->nombre);  // Cargar dirección alta de la variable fuente
-        fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", idExpr->nombre);  // Completar dirección de la variable fuente
+        fprintf(ctx->out, "    adrp x1, GV_%s\n", unique_source);  // Cargar dirección alta de la variable fuente
+        fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", unique_source);  // Completar dirección de la variable fuente
         fprintf(ctx->out, "    ldr x2, [x1]\n");  // Cargar valor de la variable fuente
         
         // Almacenar en la variable destino
-        fprintf(ctx->out, "    adrp x3, GV_%s\n", a->nombre);  // Cargar dirección alta de la variable destino
-        fprintf(ctx->out, "    add x3, x3, :lo12:GV_%s\n", a->nombre);  // Completar dirección de la variable destino
+        fprintf(ctx->out, "    adrp x3, GV_%s\n", unique_dest);  // Cargar dirección alta de la variable destino
+        fprintf(ctx->out, "    add x3, x3, :lo12:GV_%s\n", unique_dest);  // Completar dirección de la variable destino
         fprintf(ctx->out, "    str x2, [x3]\n\n");  // Almacenar valor en la variable destino
+        
+        free(unique_source);
+        free(unique_dest);
         return;
     }
     
@@ -92,9 +102,14 @@ void emit_asignacion_text(CodegenContext* ctx, AbstractExpresion* asignNode) {
         if (ctx->debug) fprintf(ctx->out, "# debug: detectada expresión compleja\n");
         
         // Evaluar la expresión compleja y almacenar el resultado
-        fprintf(ctx->out, "    // Evaluar expresión compleja para '%s'\n", a->nombre);
-        fprintf(ctx->out, "    adrp x11, GV_%s\n", a->nombre);  // Cargar dirección alta de la variable destino
-        fprintf(ctx->out, "    add x11, x11, :lo12:GV_%s\n", a->nombre);  // Completar dirección de la variable destino
+        extern char* arm_get_unique_var_name(const char* original_name);
+        char* unique_dest = arm_get_unique_var_name(a->nombre);
+        
+        fprintf(ctx->out, "    // Evaluar expresión compleja para '%s' (única: '%s')\n", a->nombre, unique_dest);
+        fprintf(ctx->out, "    adrp x11, GV_%s\n", unique_dest);  // Cargar dirección alta de la variable destino
+        fprintf(ctx->out, "    add x11, x11, :lo12:GV_%s\n", unique_dest);  // Completar dirección de la variable destino
+        
+        free(unique_dest);
         
         // Usar arm_emit_eval_expr para evaluar la expresión compleja
         extern void arm_emit_eval_expr(CodegenContext*, AbstractExpresion*, int, FILE*);
@@ -113,11 +128,18 @@ void emit_asignacion_text(CodegenContext* ctx, AbstractExpresion* asignNode) {
     switch (p->tipo) {
         case INT: {
             long ival = atol(p->valor ? p->valor : "0");
-            fprintf(ctx->out, "    // Asignar entero %ld a variable global '%s'\n", ival, a->nombre);
-            fprintf(ctx->out, "    adrp x1, GV_%s\n", a->nombre);  // Cargar dirección alta de la variable
-            fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", a->nombre);  // Completar dirección de la variable
+            
+            // Obtener nombre único para variables FOR
+            extern char* arm_get_unique_var_name(const char* original_name);
+            char* unique_name = arm_get_unique_var_name(a->nombre);
+            
+            fprintf(ctx->out, "    // Asignar entero %ld a variable global '%s' (única: '%s')\n", ival, a->nombre, unique_name);
+            fprintf(ctx->out, "    adrp x1, GV_%s\n", unique_name);  // Cargar dirección alta de la variable
+            fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", unique_name);  // Completar dirección de la variable
             fprintf(ctx->out, "    mov x2, #%ld\n", ival);  // Cargar valor entero
             fprintf(ctx->out, "    str x2, [x1]\n\n");  // Almacenar valor en la variable
+            
+            free(unique_name);
             break;
         }
         case BOOLEAN: {

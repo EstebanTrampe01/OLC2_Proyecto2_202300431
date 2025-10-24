@@ -3,7 +3,11 @@
 #include "../../../ast/nodos/instrucciones/instruccion/if.h"
 #include "../../../ast/nodos/instrucciones/instruccion/while.h"
 #include "../../../ast/nodos/instrucciones/instruccion/for.h"
+#include "../../../ast/nodos/instrucciones/instruccion/declaracion.h"
+#include "../../../ast/nodos/expresiones/expresiones.h"
+#include "../../../ast/nodos/expresiones/terminales/primitivos.h"
 #include "../expresiones/emit_expr.h"
+#include "../common.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -112,7 +116,9 @@ void arm_emit_while_statement(CodegenContext* ctx, AbstractExpresion* whileNode,
     free(end_label);
 }
 
-void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FILE* f) {
+void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FILE* f, 
+                            AbstractExpresion** label_nodes, int* label_ids, int label_map_size,
+                            char** emitted_names, int* emitted_types, int emitted_count) {
     if (!forNode || forNode->interpret != interpretForExpresion) {
         return;
     }
@@ -128,7 +134,25 @@ void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FIL
     // Inicialización (si existe)
     if (forExpr->initialization) {
         fprintf(f, "    // Inicialización FOR\n");
-        arm_emit_runtime_nodes(forExpr->initialization, ctx, f, NULL, NULL, 0, NULL, NULL, 0);
+        
+        // Activar variables FOR en el alcance por bloque
+        extern void arm_activate_for_variable(const char* name);
+        if (forExpr->initialization->interpret == interpretDeclaracionVariable) {
+            typedef struct { AbstractExpresion base; char* nombre; int tipo; } DeclVar;
+            DeclVar* decl = (DeclVar*) forExpr->initialization;
+            if (decl && decl->nombre) {
+                arm_activate_for_variable(decl->nombre);
+                
+                // Limpiar valor residual antes de inicializar
+                fprintf(f, "    // Limpiar valor residual de variable FOR '%s'\n", decl->nombre);
+                fprintf(f, "    mov x1, #0\n");
+                fprintf(f, "    adrp x2, GV_%s\n", decl->nombre);
+                fprintf(f, "    add x2, x2, :lo12:GV_%s\n", decl->nombre);
+                fprintf(f, "    str x1, [x2]\n");
+            }
+        }
+        
+        arm_emit_runtime_nodes(forExpr->initialization, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
     }
     
     // Etiqueta de inicio del bucle
@@ -148,12 +172,12 @@ void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FIL
     
     // Bloque del bucle
     fprintf(f, "    // Bloque FOR\n");
-    arm_emit_runtime_nodes(forExpr->body, ctx, f, NULL, NULL, 0, NULL, NULL, 0);
+    arm_emit_runtime_nodes(forExpr->body, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
     
     // Incremento (si existe)
     if (forExpr->increment) {
         fprintf(f, "    // Incremento FOR\n");
-        arm_emit_runtime_nodes(forExpr->increment, ctx, f, NULL, NULL, 0, NULL, NULL, 0);
+        arm_emit_runtime_nodes(forExpr->increment, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
     }
     
     // Saltar de vuelta al inicio del bucle
@@ -162,6 +186,16 @@ void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FIL
     // Etiqueta de fin
     fprintf(f, "%s:\n", end_label);
     fprintf(f, "    // Fin FOR\n");
+    
+        // Desactivar variables FOR al salir del alcance por bloque
+        extern void arm_deactivate_for_variable(const char* name);
+        if (forExpr->initialization && forExpr->initialization->interpret == interpretDeclaracionVariable) {
+            typedef struct { AbstractExpresion base; char* nombre; int tipo; } DeclVar;
+            DeclVar* decl = (DeclVar*) forExpr->initialization;
+            if (decl && decl->nombre) {
+                arm_deactivate_for_variable(decl->nombre);
+            }
+        }
     
     // Liberar memoria de las etiquetas
     free(loop_label);

@@ -184,9 +184,16 @@ static int emit_print_part(CodegenContext* ctx, AbstractExpresion* n, int nl, ch
     }
     if (cur->interpret == interpretIdentificadorExpresion) {
         IdentificadorExpresion* id = (IdentificadorExpresion*) cur;
-        fprintf(ctx->out, "    // Imprimir variable global '%s'\n", id->nombre);
-        fprintf(ctx->out, "    adrp x0, GV_%s\n", id->nombre);  // Cargar dirección alta de la variable
-        fprintf(ctx->out, "    add x0, x0, :lo12:GV_%s\n", id->nombre);  // Completar dirección de la variable
+        
+        // Obtener nombre único para variables FOR
+        extern char* arm_get_unique_var_name(const char* original_name);
+        char* unique_name = arm_get_unique_var_name(id->nombre);
+        
+        fprintf(ctx->out, "    // Imprimir variable global '%s' (única: '%s')\n", id->nombre, unique_name);
+        fprintf(ctx->out, "    adrp x0, GV_%s\n", unique_name);  // Cargar dirección alta de la variable
+        fprintf(ctx->out, "    add x0, x0, :lo12:GV_%s\n", unique_name);  // Completar dirección de la variable
+        
+        free(unique_name);
         int tag = 0;
         if (emitted_names && emitted_types) {
             for (int ii = 0; ii < emitted_count; ++ii) {
@@ -221,9 +228,15 @@ static int emit_print_part(CodegenContext* ctx, AbstractExpresion* n, int nl, ch
             for (int ii = 0; ii < emitted_count; ++ii) if (emitted_names[ii] && strcmp(emitted_names[ii], id->nombre) == 0) { tag = emitted_types[ii]; break; }
             if (tag == STRING) tag = 6; else if (tag == DOUBLE) tag = 2; else if (tag == FLOAT) tag = 3; else if (tag == BOOLEAN) tag = 4; else if (tag == CHAR) tag = 5; else tag = 1;
             if (id && id->nombre) {
-                fprintf(ctx->out, "    adrp x1, GV_%s\n", id->nombre);
-                fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", id->nombre);
+                // Obtener nombre único para variables FOR
+                extern char* arm_get_unique_var_name(const char* original_name);
+                char* unique_name = arm_get_unique_var_name(id->nombre);
+                
+                fprintf(ctx->out, "    adrp x1, GV_%s\n", unique_name);
+                fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", unique_name);
                 fprintf(ctx->out, "    ldr x1, [x1]\n");
+                
+                free(unique_name);
             }
         } else if (a && a->interpret == interpretExpresionLenguaje) {
             // Expresiones aritméticas o relacionales: evaluar y poner resultado en x1

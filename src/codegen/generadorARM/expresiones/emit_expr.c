@@ -1,6 +1,7 @@
 #include "emit_expr.h"
 #include "ast/nodos/expresiones/expresiones.h"
 #include "codegen/literals.h"
+#include <stdlib.h>
 
 // Declaraciones externas utilizadas para identificar tipos de nodos
 extern Result interpretPrimitivoExpresion(AbstractExpresion*, Context*);
@@ -44,10 +45,16 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
         typedef struct { AbstractExpresion base; char* nombre; } Id;
         Id* id = (Id*) expr;
         if (id && id->nombre) {
-            fprintf(f, "    // Cargar variable global '%s' en registro x%d\n", id->nombre, target_reg);
-            fprintf(f, "    adrp x%d, GV_%s\n", target_reg, id->nombre);  // Cargar dirección alta de la variable
-            fprintf(f, "    add x%d, x%d, :lo12:GV_%s\n", target_reg, target_reg, id->nombre);  // Completar dirección de la variable
+            // Obtener nombre único para variables FOR
+            extern char* arm_get_unique_var_name(const char* original_name);
+            char* unique_name = arm_get_unique_var_name(id->nombre);
+            
+            fprintf(f, "    // Cargar variable global '%s' (única: '%s') en registro x%d\n", id->nombre, unique_name, target_reg);
+            fprintf(f, "    adrp x%d, GV_%s\n", target_reg, unique_name);  // Cargar dirección alta de la variable
+            fprintf(f, "    add x%d, x%d, :lo12:GV_%s\n", target_reg, target_reg, unique_name);  // Completar dirección de la variable
             fprintf(f, "    ldr x%d, [x%d]\n", target_reg, target_reg);  // Cargar valor de la variable
+            
+            free(unique_name);
             return;
         }
         fprintf(f, "    // Variable no encontrada, usar valor por defecto: 0\n");
@@ -133,12 +140,9 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
                 fprintf(f, "    sub x%d, x9, x8\n", target_reg);  // Resta nativa ARM64
                 return;
             } else if (el->tablaOperaciones == &tablaOperacionesMultiplicacion) {
-                // Detectar si es operación con double (usar helper para operaciones complejas)
-                fprintf(f, "    // Operación MULTIPLICACIÓN: detectar tipo automáticamente\n");
-                fprintf(f, "    mov x0, x9\n");  // Pasar primer operando
-                fprintf(f, "    mov x1, x8\n");  // Pasar segundo operando
-                fprintf(f, "    bl double_mul\n");  // Llamar helper que maneja tipos automáticamente
-                fprintf(f, "    mov x%d, x0\n", target_reg);  // Resultado en x0
+                // Multiplicación de enteros - usar código ARM64 nativo
+                fprintf(f, "    // Operación MULTIPLICACIÓN de enteros\n");
+                fprintf(f, "    mul x%d, x9, x8\n", target_reg);  // Multiplicación nativa ARM64
                 return;
             } else if (el->tablaOperaciones == &tablaOperacionesDivision) {
                 // Detectar si es división entera o con decimales
