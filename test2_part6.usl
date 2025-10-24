@@ -1,0 +1,22 @@
+public static void main(String[] args) {
+    System.out.println("=== TEST WHILE SIMPLE CON ASIGNACIONES ===");
+    
+    int estudianteActual = 1;
+    int estudiantesDestacados = 0;
+    
+    System.out.println("Inicio: estudianteActual = " + estudianteActual);
+    
+    while (estudianteActual <= 3) {
+        System.out.println("Procesando estudiante: " + estudianteActual);
+        
+        if (estudianteActual == 2) {
+            System.out.println("Estudiante destacado encontrado!");
+            estudiantesDestacados = estudiantesDestacados + 1;
+        }
+        
+        estudianteActual = estudianteActual + 1;
+        System.out.println("Después del incremento: " + estudianteActual);
+    }
+    
+    System.out.println("Total destacados: " + estudiantesDestacados);
+}

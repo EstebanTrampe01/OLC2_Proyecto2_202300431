@@ -1,0 +1,11 @@
+public static void main(String[] args) {
+    int contador = 3;
+    System.out.println("Antes del WHILE: " + contador);
+    
+    while (contador > 0) {
+        System.out.println("Dentro del WHILE: " + contador);
+        break; // Salir inmediatamente para evitar bucle infinito
+    }
+    
+    System.out.println("Después del WHILE");
+}

@@ -70,6 +70,23 @@ void emit_asignacion_text(CodegenContext* ctx, AbstractExpresion* asignNode) {
         return;
     }
     
+    // Manejar asignaciones de identificadores (nombreActual = estudiante1)
+    if (rhs->interpret == interpretIdentificadorExpresion) {
+        IdentificadorExpresion* idExpr = (IdentificadorExpresion*)rhs;
+        fprintf(ctx->out, "    // Asignar identificador '%s' a variable '%s'\n", idExpr->nombre, a->nombre);
+        
+        // Cargar valor del identificador fuente
+        fprintf(ctx->out, "    adrp x1, GV_%s\n", idExpr->nombre);  // Cargar dirección alta de la variable fuente
+        fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", idExpr->nombre);  // Completar dirección de la variable fuente
+        fprintf(ctx->out, "    ldr x2, [x1]\n");  // Cargar valor de la variable fuente
+        
+        // Almacenar en la variable destino
+        fprintf(ctx->out, "    adrp x3, GV_%s\n", a->nombre);  // Cargar dirección alta de la variable destino
+        fprintf(ctx->out, "    add x3, x3, :lo12:GV_%s\n", a->nombre);  // Completar dirección de la variable destino
+        fprintf(ctx->out, "    str x2, [x3]\n\n");  // Almacenar valor en la variable destino
+        return;
+    }
+    
     // Manejar expresiones complejas (aritméticas, relacionales, etc.)
     if (rhs->interpret == interpretExpresionLenguaje) {
         if (ctx->debug) fprintf(ctx->out, "# debug: detectada expresión compleja\n");

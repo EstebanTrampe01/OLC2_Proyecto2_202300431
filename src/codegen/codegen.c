@@ -94,11 +94,17 @@ void codegen_programa(CodegenContext* ctx, AbstractExpresion* root) {
     int assign_cap = 16; int assign_size = 0;
     AbstractExpresion** assign_nodes = malloc(sizeof(AbstractExpresion*) * assign_cap);
 
-    int emitted_cap = 16; int emitted_count = 0;
+    int emitted_cap = 32; int emitted_count = 0;  // Aumentar de 16 a 32
     char** emitted_names = malloc(sizeof(char*) * emitted_cap);
     int* emitted_init_ids = malloc(sizeof(int) * emitted_cap);
     char** emitted_init_values = malloc(sizeof(char*) * emitted_cap); // store textual initializer for GV_<name>_str emission
     int* emitted_types = malloc(sizeof(int) * emitted_cap);
+    
+    // Verificar que todas las asignaciones de memoria fueron exitosas
+    if (!emitted_names || !emitted_init_ids || !emitted_init_values || !emitted_types) {
+        fprintf(stderr, "ERROR: No se pudo asignar memoria inicial para variables\n");
+        exit(1);
+    }
     for (int i=0;i<emitted_cap;++i) { emitted_init_ids[i]=0; emitted_names[i]=NULL; emitted_init_values[i]=NULL; emitted_types[i] = -1; }
 
     // Collect nodes: this will call emit_print_data for prints (emits L labels) and register GV names

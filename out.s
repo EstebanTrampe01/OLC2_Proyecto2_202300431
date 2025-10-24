@@ -1,17 +1,17 @@
     .section .data
     .align 3
 L1:
-    .asciz "=== SISTEMA DE CALCULO CIENTIFICO ===\n"
+    .asciz "=== SISTEMA DE GESTION DE NOTAS INDIVIDUAL ===\n"
 
 L1_end:
 
 L2:
-    .asciz "\n"
+    .asciz "Procesando 5 estudiantes individuales\n"
 
 L2_end:
 
 L3:
-    .asciz "\n"
+    .asciz "\n--- EVALUACION CON IF/ELSE ---\n"
 
 L3_end:
 
@@ -21,42 +21,42 @@ L4:
 L4_end:
 
 L5:
-    .asciz "\n--- VALORES ASIGNADOS ---\n"
+    .asciz "Clasificacion: SOBRESALIENTE\n"
 
 L5_end:
 
 L6:
-    .asciz "\n"
+    .asciz "Clasificacion: NOTABLE\n"
 
 L6_end:
 
 L7:
-    .asciz "\n"
+    .asciz "Clasificacion: BIEN\n"
 
 L7_end:
 
 L8:
-    .asciz "\n"
+    .asciz "Clasificacion: SUFICIENTE\n"
 
 L8_end:
 
 L9:
-    .asciz "\n"
+    .asciz "Clasificacion: INSUFICIENTE\n"
 
 L9_end:
 
 L10:
-    .asciz "\n"
+    .asciz "Estado: Mayor de edad completa\n"
 
 L10_end:
 
 L11:
-    .asciz "\n--- OPERACIONES ARITMETICAS ---\n"
+    .asciz "Resultado: Apto para beca\n"
 
 L11_end:
 
 L12:
-    .asciz "\n"
+    .asciz "Resultado: No apto para beca\n"
 
 L12_end:
 
@@ -66,27 +66,27 @@ L13:
 L13_end:
 
 L14:
-    .asciz "\n"
+    .asciz "Clasificacion: SOBRESALIENTE\n"
 
 L14_end:
 
 L15:
-    .asciz "\n"
+    .asciz "Clasificacion: NOTABLE\n"
 
 L15_end:
 
 L16:
-    .asciz "\n"
+    .asciz "Clasificacion: REGULAR\n"
 
 L16_end:
 
 L17:
-    .asciz "\n"
+    .asciz "Resultado: Apto para beca\n"
 
 L17_end:
 
 L18:
-    .asciz "\n--- OPERACIONES RELACIONALES ---\n"
+    .asciz "Resultado: No apto para beca\n"
 
 L18_end:
 
@@ -96,32 +96,32 @@ L19:
 L19_end:
 
 L20:
-    .asciz "\n"
+    .asciz "Clasificacion: NOTABLE\n"
 
 L20_end:
 
 L21:
-    .asciz "\n"
+    .asciz "Clasificacion: BIEN\n"
 
 L21_end:
 
 L22:
-    .asciz "\n"
+    .asciz "Clasificacion: REGULAR\n"
 
 L22_end:
 
 L23:
-    .asciz "\n"
+    .asciz "\n--- PROCESAMIENTO CON WHILE ---\n"
 
 L23_end:
 
 L24:
-    .asciz "\n"
+    .asciz "Buscando estudiantes con nota >= 90:\n"
 
 L24_end:
 
 L25:
-    .asciz "\n--- OPERACIONES LOGICAS ---\n"
+    .asciz "\n"
 
 L25_end:
 
@@ -136,7 +136,7 @@ L27:
 L27_end:
 
 L28:
-    .asciz "\n"
+    .asciz "\nContador regresivo:\n"
 
 L28_end:
 
@@ -146,7 +146,7 @@ L29:
 L29_end:
 
 L30:
-    .asciz "\n"
+    .asciz "\nBusqueda de estudiante joven con buena nota:\n"
 
 L30_end:
 
@@ -155,606 +155,278 @@ L31:
 
 L31_end:
 
-L32:
-    .asciz "\n--- OPERADORES DE BITS ---\n"
-
-L32_end:
-
-L33:
-    .asciz "\n"
-
-L33_end:
-
-L34:
-    .asciz "\n"
-
-L34_end:
-
-L35:
-    .asciz "\n"
-
-L35_end:
-
-L36:
-    .asciz "\n"
-
-L36_end:
-
-L37:
-    .asciz "\n"
-
-L37_end:
-
-L38:
-    .asciz "\n--- DESPLAZAMIENTO DE BITS ---\n"
-
-L38_end:
-
-L39:
-    .asciz "\n"
-
-L39_end:
-
-L40:
-    .asciz "\n"
-
-L40_end:
-
-L41:
-    .asciz "\n"
-
-L41_end:
-
-L42:
-    .asciz "\n--- SECUENCIAS DE ESCAPE ---\n"
-
-L42_end:
-
-L43:
-    .asciz "Comillas dobles: \"Hola mundo\"\n"
-
-L43_end:
-
-L44:
-    .asciz "Barra invertida: \\\n"
-
-L44_end:
-
-L45:
-    .asciz "Nueva línea:\nTexto en línea nueva\n"
-
-L45_end:
-
-L46:
-    .asciz "Retorno de carro:Texto con retorno\n"
-
-L46_end:
-
-L47:
-    .asciz "Tabulación:		Texto con tab\n"
-
-L47_end:
-
-L48:
-    .asciz "Línea antes del salto compuesto\nLínea después del salto compuesto\n"
-
-L48_end:
-
-L49:
-    .asciz "\n--- MANEJO DE NULL ---\n"
-
-L49_end:
-
-L50:
-    .asciz "La variable textoNulo es null\n"
-
-L50_end:
-
-L51:
-    .asciz "\n"
-
-L51_end:
-
-L52:
-    .asciz "\n"
-
-L52_end:
-
-L53:
-    .asciz "\n--- WIDENING CASTING AUTOMATICO ---\n"
-
-L53_end:
-
-L54:
-    .asciz "Casting automático progresivo:\n"
-
-L54_end:
-
-L55:
-    .asciz "\n"
-
-L55_end:
-
-L56:
-    .asciz "\n"
-
-L56_end:
-
-L57:
-    .asciz "\n"
-
-L57_end:
-
-L58:
-    .asciz "\n--- NARROWING CASTING MANUAL ---\n"
-
-L58_end:
-
-L59:
-    .asciz "Casting manual regresivo:\n"
-
-L59_end:
-
-L60:
-    .asciz "\n"
-
-L60_end:
-
-L61:
-    .asciz "\n"
-
-L61_end:
-
-L62:
-    .asciz "\n"
-
-L62_end:
-
-L63:
-    .asciz "\n--- CALCULO FINAL (SIMAULACION CÁLCULO REAL ) ---\n"
-
-L63_end:
-
-L64:
-    .asciz "\n"
-
-L64_end:
-
-L65:
-    .asciz "\n--- FIGURAS GEOMETRICAS ---\n"
-
-L65_end:
-
-L66:
-    .asciz "\n"
-
-L66_end:
-
-L67:
-    .asciz "\n"
-
-L67_end:
-
-L68:
-    .asciz "\n=== FIN DEL SISTEMA ===\n"
-
-L68_end:
-
 STRLIT_1:
-    .asciz ""
+    .asciz "=== SISTEMA DE GESTION DE NOTAS INDIVIDUAL ==="
 
 STRLIT_2:
-    .asciz "Resultado"
+    .asciz "Ana"
 
 STRLIT_3:
-    .asciz "Calculadora Científica v1.0"
+    .asciz "Luis"
 
 STRLIT_4:
-    .asciz "Constante PI: "
+    .asciz "Maria"
 
 STRLIT_5:
-    .asciz "Constante máxima: "
+    .asciz "Carlos"
 
 STRLIT_6:
-    .asciz "Nuevo resultado"
+    .asciz "Sofia"
 
 STRLIT_7:
-    .asciz "\n--- VALORES ASIGNADOS ---"
+    .asciz "Procesando 5 estudiantes individuales"
 
 STRLIT_8:
-    .asciz "Entero: "
+    .asciz "\n--- EVALUACION CON IF/ELSE ---"
 
 STRLIT_9:
-    .asciz "Flotante: "
+    .asciz "Evaluando: "
 
 STRLIT_10:
-    .asciz "Carácter: "
+    .asciz "Clasificacion: SOBRESALIENTE"
 
 STRLIT_11:
-    .asciz "Booleano: "
+    .asciz "Clasificacion: NOTABLE"
 
 STRLIT_12:
-    .asciz "Cadena: "
+    .asciz "Clasificacion: BIEN"
 
 STRLIT_13:
-    .asciz "\n--- OPERACIONES ARITMETICAS ---"
+    .asciz "Clasificacion: SUFICIENTE"
 
 STRLIT_14:
-    .asciz "a = "
+    .asciz "Clasificacion: INSUFICIENTE"
 
 STRLIT_15:
-    .asciz ", b = "
+    .asciz "Estado: Mayor de edad completa"
 
 STRLIT_16:
-    .asciz "Suma (a + b): "
+    .asciz "Resultado: Apto para beca"
 
 STRLIT_17:
-    .asciz "Resta (a - b): "
+    .asciz "Resultado: No apto para beca"
 
 STRLIT_18:
-    .asciz "Multiplicación (a * b): "
+    .asciz "\nEvaluando: "
 
 STRLIT_19:
-    .asciz "División (a / b): "
+    .asciz "Clasificacion: REGULAR"
 
 STRLIT_20:
-    .asciz "Módulo (a % b): "
+    .asciz "\n--- PROCESAMIENTO CON WHILE ---"
 
 STRLIT_21:
-    .asciz "\n--- OPERACIONES RELACIONALES ---"
+    .asciz "Buscando estudiantes con nota >= 90:"
 
 STRLIT_22:
-    .asciz "a > b: "
+    .asciz ""
 
 STRLIT_23:
-    .asciz "a < b: "
+    .asciz "Revisando estudiante "
 
 STRLIT_24:
-    .asciz "a >= b: "
+    .asciz ": "
 
 STRLIT_25:
-    .asciz "a <= b: "
+    .asciz "Destacado encontrado: "
 
 STRLIT_26:
-    .asciz "a == b: "
+    .asciz " con "
 
 STRLIT_27:
-    .asciz "a != b: "
+    .asciz "Total de estudiantes destacados: "
 
 STRLIT_28:
-    .asciz "\n--- OPERACIONES LOGICAS ---"
+    .asciz "\nContador regresivo:"
 
 STRLIT_29:
-    .asciz "condicion1 = "
+    .asciz "Quedan: "
 
 STRLIT_30:
-    .asciz "condicion2 = "
+    .asciz " estudiantes por procesar"
 
 STRLIT_31:
-    .asciz "condicion1 && condicion2: "
+    .asciz "\nBusqueda de estudiante joven con buena nota:"
 
 STRLIT_32:
-    .asciz "condicion1 || condicion2: "
+    .asciz "Estudiante joven destacado: "
 
 STRLIT_33:
-    .asciz "!condicion1: "
+    .asciz " (Edad: "
 
 STRLIT_34:
-    .asciz "!condicion2: "
+    .asciz ", Nota: "
 
 STRLIT_35:
-    .asciz "\n--- OPERADORES DE BITS ---"
+    .asciz ")"
 
-STRLIT_36:
-    .asciz "x = "
+GV_estudiante1: .quad STRLIT_2
 
-STRLIT_37:
-    .asciz " (binario: 1100)"
+GV_estudiante2: .quad STRLIT_3
 
-STRLIT_38:
-    .asciz "y = "
+GV_estudiante3: .quad STRLIT_4
 
-STRLIT_39:
-    .asciz " (binario: 1010)"
+GV_estudiante4: .quad STRLIT_5
 
-STRLIT_40:
-    .asciz "x & y (AND): "
+GV_estudiante5: .quad STRLIT_6
 
-STRLIT_41:
-    .asciz "x | y (OR): "
+GV_nota1: .quad 85
 
-STRLIT_42:
-    .asciz "x ^ y (XOR): "
+GV_nota2: .quad 92
 
-STRLIT_43:
-    .asciz "\n--- DESPLAZAMIENTO DE BITS ---"
+GV_nota3: .quad 78
 
-STRLIT_44:
-    .asciz "valor = "
+GV_nota4: .quad 95
 
-STRLIT_45:
-    .asciz "valor << 2: "
+GV_nota5: .quad 88
 
-STRLIT_46:
-    .asciz "valor >> 2: "
+GV_edad1: .quad 20
 
-STRLIT_47:
-    .asciz "\n--- SECUENCIAS DE ESCAPE ---"
+GV_edad2: .quad 19
 
-STRLIT_48:
-    .asciz "Comillas dobles: \"Hola mundo\""
+GV_edad3: .quad 21
 
-STRLIT_49:
-    .asciz "Barra invertida: \\"
+GV_edad4: .quad 20
 
-STRLIT_50:
-    .asciz "Nueva línea:\nTexto en línea nueva"
+GV_edad5: .quad 22
 
-STRLIT_51:
-    .asciz "Retorno de carro:Texto con retorno"
+GV_estudianteActual: .quad 1
 
-STRLIT_52:
-    .asciz "Tabulación:		Texto con tab"
+GV_estudiantesDestacados: .quad 0
 
-STRLIT_53:
-    .asciz "Línea antes del salto compuesto\nLínea después del salto compuesto"
+GV_nombreActual: .quad STRLIT_22
 
-STRLIT_54:
-    .asciz "null"
+GV_notaActual: .quad 0
 
-STRLIT_55:
-    .asciz "\n--- MANEJO DE NULL ---"
+GV_contador: .quad 5
 
-STRLIT_56:
-    .asciz "La variable textoNulo es null"
+GV_indice: .quad 1
 
-STRLIT_57:
-    .asciz "Valor asignado después de verificar null"
+GV_nombre: .quad STRLIT_22
 
-STRLIT_58:
-    .asciz "textoNulo ahora: "
+GV_nota: .quad 0
 
-STRLIT_59:
-    .asciz "Es null"
+GV_edad: .quad 0
 
-STRLIT_60:
-    .asciz "Resultado condicional: "
+GV_estudiante1_str:
+    .asciz "Ana"
 
-STRLIT_61:
-    .asciz "\n--- WIDENING CASTING AUTOMATICO ---"
+GV_estudiante1_str_end:
 
-STRLIT_62:
-    .asciz "Casting automático progresivo:"
+GV_estudiante2_str:
+    .asciz "Luis"
 
-STRLIT_63:
-    .asciz "char "
+GV_estudiante2_str_end:
 
-STRLIT_64:
-    .asciz " -> int "
+GV_estudiante3_str:
+    .asciz "Maria"
 
-STRLIT_65:
-    .asciz "int "
+GV_estudiante3_str_end:
 
-STRLIT_66:
-    .asciz " -> float "
+GV_estudiante4_str:
+    .asciz "Carlos"
 
-STRLIT_67:
-    .asciz "float "
+GV_estudiante4_str_end:
 
-STRLIT_68:
-    .asciz " -> double "
+GV_estudiante5_str:
+    .asciz "Sofia"
 
-STRLIT_69:
-    .asciz "\n--- NARROWING CASTING MANUAL ---"
+GV_estudiante5_str_end:
 
-STRLIT_70:
-    .asciz "Casting manual regresivo:"
+GV_nota1_str:
+    .asciz "85"
 
-STRLIT_71:
-    .asciz "double "
+GV_nota1_str_end:
 
-STRLIT_72:
-    .asciz " -> char '"
+GV_nota2_str:
+    .asciz "92"
 
-STRLIT_73:
-    .asciz "'"
+GV_nota2_str_end:
 
-STRLIT_74:
-    .asciz "\n--- CALCULO FINAL (SIMAULACION CÁLCULO REAL ) ---"
+GV_nota3_str:
+    .asciz "78"
 
-STRLIT_75:
-    .asciz "Resultado científico: "
+GV_nota3_str_end:
 
-STRLIT_76:
-    .asciz "\n--- FIGURAS GEOMETRICAS ---"
+GV_nota4_str:
+    .asciz "95"
 
-STRLIT_77:
-    .asciz "Circulo -> radio="
+GV_nota4_str_end:
 
-STRLIT_78:
-    .asciz " cm, area="
+GV_nota5_str:
+    .asciz "88"
 
-STRLIT_79:
-    .asciz " cm^2, perimetro="
+GV_nota5_str_end:
 
-STRLIT_80:
-    .asciz " cm"
+GV_edad1_str:
+    .asciz "20"
 
-STRLIT_81:
-    .asciz "Rectangulo -> base="
+GV_edad1_str_end:
 
-STRLIT_82:
-    .asciz " cm, altura="
+GV_edad2_str:
+    .asciz "19"
 
-STRLIT_83:
-    .asciz "\n=== FIN DEL SISTEMA ==="
+GV_edad2_str_end:
 
-GV_numeroEntero: .quad 42
+GV_edad3_str:
+    .asciz "21"
 
-GV_numeroFlotante: .single 3.14
+GV_edad3_str_end:
 
-GV_numeroDoble: .double 2.718281828
+GV_edad4_str:
+    .asciz "20"
 
-GV_caracter: .byte 65
+GV_edad4_str_end:
 
-GV_esVerdadero: .quad 1
+GV_edad5_str:
+    .asciz "22"
 
-GV_cadenaTexto: .quad STRLIT_2
+GV_edad5_str_end:
 
-GV_PI: .quad 3
-
-GV_CONSTANTE_MAXIMA: .quad 100
-
-GV_MENSAJE_SISTEMA: .quad 0
-
-GV_a: .quad 25
-
-GV_b: .quad 7
-
-GV_condicion1: .quad 1
-
-GV_condicion2: .quad 0
-
-GV_x: .quad 12
-
-GV_y: .quad 10
-
-GV_valorDesplazamiento: .quad 16
-
-GV_textoNulo: .quad 0
-
-GV_otroTextoNulo: .quad STRLIT_54
-
-GV_resultado: .quad 0
-
-GV_letraInicial: .byte 77
-
-GV_codigoAscii: .quad 0
-
-GV_codigoFloat: .single 0.0
-
-GV_codigoDouble: .double 0.0
-
-GV_valorGrande: .double 75.89
-
-GV_valorMedio: .single 0.0
-
-GV_valorEntero: .quad 0
-
-GV_caracterFinal: .byte 0
-
-GV_variableComentada: .quad 50
-
-GV_resultadoFinal: .double 0.0
-
-GV_radioCirculoCm: .double 0.0
-
-GV_areaCirculoCm2: .double 0.0
-
-GV_perimetroCirculoCm: .double 0.0
-
-GV_baseRectCm: .double 0.0
-
-GV_alturaRectCm: .double 0.0
-
-GV_areaRectCm2: .double 0.0
-
-GV_perimetroRectCm: .double 0.0
-
-GV_numeroEntero_str:
-    .asciz "42"
-
-GV_numeroEntero_str_end:
-
-GV_numeroFlotante_str:
-    .asciz "3.14"
-
-GV_numeroFlotante_str_end:
-
-GV_numeroDoble_str:
-    .asciz "2.718281828"
-
-GV_numeroDoble_str_end:
-
-GV_caracter_str:
-    .asciz "A"
-
-GV_caracter_str_end:
-
-GV_esVerdadero_str:
+GV_estudianteActual_str:
     .asciz "1"
 
-GV_esVerdadero_str_end:
+GV_estudianteActual_str_end:
 
-GV_cadenaTexto_str:
-    .asciz "Resultado"
-
-GV_cadenaTexto_str_end:
-
-GV_PI_str:
-    .asciz "3"
-
-GV_PI_str_end:
-
-GV_CONSTANTE_MAXIMA_str:
-    .asciz "100"
-
-GV_CONSTANTE_MAXIMA_str_end:
-
-GV_a_str:
-    .asciz "25"
-
-GV_a_str_end:
-
-GV_b_str:
-    .asciz "7"
-
-GV_b_str_end:
-
-GV_condicion1_str:
-    .asciz "1"
-
-GV_condicion1_str_end:
-
-GV_condicion2_str:
+GV_estudiantesDestacados_str:
     .asciz "0"
 
-GV_condicion2_str_end:
+GV_estudiantesDestacados_str_end:
 
-GV_x_str:
-    .asciz "12"
+GV_nombreActual_str:
+    .asciz ""
 
-GV_x_str_end:
+GV_nombreActual_str_end:
 
-GV_y_str:
-    .asciz "10"
+GV_notaActual_str:
+    .asciz "0"
 
-GV_y_str_end:
+GV_notaActual_str_end:
 
-GV_valorDesplazamiento_str:
-    .asciz "16"
+GV_contador_str:
+    .asciz "5"
 
-GV_valorDesplazamiento_str_end:
+GV_contador_str_end:
 
-GV_otroTextoNulo_str:
-    .asciz "null"
+GV_indice_str:
+    .asciz "1"
 
-GV_otroTextoNulo_str_end:
+GV_indice_str_end:
 
-GV_letraInicial_str:
-    .asciz "M"
+GV_nombre_str:
+    .asciz ""
 
-GV_letraInicial_str_end:
+GV_nombre_str_end:
 
-GV_valorGrande_str:
-    .asciz "75.89"
+GV_nota_str:
+    .asciz "0"
 
-GV_valorGrande_str_end:
+GV_nota_str_end:
 
-GV_variableComentada_str:
-    .asciz "50"
+GV_edad_str:
+    .asciz "0"
 
-GV_variableComentada_str_end:
+GV_edad_str_end:
 
     .section .text
     .global _start
@@ -764,119 +436,29 @@ _start:
     sub sp, sp, #1024
     // ===== System.out.println =====
 # interpret_map:
-#   PRIMITIVO=0x60418962c764
-#   IDENTIFICADOR=0x60418962c667
-#   EXPRESION_LENGUAJE=0x60418962bfd1
-#   LLAMADA_FUNCION=0x604189634a39
-#   LISTA_EXPRESIONES=0x604189625f9d
-#   CAST=0x60418962b97c
-#   UNARIO_LENGUAJE=0x60418962c431
-#   BUILTIN_STRING_VALUEOF=0x604189627602
-#   PRINT_EXPR=0x6041896341c2
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor==== SISTEMA DE CALCULO CIENTIFICO ===
-    // ERROR: STRLIT no encontrado para '=== SISTEMA DE CALCULO CIENTIFICO ==='
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-#   id nombre=MENSAJE_SISTEMA
-    // Imprimir variable global 'MENSAJE_SISTEMA'
-    adrp x0, GV_MENSAJE_SISTEMA
-    add x0, x0, :lo12:GV_MENSAJE_SISTEMA
-    // tipo tag=9
-    mov x1, #9
-    mov x2, #1
-    bl print_any_gv
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Constante PI: 
-# # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# #   id nombre=PI
-    // Imprimir string literal 'Constante PI: '
-    adrp x0, STRLIT_4
-    add x0, x0, :lo12:STRLIT_4
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'PI'
-    adrp x0, GV_PI
-    add x0, x0, :lo12:GV_PI
-    // tipo tag=5
-    mov x1, #5
-    mov x2, #1
-    bl print_any_gv
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=-1055985008
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Constante máxima: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'Constante m\xC3\xA1xima: '
-    adrp x0, STRLIT_5
-    add x0, x0, :lo12:STRLIT_5
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_CONSTANTE_MAXIMA
-    add x1, x1, :lo12:GV_CONSTANTE_MAXIMA
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
+#   PRIMITIVO=0x57ece99279ce
+#   IDENTIFICADOR=0x57ece99278d1
+#   EXPRESION_LENGUAJE=0x57ece992723b
+#   LLAMADA_FUNCION=0x57ece992fca3
+#   LISTA_EXPRESIONES=0x57ece9921207
+#   CAST=0x57ece9926be6
+#   UNARIO_LENGUAJE=0x57ece992769b
+#   BUILTIN_STRING_VALUEOF=0x57ece992286c
+#   PRINT_EXPR=0x57ece992f42c
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor==== SISTEMA DE GESTION DE NOTAS INDIVIDUAL ===
+    // Imprimir string literal '=== SISTEMA DE GESTION DE NOTAS INDIVIDUAL ==='
+    adrp x0, STRLIT_1
+    add x0, x0, :lo12:STRLIT_1
     mov x1, #1
     bl print_string
-    mov x0, x9
-    bl free
 
     // ===== Fin System.out.println =====
 
-    // Asignar entero 100 a variable global 'numeroEntero'
-    adrp x1, GV_numeroEntero
-    add x1, x1, :lo12:GV_numeroEntero
-    mov x2, #100
-    str x2, [x1]
-
-    // Asignar flotante 5.670000 a variable global 'numeroFlotante'
-    adrp x1, GV_numeroFlotante
-    add x1, x1, :lo12:GV_numeroFlotante
-    adrp x2, NUMLIT_3
-    ldr d2, [x2, :lo12:NUMLIT_3]
-    fcvt s2, d2
-    str s2, [x1]
-
-    // Asignar carácter 'Z' (ASCII 90) a variable global 'caracter'
-    adrp x1, GV_caracter
-    add x1, x1, :lo12:GV_caracter
-    mov w2, #90
-    strb w2, [x1]
-
-    // Asignar booleano 0 (false) a variable global 'esVerdadero'
-    adrp x1, GV_esVerdadero
-    add x1, x1, :lo12:GV_esVerdadero
-    mov x2, #0
-    str x2, [x1]
-
-    // Asignar string 'Nuevo resultado' a variable global 'cadenaTexto'
-    adrp x1, GV_cadenaTexto
-    add x1, x1, :lo12:GV_cadenaTexto
-    adrp x2, STRLIT_6
-    add x2, x2, :lo12:STRLIT_6
-    str x2, [x1]
-
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- VALORES ASIGNADOS ---
-    // Imprimir string literal '\n--- VALORES ASIGNADOS ---'
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Procesando 5 estudiantes individuales
+    // Imprimir string literal 'Procesando 5 estudiantes individuales'
     adrp x0, STRLIT_7
     add x0, x0, :lo12:STRLIT_7
     mov x1, #1
@@ -885,122 +467,32 @@ _start:
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Entero: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'Entero: '
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=\n--- EVALUACION CON IF/ELSE ---
+    // Imprimir string literal '\n--- EVALUACION CON IF/ELSE ---'
     adrp x0, STRLIT_8
     add x0, x0, :lo12:STRLIT_8
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_numeroEntero
-    add x1, x1, :lo12:GV_numeroEntero
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
     mov x1, #1
     bl print_string
-    mov x0, x9
-    bl free
 
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Flotante: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'Flotante: '
+# AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+#   expresion tipo=659906400
+# # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# #   prim tipo=9 valor=Evaluando: 
+# # AST node: IDENTIFICADOR iptr=0x57ece99278d1 children=0
+# #   id nombre=estudiante1
+    // Imprimir string literal 'Evaluando: '
     adrp x0, STRLIT_9
     add x0, x0, :lo12:STRLIT_9
     mov x1, #0
     bl print_string
 
-    adrp x1, GV_numeroFlotante
-    add x1, x1, :lo12:GV_numeroFlotante
-    ldr x1, [x1]
-    mov w0, #3
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Carácter: 
-# # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# #   id nombre=caracter
-    // Imprimir string literal 'Car\xC3\xA1cter: '
-    adrp x0, STRLIT_10
-    add x0, x0, :lo12:STRLIT_10
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'caracter'
-    adrp x0, GV_caracter
-    add x0, x0, :lo12:GV_caracter
-    // tipo tag=2
-    mov x1, #2
-    mov x2, #1
-    bl print_any_gv
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Booleano: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'Booleano: '
-    adrp x0, STRLIT_11
-    add x0, x0, :lo12:STRLIT_11
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_esVerdadero
-    add x1, x1, :lo12:GV_esVerdadero
-    ldr x1, [x1]
-    mov w0, #4
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Cadena: 
-# # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# #   id nombre=cadenaTexto
-    // Imprimir string literal 'Cadena: '
-    adrp x0, STRLIT_12
-    add x0, x0, :lo12:STRLIT_12
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'cadenaTexto'
-    adrp x0, GV_cadenaTexto
-    add x0, x0, :lo12:GV_cadenaTexto
+    // Imprimir variable global 'estudiante1'
+    adrp x0, GV_estudiante1
+    add x0, x0, :lo12:GV_estudiante1
     // tipo tag=9
     mov x1, #9
     mov x2, #1
@@ -1008,10 +500,112 @@ _start:
 
     // ===== Fin System.out.println =====
 
+    // IF statement
+    // Cargar entero literal 95 en registro x8
+    mov x8, #95
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota1' en registro x9
+    adrp x9, GV_nota1
+    add x9, x9, :lo12:GV_nota1
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_0
+    // Bloque IF
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- OPERACIONES ARITMETICAS ---
-    // Imprimir string literal '\n--- OPERACIONES ARITMETICAS ---'
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: SOBRESALIENTE
+    // Imprimir string literal 'Clasificacion: SOBRESALIENTE'
+    adrp x0, STRLIT_10
+    add x0, x0, :lo12:STRLIT_10
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+    b endif_1
+else_0:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 85 en registro x8
+    mov x8, #85
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota1' en registro x9
+    adrp x9, GV_nota1
+    add x9, x9, :lo12:GV_nota1
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_2
+    // Bloque IF
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: NOTABLE
+    // Imprimir string literal 'Clasificacion: NOTABLE'
+    adrp x0, STRLIT_11
+    add x0, x0, :lo12:STRLIT_11
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+    b endif_3
+else_2:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 75 en registro x8
+    mov x8, #75
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota1' en registro x9
+    adrp x9, GV_nota1
+    add x9, x9, :lo12:GV_nota1
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_4
+    // Bloque IF
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: BIEN
+    // Imprimir string literal 'Clasificacion: BIEN'
+    adrp x0, STRLIT_12
+    add x0, x0, :lo12:STRLIT_12
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+    b endif_5
+else_4:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 65 en registro x8
+    mov x8, #65
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota1' en registro x9
+    adrp x9, GV_nota1
+    add x9, x9, :lo12:GV_nota1
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_6
+    // Bloque IF
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: SUFICIENTE
+    // Imprimir string literal 'Clasificacion: SUFICIENTE'
     adrp x0, STRLIT_13
     add x0, x0, :lo12:STRLIT_13
     mov x1, #1
@@ -1019,251 +613,347 @@ _start:
 
     // ===== Fin System.out.println =====
 
+    b endif_7
+else_6:
+    // Bloque ELSE
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # #   expresion tipo=0
-# # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # #   prim tipo=9 valor=a = 
-# # # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # #   prim tipo=9 valor=, b = 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'a = '
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: INSUFICIENTE
+    // Imprimir string literal 'Clasificacion: INSUFICIENTE'
     adrp x0, STRLIT_14
     add x0, x0, :lo12:STRLIT_14
-    mov x1, #0
+    mov x1, #1
     bl print_string
 
-    adrp x1, GV_a
-    add x1, x1, :lo12:GV_a
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
+    // ===== Fin System.out.println =====
 
-    // Imprimir string literal ', b = '
+endif_7:
+    // Fin IF
+endif_5:
+    // Fin IF
+endif_3:
+    // Fin IF
+endif_1:
+    // Fin IF
+    // IF statement
+    // Cargar entero literal 21 en registro x8
+    mov x8, #21
+    str x8, [sp, #-16]!
+    // Cargar variable global 'edad1' en registro x9
+    adrp x9, GV_edad1
+    add x9, x9, :lo12:GV_edad1
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq endif_9
+    // Bloque IF
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Estado: Mayor de edad completa
+    // Imprimir string literal 'Estado: Mayor de edad completa'
     adrp x0, STRLIT_15
     add x0, x0, :lo12:STRLIT_15
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_b
-    add x1, x1, :lo12:GV_b
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
     mov x1, #1
     bl print_string
-    mov x0, x9
-    bl free
 
     // ===== Fin System.out.println =====
 
+endif_9:
+    // Fin IF
+    // IF statement
+    // Cargar entero literal 90 en registro x8
+    mov x8, #90
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota1' en registro x9
+    adrp x9, GV_nota1
+    add x9, x9, :lo12:GV_nota1
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_10
+    // Bloque IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Suma (a + b): 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'Suma (a + b): '
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Resultado: Apto para beca
+    // Imprimir string literal 'Resultado: Apto para beca'
     adrp x0, STRLIT_16
     add x0, x0, :lo12:STRLIT_16
-    mov x1, #0
-    bl print_string
-
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación SUMA: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_add
-    mov x1, x0
-    mov w0, #2
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
     mov x1, #1
     bl print_string
-    mov x0, x9
-    bl free
 
     // ===== Fin System.out.println =====
 
+    b endif_11
+else_10:
+    // Bloque ELSE
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Resta (a - b): 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'Resta (a - b): '
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Resultado: No apto para beca
+    // Imprimir string literal 'Resultado: No apto para beca'
     adrp x0, STRLIT_17
     add x0, x0, :lo12:STRLIT_17
-    mov x1, #0
-    bl print_string
-
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación RESTA: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_sub
-    mov x1, x0
-    mov w0, #2
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
     mov x1, #1
     bl print_string
-    mov x0, x9
-    bl free
 
     // ===== Fin System.out.println =====
 
+endif_11:
+    // Fin IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Multiplicación (a * b): 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'Multiplicaci\xC3\xB3n (a * b): '
+# # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# #   prim tipo=9 valor=\nEvaluando: 
+# # AST node: IDENTIFICADOR iptr=0x57ece99278d1 children=0
+# #   id nombre=estudiante2
+    // Imprimir string literal '\nEvaluando: '
     adrp x0, STRLIT_18
     add x0, x0, :lo12:STRLIT_18
     mov x1, #0
     bl print_string
 
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación MULTIPLICACIÓN: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_mul
-    mov x1, x0
-    mov w0, #2
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
+    // Imprimir variable global 'estudiante2'
+    adrp x0, GV_estudiante2
+    add x0, x0, :lo12:GV_estudiante2
+    // tipo tag=9
+    mov x1, #9
+    mov x2, #1
+    bl print_any_gv
 
     // ===== Fin System.out.println =====
 
+    // IF statement
+    // Cargar entero literal 95 en registro x8
+    mov x8, #95
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota2' en registro x9
+    adrp x9, GV_nota2
+    add x9, x9, :lo12:GV_nota2
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_12
+    // Bloque IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=División (a / b): 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'Divisi\xC3\xB3n (a / b): '
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: SOBRESALIENTE
+    // Imprimir string literal 'Clasificacion: SOBRESALIENTE'
+    adrp x0, STRLIT_10
+    add x0, x0, :lo12:STRLIT_10
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+    b endif_13
+else_12:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 85 en registro x8
+    mov x8, #85
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota2' en registro x9
+    adrp x9, GV_nota2
+    add x9, x9, :lo12:GV_nota2
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_14
+    // Bloque IF
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: NOTABLE
+    // Imprimir string literal 'Clasificacion: NOTABLE'
+    adrp x0, STRLIT_11
+    add x0, x0, :lo12:STRLIT_11
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+    b endif_15
+else_14:
+    // Bloque ELSE
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: REGULAR
+    // Imprimir string literal 'Clasificacion: REGULAR'
     adrp x0, STRLIT_19
     add x0, x0, :lo12:STRLIT_19
-    mov x1, #0
-    bl print_string
-
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación DIVISIÓN: detectar tipo de división
-    mov x0, x9
-    mov x1, x8
-    bl double_div
-    mov x1, x0
-    mov w0, #2
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
     mov x1, #1
     bl print_string
-    mov x0, x9
-    bl free
 
     // ===== Fin System.out.println =====
 
+endif_15:
+    // Fin IF
+endif_13:
+    // Fin IF
+    // IF statement
+    // Cargar entero literal 90 en registro x8
+    mov x8, #90
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota2' en registro x9
+    adrp x9, GV_nota2
+    add x9, x9, :lo12:GV_nota2
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_16
+    // Bloque IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Resultado: Apto para beca
+    // Imprimir string literal 'Resultado: Apto para beca'
+    adrp x0, STRLIT_16
+    add x0, x0, :lo12:STRLIT_16
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+    b endif_17
+else_16:
+    // Bloque ELSE
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Resultado: No apto para beca
+    // Imprimir string literal 'Resultado: No apto para beca'
+    adrp x0, STRLIT_17
+    add x0, x0, :lo12:STRLIT_17
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+endif_17:
+    // Fin IF
+    // ===== System.out.println =====
+# AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Módulo (a % b): 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'M\xC3\xB3dulo (a % b): '
+# # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# #   prim tipo=9 valor=\nEvaluando: 
+# # AST node: IDENTIFICADOR iptr=0x57ece99278d1 children=0
+# #   id nombre=estudiante3
+    // Imprimir string literal '\nEvaluando: '
+    adrp x0, STRLIT_18
+    add x0, x0, :lo12:STRLIT_18
+    mov x1, #0
+    bl print_string
+
+    // Imprimir variable global 'estudiante3'
+    adrp x0, GV_estudiante3
+    add x0, x0, :lo12:GV_estudiante3
+    // tipo tag=9
+    mov x1, #9
+    mov x2, #1
+    bl print_any_gv
+
+    // ===== Fin System.out.println =====
+
+    // IF statement
+    // Cargar entero literal 85 en registro x8
+    mov x8, #85
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota3' en registro x9
+    adrp x9, GV_nota3
+    add x9, x9, :lo12:GV_nota3
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_18
+    // Bloque IF
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: NOTABLE
+    // Imprimir string literal 'Clasificacion: NOTABLE'
+    adrp x0, STRLIT_11
+    add x0, x0, :lo12:STRLIT_11
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+    b endif_19
+else_18:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 75 en registro x8
+    mov x8, #75
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota3' en registro x9
+    adrp x9, GV_nota3
+    add x9, x9, :lo12:GV_nota3
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    cmp x9, #0
+    b.eq else_20
+    // Bloque IF
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: BIEN
+    // Imprimir string literal 'Clasificacion: BIEN'
+    adrp x0, STRLIT_12
+    add x0, x0, :lo12:STRLIT_12
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+    b endif_21
+else_20:
+    // Bloque ELSE
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Clasificacion: REGULAR
+    // Imprimir string literal 'Clasificacion: REGULAR'
+    adrp x0, STRLIT_19
+    add x0, x0, :lo12:STRLIT_19
+    mov x1, #1
+    bl print_string
+
+    // ===== Fin System.out.println =====
+
+endif_21:
+    // Fin IF
+endif_19:
+    // Fin IF
+    // ===== System.out.println =====
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=\n--- PROCESAMIENTO CON WHILE ---
+    // Imprimir string literal '\n--- PROCESAMIENTO CON WHILE ---'
     adrp x0, STRLIT_20
     add x0, x0, :lo12:STRLIT_20
-    mov x1, #0
-    bl print_string
-
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación MÓDULO: llamar helper C para módulo
-    mov x0, x9
-    mov x1, x8
-    bl mod_helper
-    mov x1, x0
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
     mov x1, #1
     bl print_string
-    mov x0, x9
-    bl free
 
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- OPERACIONES RELACIONALES ---
-    // Imprimir string literal '\n--- OPERACIONES RELACIONALES ---'
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=Buscando estudiantes con nota >= 90:
+    // Imprimir string literal 'Buscando estudiantes con nota >= 90:'
     adrp x0, STRLIT_21
     add x0, x0, :lo12:STRLIT_21
     mov x1, #1
@@ -1271,176 +961,300 @@ _start:
 
     // ===== Fin System.out.println =====
 
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=a > b: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'a > b: '
-    adrp x0, STRLIT_22
-    add x0, x0, :lo12:STRLIT_22
-    mov x1, #0
-    bl print_string
-
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
+    // WHILE statement
+while_loop_22:
+    // Cargar entero literal 5 en registro x8
+    mov x8, #5
     str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
+    // Cargar variable global 'estudianteActual' en registro x9
+    adrp x9, GV_estudianteActual
+    add x9, x9, :lo12:GV_estudianteActual
     ldr x9, [x9]
     ldr x8, [sp], #16
-    // Operación MAYOR QUE: comparar x9 > x8
+    // Operación MENOR O IGUAL: comparar x9 <= x8
     cmp x9, x8
-    cset x1, gt
-    mov w0, #4
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
+    cset x9, le
+    cmp x9, #0
+    b.eq while_end_23
+    // Bloque WHILE
+    // IF statement
+    // Cargar entero literal 1 en registro x8
+    mov x8, #1
+    str x8, [sp, #-16]!
+    // Cargar variable global 'estudianteActual' en registro x9
+    adrp x9, GV_estudianteActual
+    add x9, x9, :lo12:GV_estudianteActual
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq else_24
+    // Bloque IF
+    // Asignar identificador 'estudiante1' a variable 'nombreActual'
+    adrp x1, GV_estudiante1
+    add x1, x1, :lo12:GV_estudiante1
+    ldr x2, [x1]
+    adrp x3, GV_nombreActual
+    add x3, x3, :lo12:GV_nombreActual
+    str x2, [x3]
 
-    // ===== Fin System.out.println =====
+    // Asignar identificador 'nota1' a variable 'notaActual'
+    adrp x1, GV_nota1
+    add x1, x1, :lo12:GV_nota1
+    ldr x2, [x1]
+    adrp x3, GV_notaActual
+    add x3, x3, :lo12:GV_notaActual
+    str x2, [x3]
 
+    b endif_25
+else_24:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 2 en registro x8
+    mov x8, #2
+    str x8, [sp, #-16]!
+    // Cargar variable global 'estudianteActual' en registro x9
+    adrp x9, GV_estudianteActual
+    add x9, x9, :lo12:GV_estudianteActual
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq else_26
+    // Bloque IF
+    // Asignar identificador 'estudiante2' a variable 'nombreActual'
+    adrp x1, GV_estudiante2
+    add x1, x1, :lo12:GV_estudiante2
+    ldr x2, [x1]
+    adrp x3, GV_nombreActual
+    add x3, x3, :lo12:GV_nombreActual
+    str x2, [x3]
+
+    // Asignar identificador 'nota2' a variable 'notaActual'
+    adrp x1, GV_nota2
+    add x1, x1, :lo12:GV_nota2
+    ldr x2, [x1]
+    adrp x3, GV_notaActual
+    add x3, x3, :lo12:GV_notaActual
+    str x2, [x3]
+
+    b endif_27
+else_26:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 3 en registro x8
+    mov x8, #3
+    str x8, [sp, #-16]!
+    // Cargar variable global 'estudianteActual' en registro x9
+    adrp x9, GV_estudianteActual
+    add x9, x9, :lo12:GV_estudianteActual
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq else_28
+    // Bloque IF
+    // Asignar identificador 'estudiante3' a variable 'nombreActual'
+    adrp x1, GV_estudiante3
+    add x1, x1, :lo12:GV_estudiante3
+    ldr x2, [x1]
+    adrp x3, GV_nombreActual
+    add x3, x3, :lo12:GV_nombreActual
+    str x2, [x3]
+
+    // Asignar identificador 'nota3' a variable 'notaActual'
+    adrp x1, GV_nota3
+    add x1, x1, :lo12:GV_nota3
+    ldr x2, [x1]
+    adrp x3, GV_notaActual
+    add x3, x3, :lo12:GV_notaActual
+    str x2, [x3]
+
+    b endif_29
+else_28:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 4 en registro x8
+    mov x8, #4
+    str x8, [sp, #-16]!
+    // Cargar variable global 'estudianteActual' en registro x9
+    adrp x9, GV_estudianteActual
+    add x9, x9, :lo12:GV_estudianteActual
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq else_30
+    // Bloque IF
+    // Asignar identificador 'estudiante4' a variable 'nombreActual'
+    adrp x1, GV_estudiante4
+    add x1, x1, :lo12:GV_estudiante4
+    ldr x2, [x1]
+    adrp x3, GV_nombreActual
+    add x3, x3, :lo12:GV_nombreActual
+    str x2, [x3]
+
+    // Asignar identificador 'nota4' a variable 'notaActual'
+    adrp x1, GV_nota4
+    add x1, x1, :lo12:GV_nota4
+    ldr x2, [x1]
+    adrp x3, GV_notaActual
+    add x3, x3, :lo12:GV_notaActual
+    str x2, [x3]
+
+    b endif_31
+else_30:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 5 en registro x8
+    mov x8, #5
+    str x8, [sp, #-16]!
+    // Cargar variable global 'estudianteActual' en registro x9
+    adrp x9, GV_estudianteActual
+    add x9, x9, :lo12:GV_estudianteActual
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq endif_33
+    // Bloque IF
+    // Asignar identificador 'estudiante5' a variable 'nombreActual'
+    adrp x1, GV_estudiante5
+    add x1, x1, :lo12:GV_estudiante5
+    ldr x2, [x1]
+    adrp x3, GV_nombreActual
+    add x3, x3, :lo12:GV_nombreActual
+    str x2, [x3]
+
+    // Asignar identificador 'nota5' a variable 'notaActual'
+    adrp x1, GV_nota5
+    add x1, x1, :lo12:GV_nota5
+    ldr x2, [x1]
+    adrp x3, GV_notaActual
+    add x3, x3, :lo12:GV_notaActual
+    str x2, [x3]
+
+endif_33:
+    // Fin IF
+endif_31:
+    // Fin IF
+endif_29:
+    // Fin IF
+endif_27:
+    // Fin IF
+endif_25:
+    // Fin IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=a < b: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'a < b: '
+# # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# #   expresion tipo=0
+# # # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# # #   expresion tipo=0
+# # # # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# # # #   prim tipo=9 valor=Revisando estudiante 
+# # # # AST node: UNKNOWN iptr=0x57ece992286c children=0
+# # # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# # #   prim tipo=9 valor=: 
+# # AST node: IDENTIFICADOR iptr=0x57ece99278d1 children=0
+# #   id nombre=nombreActual
+    // Imprimir string literal 'Revisando estudiante '
     adrp x0, STRLIT_23
     add x0, x0, :lo12:STRLIT_23
     mov x1, #0
     bl print_string
 
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación MENOR QUE: comparar x9 < x8
-    cmp x9, x8
-    cset x1, lt
-    mov w0, #4
+    adrp x1, GV_estudianteActual
+    add x1, x1, :lo12:GV_estudianteActual
+    ldr x1, [x1]
+    mov w0, #1
     bl string_value_of_any
     mov x9, x0
     mov x0, x9
-    mov x1, #1
+    mov x1, #0
     bl print_string
     mov x0, x9
     bl free
 
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=a >= b: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'a >= b: '
+    // Imprimir string literal ': '
     adrp x0, STRLIT_24
     add x0, x0, :lo12:STRLIT_24
     mov x1, #0
     bl print_string
 
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
+    // Imprimir variable global 'nombreActual'
+    adrp x0, GV_nombreActual
+    add x0, x0, :lo12:GV_nombreActual
+    // tipo tag=9
+    mov x1, #9
+    mov x2, #1
+    bl print_any_gv
+
+    // ===== Fin System.out.println =====
+
+    // IF statement
+    // Cargar entero literal 90 en registro x8
+    mov x8, #90
     str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
+    // Cargar variable global 'notaActual' en registro x9
+    adrp x9, GV_notaActual
+    add x9, x9, :lo12:GV_notaActual
     ldr x9, [x9]
     ldr x8, [sp], #16
     // Operación MAYOR O IGUAL: comparar x9 >= x8
     cmp x9, x8
-    cset x1, ge
-    mov w0, #4
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
+    cset x9, ge
+    cmp x9, #0
+    b.eq endif_35
+    // Bloque IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=a <= b: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'a <= b: '
+# # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# #   expresion tipo=0
+# # # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# # #   expresion tipo=0
+# # # # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# # # #   prim tipo=9 valor=Destacado encontrado: 
+# # # # AST node: IDENTIFICADOR iptr=0x57ece99278d1 children=0
+# # # #   id nombre=nombreActual
+# # # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# # #   prim tipo=9 valor= con 
+# # AST node: UNKNOWN iptr=0x57ece992286c children=0
+    // Imprimir string literal 'Destacado encontrado: '
     adrp x0, STRLIT_25
     add x0, x0, :lo12:STRLIT_25
     mov x1, #0
     bl print_string
 
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación MENOR O IGUAL: comparar x9 <= x8
-    cmp x9, x8
-    cset x1, le
-    mov w0, #4
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
+    // Imprimir variable global 'nombreActual'
+    adrp x0, GV_nombreActual
+    add x0, x0, :lo12:GV_nombreActual
+    // tipo tag=9
+    mov x1, #9
+    mov x2, #0
+    bl print_any_gv
 
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=a == b: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'a == b: '
+    // Imprimir string literal ' con '
     adrp x0, STRLIT_26
     add x0, x0, :lo12:STRLIT_26
     mov x1, #0
     bl print_string
 
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación IGUALDAD: comparar x9 == x8
-    cmp x9, x8
-    cset x1, eq
-    mov w0, #4
+    adrp x1, GV_notaActual
+    add x1, x1, :lo12:GV_notaActual
+    ldr x1, [x1]
+    mov w0, #1
     bl string_value_of_any
     mov x9, x0
     mov x0, x9
@@ -1451,32 +1265,57 @@ _start:
 
     // ===== Fin System.out.println =====
 
+    // Evaluar expresión compleja para 'estudiantesDestacados'
+    adrp x11, GV_estudiantesDestacados
+    add x11, x11, :lo12:GV_estudiantesDestacados
+    // Cargar entero literal 1 en registro x8
+    mov x8, #1
+    str x8, [sp, #-16]!
+    // Cargar variable global 'estudiantesDestacados' en registro x9
+    adrp x9, GV_estudiantesDestacados
+    add x9, x9, :lo12:GV_estudiantesDestacados
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación SUMA de enteros
+    add x2, x9, x8
+    str x2, [x11]
+
+endif_35:
+    // Fin IF
+    // Evaluar expresión compleja para 'estudianteActual'
+    adrp x11, GV_estudianteActual
+    add x11, x11, :lo12:GV_estudianteActual
+    // Cargar entero literal 1 en registro x8
+    mov x8, #1
+    str x8, [sp, #-16]!
+    // Cargar variable global 'estudianteActual' en registro x9
+    adrp x9, GV_estudianteActual
+    add x9, x9, :lo12:GV_estudianteActual
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación SUMA de enteros
+    add x2, x9, x8
+    str x2, [x11]
+
+    b while_loop_22
+while_end_23:
+    // Fin WHILE
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=a != b: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'a != b: '
+# # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# #   prim tipo=9 valor=Total de estudiantes destacados: 
+# # AST node: UNKNOWN iptr=0x57ece992286c children=0
+    // Imprimir string literal 'Total de estudiantes destacados: '
     adrp x0, STRLIT_27
     add x0, x0, :lo12:STRLIT_27
     mov x1, #0
     bl print_string
 
-    // Cargar variable global 'b' en registro x8
-    adrp x8, GV_b
-    add x8, x8, :lo12:GV_b
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'a' en registro x9
-    adrp x9, GV_a
-    add x9, x9, :lo12:GV_a
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación DESIGUALDAD: comparar x9 != x8
-    cmp x9, x8
-    cset x1, ne
-    mov w0, #4
+    adrp x1, GV_estudiantesDestacados
+    add x1, x1, :lo12:GV_estudiantesDestacados
+    ldr x1, [x1]
+    mov w0, #1
     bl string_value_of_any
     mov x9, x0
     mov x0, x9
@@ -1488,9 +1327,9 @@ _start:
     // ===== Fin System.out.println =====
 
     // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- OPERACIONES LOGICAS ---
-    // Imprimir string literal '\n--- OPERACIONES LOGICAS ---'
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=\nContador regresivo:
+    // Imprimir string literal '\nContador regresivo:'
     adrp x0, STRLIT_28
     add x0, x0, :lo12:STRLIT_28
     mov x1, #1
@@ -1498,196 +1337,447 @@ _start:
 
     // ===== Fin System.out.println =====
 
+    // WHILE statement
+while_loop_36:
+    // Cargar entero literal 0 en registro x8
+    mov x8, #0
+    str x8, [sp, #-16]!
+    // Cargar variable global 'contador' en registro x9
+    adrp x9, GV_contador
+    add x9, x9, :lo12:GV_contador
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR QUE: comparar x9 > x8
+    cmp x9, x8
+    cset x9, gt
+    cmp x9, #0
+    b.eq while_end_37
+    // Bloque WHILE
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=condicion1 = 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'condicion1 = '
+# # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# #   expresion tipo=0
+# # # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# # #   prim tipo=9 valor=Quedan: 
+# # # AST node: UNKNOWN iptr=0x57ece992286c children=0
+# # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# #   prim tipo=9 valor= estudiantes por procesar
+    // Imprimir string literal 'Quedan: '
     adrp x0, STRLIT_29
     add x0, x0, :lo12:STRLIT_29
     mov x1, #0
     bl print_string
 
-    adrp x1, GV_condicion1
-    add x1, x1, :lo12:GV_condicion1
+    adrp x1, GV_contador
+    add x1, x1, :lo12:GV_contador
     ldr x1, [x1]
-    mov w0, #4
+    mov w0, #1
     bl string_value_of_any
     mov x9, x0
     mov x0, x9
-    mov x1, #1
+    mov x1, #0
     bl print_string
     mov x0, x9
     bl free
 
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=condicion2 = 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'condicion2 = '
+    // Imprimir string literal ' estudiantes por procesar'
     adrp x0, STRLIT_30
     add x0, x0, :lo12:STRLIT_30
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_condicion2
-    add x1, x1, :lo12:GV_condicion2
-    ldr x1, [x1]
-    mov w0, #4
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
     mov x1, #1
     bl print_string
-    mov x0, x9
-    bl free
 
     // ===== Fin System.out.println =====
 
+    // Evaluar expresión compleja para 'contador'
+    adrp x11, GV_contador
+    add x11, x11, :lo12:GV_contador
+    // Cargar entero literal 1 en registro x8
+    mov x8, #1
+    str x8, [sp, #-16]!
+    // Cargar variable global 'contador' en registro x9
+    adrp x9, GV_contador
+    add x9, x9, :lo12:GV_contador
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación RESTA de enteros
+    sub x2, x9, x8
+    str x2, [x11]
+
+    b while_loop_36
+while_end_37:
+    // Fin WHILE
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=condicion1 && condicion2: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'condicion1 && condicion2: '
+# AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+#   prim tipo=9 valor=\nBusqueda de estudiante joven con buena nota:
+    // Imprimir string literal '\nBusqueda de estudiante joven con buena nota:'
     adrp x0, STRLIT_31
     add x0, x0, :lo12:STRLIT_31
-    mov x1, #0
+    mov x1, #1
     bl print_string
 
-    // Cargar variable global 'condicion2' en registro x8
-    adrp x8, GV_condicion2
-    add x8, x8, :lo12:GV_condicion2
-    ldr x8, [x8]
+    // ===== Fin System.out.println =====
+
+    // WHILE statement
+while_loop_38:
+    // Cargar entero literal 0 en registro x8
+    mov x8, #0
     str x8, [sp, #-16]!
-    // Cargar variable global 'condicion1' en registro x9
-    adrp x9, GV_condicion1
-    add x9, x9, :lo12:GV_condicion1
+    // Cargar variable global 'estudiantesDestacados' en registro x9
+    adrp x9, GV_estudiantesDestacados
+    add x9, x9, :lo12:GV_estudiantesDestacados
     ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR QUE: comparar x9 > x8
+    cmp x9, x8
+    cset x8, gt
+    str x8, [sp, #-16]!
+    // Cargar entero literal 5 en registro x8
+    mov x8, #5
+    str x8, [sp, #-16]!
+    // Cargar variable global 'indice' en registro x9
+    adrp x9, GV_indice
+    add x9, x9, :lo12:GV_indice
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MENOR O IGUAL: comparar x9 <= x8
+    cmp x9, x8
+    cset x9, le
     ldr x8, [sp], #16
     // Operación AND LÓGICO: x9 && x8
     cmp x9, #0
-    csel x1, xzr, x8, eq
-    cmp x1, #0
-    cset x1, ne
-    mov w0, #4
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
+    csel x9, xzr, x8, eq
+    cmp x9, #0
+    cset x9, ne
+    cmp x9, #0
+    b.eq while_end_39
+    // Bloque WHILE
+    // IF statement
+    // Cargar entero literal 1 en registro x8
+    mov x8, #1
+    str x8, [sp, #-16]!
+    // Cargar variable global 'indice' en registro x9
+    adrp x9, GV_indice
+    add x9, x9, :lo12:GV_indice
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq else_40
+    // Bloque IF
+    // Asignar identificador 'estudiante1' a variable 'nombre'
+    adrp x1, GV_estudiante1
+    add x1, x1, :lo12:GV_estudiante1
+    ldr x2, [x1]
+    adrp x3, GV_nombre
+    add x3, x3, :lo12:GV_nombre
+    str x2, [x3]
 
-    // ===== Fin System.out.println =====
+    // Asignar identificador 'nota1' a variable 'nota'
+    adrp x1, GV_nota1
+    add x1, x1, :lo12:GV_nota1
+    ldr x2, [x1]
+    adrp x3, GV_nota
+    add x3, x3, :lo12:GV_nota
+    str x2, [x3]
 
+    // Asignar identificador 'edad1' a variable 'edad'
+    adrp x1, GV_edad1
+    add x1, x1, :lo12:GV_edad1
+    ldr x2, [x1]
+    adrp x3, GV_edad
+    add x3, x3, :lo12:GV_edad
+    str x2, [x3]
+
+    b endif_41
+else_40:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 2 en registro x8
+    mov x8, #2
+    str x8, [sp, #-16]!
+    // Cargar variable global 'indice' en registro x9
+    adrp x9, GV_indice
+    add x9, x9, :lo12:GV_indice
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq else_42
+    // Bloque IF
+    // Asignar identificador 'estudiante2' a variable 'nombre'
+    adrp x1, GV_estudiante2
+    add x1, x1, :lo12:GV_estudiante2
+    ldr x2, [x1]
+    adrp x3, GV_nombre
+    add x3, x3, :lo12:GV_nombre
+    str x2, [x3]
+
+    // Asignar identificador 'nota2' a variable 'nota'
+    adrp x1, GV_nota2
+    add x1, x1, :lo12:GV_nota2
+    ldr x2, [x1]
+    adrp x3, GV_nota
+    add x3, x3, :lo12:GV_nota
+    str x2, [x3]
+
+    // Asignar identificador 'edad2' a variable 'edad'
+    adrp x1, GV_edad2
+    add x1, x1, :lo12:GV_edad2
+    ldr x2, [x1]
+    adrp x3, GV_edad
+    add x3, x3, :lo12:GV_edad
+    str x2, [x3]
+
+    b endif_43
+else_42:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 3 en registro x8
+    mov x8, #3
+    str x8, [sp, #-16]!
+    // Cargar variable global 'indice' en registro x9
+    adrp x9, GV_indice
+    add x9, x9, :lo12:GV_indice
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq else_44
+    // Bloque IF
+    // Asignar identificador 'estudiante3' a variable 'nombre'
+    adrp x1, GV_estudiante3
+    add x1, x1, :lo12:GV_estudiante3
+    ldr x2, [x1]
+    adrp x3, GV_nombre
+    add x3, x3, :lo12:GV_nombre
+    str x2, [x3]
+
+    // Asignar identificador 'nota3' a variable 'nota'
+    adrp x1, GV_nota3
+    add x1, x1, :lo12:GV_nota3
+    ldr x2, [x1]
+    adrp x3, GV_nota
+    add x3, x3, :lo12:GV_nota
+    str x2, [x3]
+
+    // Asignar identificador 'edad3' a variable 'edad'
+    adrp x1, GV_edad3
+    add x1, x1, :lo12:GV_edad3
+    ldr x2, [x1]
+    adrp x3, GV_edad
+    add x3, x3, :lo12:GV_edad
+    str x2, [x3]
+
+    b endif_45
+else_44:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 4 en registro x8
+    mov x8, #4
+    str x8, [sp, #-16]!
+    // Cargar variable global 'indice' en registro x9
+    adrp x9, GV_indice
+    add x9, x9, :lo12:GV_indice
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq else_46
+    // Bloque IF
+    // Asignar identificador 'estudiante4' a variable 'nombre'
+    adrp x1, GV_estudiante4
+    add x1, x1, :lo12:GV_estudiante4
+    ldr x2, [x1]
+    adrp x3, GV_nombre
+    add x3, x3, :lo12:GV_nombre
+    str x2, [x3]
+
+    // Asignar identificador 'nota4' a variable 'nota'
+    adrp x1, GV_nota4
+    add x1, x1, :lo12:GV_nota4
+    ldr x2, [x1]
+    adrp x3, GV_nota
+    add x3, x3, :lo12:GV_nota
+    str x2, [x3]
+
+    // Asignar identificador 'edad4' a variable 'edad'
+    adrp x1, GV_edad4
+    add x1, x1, :lo12:GV_edad4
+    ldr x2, [x1]
+    adrp x3, GV_edad
+    add x3, x3, :lo12:GV_edad
+    str x2, [x3]
+
+    b endif_47
+else_46:
+    // Bloque ELSE
+    // IF statement
+    // Cargar entero literal 5 en registro x8
+    mov x8, #5
+    str x8, [sp, #-16]!
+    // Cargar variable global 'indice' en registro x9
+    adrp x9, GV_indice
+    add x9, x9, :lo12:GV_indice
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación IGUALDAD: comparar x9 == x8
+    cmp x9, x8
+    cset x9, eq
+    cmp x9, #0
+    b.eq endif_49
+    // Bloque IF
+    // Asignar identificador 'estudiante5' a variable 'nombre'
+    adrp x1, GV_estudiante5
+    add x1, x1, :lo12:GV_estudiante5
+    ldr x2, [x1]
+    adrp x3, GV_nombre
+    add x3, x3, :lo12:GV_nombre
+    str x2, [x3]
+
+    // Asignar identificador 'nota5' a variable 'nota'
+    adrp x1, GV_nota5
+    add x1, x1, :lo12:GV_nota5
+    ldr x2, [x1]
+    adrp x3, GV_nota
+    add x3, x3, :lo12:GV_nota
+    str x2, [x3]
+
+    // Asignar identificador 'edad5' a variable 'edad'
+    adrp x1, GV_edad5
+    add x1, x1, :lo12:GV_edad5
+    ldr x2, [x1]
+    adrp x3, GV_edad
+    add x3, x3, :lo12:GV_edad
+    str x2, [x3]
+
+endif_49:
+    // Fin IF
+endif_47:
+    // Fin IF
+endif_45:
+    // Fin IF
+endif_43:
+    // Fin IF
+endif_41:
+    // Fin IF
+    // IF statement
+    // Cargar entero literal 20 en registro x8
+    mov x8, #20
+    str x8, [sp, #-16]!
+    // Cargar variable global 'edad' en registro x9
+    adrp x9, GV_edad
+    add x9, x9, :lo12:GV_edad
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MENOR O IGUAL: comparar x9 <= x8
+    cmp x9, x8
+    cset x8, le
+    str x8, [sp, #-16]!
+    // Cargar entero literal 90 en registro x8
+    mov x8, #90
+    str x8, [sp, #-16]!
+    // Cargar variable global 'nota' en registro x9
+    adrp x9, GV_nota
+    add x9, x9, :lo12:GV_nota
+    ldr x9, [x9]
+    ldr x8, [sp], #16
+    // Operación MAYOR O IGUAL: comparar x9 >= x8
+    cmp x9, x8
+    cset x9, ge
+    ldr x8, [sp], #16
+    // Operación AND LÓGICO: x9 && x8
+    cmp x9, #0
+    csel x9, xzr, x8, eq
+    cmp x9, #0
+    cset x9, ne
+    cmp x9, #0
+    b.eq endif_51
+    // Bloque IF
     // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
+# AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
 #   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=condicion1 || condicion2: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'condicion1 || condicion2: '
+# # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# #   expresion tipo=0
+# # # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# # #   expresion tipo=0
+# # # # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# # # #   expresion tipo=0
+# # # # # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# # # # #   expresion tipo=0
+# # # # # # AST node: EXPRESION_LENGUAJE iptr=0x57ece992723b children=2
+# # # # # #   expresion tipo=0
+# # # # # # # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# # # # # # #   prim tipo=9 valor=Estudiante joven destacado: 
+# # # # # # # AST node: IDENTIFICADOR iptr=0x57ece99278d1 children=0
+# # # # # # #   id nombre=nombre
+# # # # # # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# # # # # #   prim tipo=9 valor= (Edad: 
+# # # # # AST node: UNKNOWN iptr=0x57ece992286c children=0
+# # # # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# # # #   prim tipo=9 valor=, Nota: 
+# # # AST node: UNKNOWN iptr=0x57ece992286c children=0
+# # AST node: PRIMITIVO iptr=0x57ece99279ce children=0
+# #   prim tipo=9 valor=)
+    // Imprimir string literal 'Estudiante joven destacado: '
     adrp x0, STRLIT_32
     add x0, x0, :lo12:STRLIT_32
     mov x1, #0
     bl print_string
 
-    // Cargar variable global 'condicion2' en registro x8
-    adrp x8, GV_condicion2
-    add x8, x8, :lo12:GV_condicion2
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'condicion1' en registro x9
-    adrp x9, GV_condicion1
-    add x9, x9, :lo12:GV_condicion1
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación OR LÓGICO: x9 || x8
-    cmp x9, #0
-    csel x1, x8, x9, eq
-    cmp x1, #0
-    cset x1, ne
-    mov w0, #4
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
+    // Imprimir variable global 'nombre'
+    adrp x0, GV_nombre
+    add x0, x0, :lo12:GV_nombre
+    // tipo tag=9
+    mov x1, #9
+    mov x2, #0
+    bl print_any_gv
 
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=!condicion1: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal '!condicion1: '
+    // Imprimir string literal ' (Edad: '
     adrp x0, STRLIT_33
     add x0, x0, :lo12:STRLIT_33
     mov x1, #0
     bl print_string
 
-    // Cargar variable global 'condicion1' en registro x9
-    adrp x9, GV_condicion1
-    add x9, x9, :lo12:GV_condicion1
-    ldr x9, [x9]
-    cmp x9, #0
-    cset x1, eq
-    mov w0, #4
+    adrp x1, GV_edad
+    add x1, x1, :lo12:GV_edad
+    ldr x1, [x1]
+    mov w0, #1
     bl string_value_of_any
     mov x9, x0
     mov x0, x9
-    mov x1, #1
+    mov x1, #0
     bl print_string
     mov x0, x9
     bl free
 
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=!condicion2: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal '!condicion2: '
+    // Imprimir string literal ', Nota: '
     adrp x0, STRLIT_34
     add x0, x0, :lo12:STRLIT_34
     mov x1, #0
     bl print_string
 
-    // Cargar variable global 'condicion2' en registro x9
-    adrp x9, GV_condicion2
-    add x9, x9, :lo12:GV_condicion2
-    ldr x9, [x9]
-    cmp x9, #0
-    cset x1, eq
-    mov w0, #4
+    adrp x1, GV_nota
+    add x1, x1, :lo12:GV_nota
+    ldr x1, [x1]
+    mov w0, #1
     bl string_value_of_any
     mov x9, x0
     mov x0, x9
-    mov x1, #1
+    mov x1, #0
     bl print_string
     mov x0, x9
     bl free
 
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- OPERADORES DE BITS ---
-    // Imprimir string literal '\n--- OPERADORES DE BITS ---'
+    // Imprimir string literal ')'
     adrp x0, STRLIT_35
     add x0, x0, :lo12:STRLIT_35
     mov x1, #1
@@ -1695,1355 +1785,27 @@ _start:
 
     // ===== Fin System.out.println =====
 
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # #   prim tipo=9 valor=x = 
-# # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor= (binario: 1100)
-    // Imprimir string literal 'x = '
-    adrp x0, STRLIT_36
-    add x0, x0, :lo12:STRLIT_36
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_x
-    add x1, x1, :lo12:GV_x
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // Imprimir string literal ' (binario: 1100)'
-    adrp x0, STRLIT_37
-    add x0, x0, :lo12:STRLIT_37
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # #   prim tipo=9 valor=y = 
-# # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor= (binario: 1010)
-    // Imprimir string literal 'y = '
-    adrp x0, STRLIT_38
-    add x0, x0, :lo12:STRLIT_38
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_y
-    add x1, x1, :lo12:GV_y
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // Imprimir string literal ' (binario: 1010)'
-    adrp x0, STRLIT_39
-    add x0, x0, :lo12:STRLIT_39
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=x & y (AND): 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'x & y (AND): '
-    adrp x0, STRLIT_40
-    add x0, x0, :lo12:STRLIT_40
-    mov x1, #0
-    bl print_string
-
-    // Cargar variable global 'y' en registro x8
-    adrp x8, GV_y
-    add x8, x8, :lo12:GV_y
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'x' en registro x9
-    adrp x9, GV_x
-    add x9, x9, :lo12:GV_x
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación AND DE BITS: x1 = x9 & x8
-    and x1, x9, x8
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=x | y (OR): 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'x | y (OR): '
-    adrp x0, STRLIT_41
-    add x0, x0, :lo12:STRLIT_41
-    mov x1, #0
-    bl print_string
-
-    // Cargar variable global 'y' en registro x8
-    adrp x8, GV_y
-    add x8, x8, :lo12:GV_y
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'x' en registro x9
-    adrp x9, GV_x
-    add x9, x9, :lo12:GV_x
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación OR DE BITS: x1 = x9 | x8
-    orr x1, x9, x8
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=x ^ y (XOR): 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'x ^ y (XOR): '
-    adrp x0, STRLIT_42
-    add x0, x0, :lo12:STRLIT_42
-    mov x1, #0
-    bl print_string
-
-    // Cargar variable global 'y' en registro x8
-    adrp x8, GV_y
-    add x8, x8, :lo12:GV_y
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'x' en registro x9
-    adrp x9, GV_x
-    add x9, x9, :lo12:GV_x
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación XOR DE BITS: x1 = x9 ^ x8
-    eor x1, x9, x8
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- DESPLAZAMIENTO DE BITS ---
-    // Imprimir string literal '\n--- DESPLAZAMIENTO DE BITS ---'
-    adrp x0, STRLIT_43
-    add x0, x0, :lo12:STRLIT_43
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=valor = 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'valor = '
-    adrp x0, STRLIT_44
-    add x0, x0, :lo12:STRLIT_44
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_valorDesplazamiento
-    add x1, x1, :lo12:GV_valorDesplazamiento
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=valor << 2: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'valor << 2: '
-    adrp x0, STRLIT_45
-    add x0, x0, :lo12:STRLIT_45
-    mov x1, #0
-    bl print_string
-
-    // Cargar entero literal 2 en registro x8
-    mov x8, #2
-    str x8, [sp, #-16]!
-    // Cargar variable global 'valorDesplazamiento' en registro x9
-    adrp x9, GV_valorDesplazamiento
-    add x9, x9, :lo12:GV_valorDesplazamiento
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación DESPLAZAMIENTO IZQUIERDA: x1 = x9 << x8
-    lsl x1, x9, x8
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=valor >> 2: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'valor >> 2: '
-    adrp x0, STRLIT_46
-    add x0, x0, :lo12:STRLIT_46
-    mov x1, #0
-    bl print_string
-
-    // Cargar entero literal 2 en registro x8
-    mov x8, #2
-    str x8, [sp, #-16]!
-    // Cargar variable global 'valorDesplazamiento' en registro x9
-    adrp x9, GV_valorDesplazamiento
-    add x9, x9, :lo12:GV_valorDesplazamiento
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación DESPLAZAMIENTO DERECHA: x1 = x9 >> x8
-    asr x1, x9, x8
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- SECUENCIAS DE ESCAPE ---
-    // Imprimir string literal '\n--- SECUENCIAS DE ESCAPE ---'
-    adrp x0, STRLIT_47
-    add x0, x0, :lo12:STRLIT_47
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=Comillas dobles: "Hola mundo"
-    // Imprimir string literal 'Comillas dobles: \"Hola mundo\"'
-    adrp x0, STRLIT_48
-    add x0, x0, :lo12:STRLIT_48
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=Barra invertida: \
-    // Imprimir string literal 'Barra invertida: \\'
-    adrp x0, STRLIT_49
-    add x0, x0, :lo12:STRLIT_49
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=Nueva línea:\nTexto en línea nueva
-    // Imprimir string literal 'Nueva l\xC3\xADnea:\nTexto en l\xC3\xADnea nueva'
-    adrp x0, STRLIT_50
-    add x0, x0, :lo12:STRLIT_50
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=Retorno de carro:\rTexto con retorno
-    // Imprimir string literal 'Retorno de carro:\rTexto con retorno'
-    adrp x0, STRLIT_51
-    add x0, x0, :lo12:STRLIT_51
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=Tabulación:\t\tTexto con tab
-    // Imprimir string literal 'Tabulaci\xC3\xB3n:\t\tTexto con tab'
-    adrp x0, STRLIT_52
-    add x0, x0, :lo12:STRLIT_52
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=Línea antes del salto compuesto\r\nLínea después del salto compuesto
-    // Imprimir string literal 'L\xC3\xADnea antes del salto compuesto\r\nL\xC3\xADnea despu\xC3\xA9s del salto compuesto'
-    adrp x0, STRLIT_53
-    add x0, x0, :lo12:STRLIT_53
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- MANEJO DE NULL ---
-    // Imprimir string literal '\n--- MANEJO DE NULL ---'
-    adrp x0, STRLIT_55
-    add x0, x0, :lo12:STRLIT_55
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // IF statement
-    // Cargar string literal 'null' en registro x8
-    adrp x8, STRLIT_54
-    add x8, x8, :lo12:STRLIT_54
-    str x8, [sp, #-16]!
-    // Cargar variable global 'textoNulo' en registro x9
-    adrp x9, GV_textoNulo
-    add x9, x9, :lo12:GV_textoNulo
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación IGUALDAD: comparar x9 == x8
-    cmp x9, x8
-    cset x9, eq
-    cmp x9, #0
-    b.eq endif_1
-    // Bloque IF
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=La variable textoNulo es null
-    // Imprimir string literal 'La variable textoNulo es null'
-    adrp x0, STRLIT_56
-    add x0, x0, :lo12:STRLIT_56
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // Asignar string 'Valor asignado después de verificar null' a variable global 'textoNulo'
-    adrp x1, GV_textoNulo
-    add x1, x1, :lo12:GV_textoNulo
-    adrp x2, STRLIT_57
-    add x2, x2, :lo12:STRLIT_57
-    str x2, [x1]
-
-endif_1:
+endif_51:
     // Fin IF
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=textoNulo ahora: 
-# # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# #   id nombre=textoNulo
-    // Imprimir string literal 'textoNulo ahora: '
-    adrp x0, STRLIT_58
-    add x0, x0, :lo12:STRLIT_58
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'textoNulo'
-    adrp x0, GV_textoNulo
-    add x0, x0, :lo12:GV_textoNulo
-    // tipo tag=9
-    mov x1, #9
-    mov x2, #1
-    bl print_any_gv
-
-    // ===== Fin System.out.println =====
-
-    // IF statement
-    // Cargar string literal 'null' en registro x8
-    adrp x8, STRLIT_54
-    add x8, x8, :lo12:STRLIT_54
+    // Evaluar expresión compleja para 'indice'
+    adrp x11, GV_indice
+    add x11, x11, :lo12:GV_indice
+    // Cargar entero literal 1 en registro x8
+    mov x8, #1
     str x8, [sp, #-16]!
-    // Cargar variable global 'otroTextoNulo' en registro x9
-    adrp x9, GV_otroTextoNulo
-    add x9, x9, :lo12:GV_otroTextoNulo
+    // Cargar variable global 'indice' en registro x9
+    adrp x9, GV_indice
+    add x9, x9, :lo12:GV_indice
     ldr x9, [x9]
     ldr x8, [sp], #16
-    // Operación IGUALDAD: comparar x9 == x8
-    cmp x9, x8
-    cset x9, eq
-    cmp x9, #0
-    b.eq else_2
-    // Bloque IF
-    // Asignar string 'Es null' a variable global 'resultado'
-    adrp x1, GV_resultado
-    add x1, x1, :lo12:GV_resultado
-    adrp x2, STRLIT_59
-    add x2, x2, :lo12:STRLIT_59
-    str x2, [x1]
-
-    b endif_3
-else_2:
-    // Bloque ELSE
-endif_3:
-    // Fin IF
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Resultado condicional: 
-# # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# #   id nombre=resultado
-    // Imprimir string literal 'Resultado condicional: '
-    adrp x0, STRLIT_60
-    add x0, x0, :lo12:STRLIT_60
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'resultado'
-    adrp x0, GV_resultado
-    add x0, x0, :lo12:GV_resultado
-    // tipo tag=9
-    mov x1, #9
-    mov x2, #1
-    bl print_any_gv
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- WIDENING CASTING AUTOMATICO ---
-    // Imprimir string literal '\n--- WIDENING CASTING AUTOMATICO ---'
-    adrp x0, STRLIT_61
-    add x0, x0, :lo12:STRLIT_61
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // Declaración con casting automático: codigoAscii = letraInicial (char->int)
-    adrp x1, GV_codigoAscii
-    add x1, x1, :lo12:GV_codigoAscii
-    adrp x2, GV_letraInicial
-    add x2, x2, :lo12:GV_letraInicial
-    ldrb w2, [x2]
-    sxtb x2, w2
-    str x2, [x1]
-
-    // Declaración con casting automático: codigoFloat = codigoAscii (int->float)
-    adrp x1, GV_codigoFloat
-    add x1, x1, :lo12:GV_codigoFloat
-    adrp x2, GV_codigoAscii
-    add x2, x2, :lo12:GV_codigoAscii
-    ldr x2, [x2]
-    scvtf s2, x2
-    str s2, [x1]
-
-    // Declaración con casting automático: codigoDouble = codigoFloat (float->double)
-    adrp x1, GV_codigoDouble
-    add x1, x1, :lo12:GV_codigoDouble
-    adrp x2, GV_codigoFloat
-    add x2, x2, :lo12:GV_codigoFloat
-    ldr s2, [x2]
-    fcvt d2, s2
-    str d2, [x1]
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=Casting automático progresivo:
-    // Imprimir string literal 'Casting autom\xC3\xA1tico progresivo:'
-    adrp x0, STRLIT_62
-    add x0, x0, :lo12:STRLIT_62
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # #   expresion tipo=0
-# # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # #   prim tipo=9 valor=char 
-# # # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # #   prim tipo=9 valor= -> int 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'char '
-    adrp x0, STRLIT_63
-    add x0, x0, :lo12:STRLIT_63
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_letraInicial
-    add x1, x1, :lo12:GV_letraInicial
-    ldr x1, [x1]
-    mov w0, #5
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // Imprimir string literal ' -> int '
-    adrp x0, STRLIT_64
-    add x0, x0, :lo12:STRLIT_64
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_codigoAscii
-    add x1, x1, :lo12:GV_codigoAscii
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # #   expresion tipo=0
-# # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # #   prim tipo=9 valor=int 
-# # # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # #   prim tipo=9 valor= -> float 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'int '
-    adrp x0, STRLIT_65
-    add x0, x0, :lo12:STRLIT_65
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_codigoAscii
-    add x1, x1, :lo12:GV_codigoAscii
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // Imprimir string literal ' -> float '
-    adrp x0, STRLIT_66
-    add x0, x0, :lo12:STRLIT_66
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_codigoFloat
-    add x1, x1, :lo12:GV_codigoFloat
-    ldr x1, [x1]
-    mov w0, #3
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # #   expresion tipo=0
-# # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # #   prim tipo=9 valor=float 
-# # # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # #   prim tipo=9 valor= -> double 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'float '
-    adrp x0, STRLIT_67
-    add x0, x0, :lo12:STRLIT_67
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_codigoFloat
-    add x1, x1, :lo12:GV_codigoFloat
-    ldr x1, [x1]
-    mov w0, #3
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // Imprimir string literal ' -> double '
-    adrp x0, STRLIT_68
-    add x0, x0, :lo12:STRLIT_68
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_codigoDouble
-    add x1, x1, :lo12:GV_codigoDouble
-    ldr x1, [x1]
-    mov w0, #2
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- NARROWING CASTING MANUAL ---
-    // Imprimir string literal '\n--- NARROWING CASTING MANUAL ---'
-    adrp x0, STRLIT_69
-    add x0, x0, :lo12:STRLIT_69
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // Declaración con casting: valorMedio = (float) valorGrande (origen tipo=8)
-    adrp x1, GV_valorMedio
-    add x1, x1, :lo12:GV_valorMedio
-    adrp x2, GV_valorGrande
-    add x2, x2, :lo12:GV_valorGrande
-    ldr d2, [x2]
-    fcvt s2, d2
-    str s2, [x1]
-
-    // Declaración con casting: valorEntero = (int) valorMedio (origen tipo=7)
-    adrp x1, GV_valorEntero
-    add x1, x1, :lo12:GV_valorEntero
-    adrp x2, GV_valorMedio
-    add x2, x2, :lo12:GV_valorMedio
-    ldr s2, [x2]
-    fcvtzs x2, s2
-    str x2, [x1]
-
-    // Declaración con casting: caracterFinal = (char) valorEntero
-    adrp x1, GV_caracterFinal
-    add x1, x1, :lo12:GV_caracterFinal
-    adrp x2, GV_valorEntero
-    add x2, x2, :lo12:GV_valorEntero
-    ldr x2, [x2]
-    strb w2, [x1]
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=Casting manual regresivo:
-    // Imprimir string literal 'Casting manual regresivo:'
-    adrp x0, STRLIT_70
-    add x0, x0, :lo12:STRLIT_70
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # #   expresion tipo=0
-# # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # #   prim tipo=9 valor=double 
-# # # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # #   prim tipo=9 valor= -> float 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'double '
-    adrp x0, STRLIT_71
-    add x0, x0, :lo12:STRLIT_71
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_valorGrande
-    add x1, x1, :lo12:GV_valorGrande
-    ldr x1, [x1]
-    mov w0, #2
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // Imprimir string literal ' -> float '
-    adrp x0, STRLIT_66
-    add x0, x0, :lo12:STRLIT_66
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_valorMedio
-    add x1, x1, :lo12:GV_valorMedio
-    ldr x1, [x1]
-    mov w0, #3
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # #   expresion tipo=0
-# # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # #   prim tipo=9 valor=float 
-# # # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # #   prim tipo=9 valor= -> int 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'float '
-    adrp x0, STRLIT_67
-    add x0, x0, :lo12:STRLIT_67
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_valorMedio
-    add x1, x1, :lo12:GV_valorMedio
-    ldr x1, [x1]
-    mov w0, #3
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // Imprimir string literal ' -> int '
-    adrp x0, STRLIT_64
-    add x0, x0, :lo12:STRLIT_64
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_valorEntero
-    add x1, x1, :lo12:GV_valorEntero
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # #   expresion tipo=0
-# # # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # # #   expresion tipo=0
-# # # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # # #   prim tipo=9 valor=int 
-# # # # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # #   prim tipo=9 valor= -> char '
-# # # AST node: UNKNOWN iptr=0x604189627602 children=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor='
-    // Imprimir string literal 'int '
-    adrp x0, STRLIT_65
-    add x0, x0, :lo12:STRLIT_65
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_valorEntero
-    add x1, x1, :lo12:GV_valorEntero
-    ldr x1, [x1]
-    mov w0, #1
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // Imprimir string literal ' -> char \''
-    adrp x0, STRLIT_72
-    add x0, x0, :lo12:STRLIT_72
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_caracterFinal
-    add x1, x1, :lo12:GV_caracterFinal
-    ldr x1, [x1]
-    mov w0, #5
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #0
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // Imprimir string literal '\''
-    adrp x0, STRLIT_73
-    add x0, x0, :lo12:STRLIT_73
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // Declaración con expresión compleja: resultadoFinal = expresión
-    adrp x11, GV_resultadoFinal
-    add x11, x11, :lo12:GV_resultadoFinal
-    // Cargar número flotante literal 2.0 en registro x8
-    adrp x8, NUMLIT_5
-    ldr x8, [x8, :lo12:NUMLIT_5]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'codigoAscii' en registro x8
-    adrp x8, GV_codigoAscii
-    add x8, x8, :lo12:GV_codigoAscii
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'valorEntero' en registro x9
-    adrp x9, GV_valorEntero
-    add x9, x9, :lo12:GV_valorEntero
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación SUMA: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_add
-    mov x8, x0
-    str x8, [sp, #-16]!
-    // Cargar variable global 'PI' en registro x9
-    adrp x9, GV_PI
-    add x9, x9, :lo12:GV_PI
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación MULTIPLICACIÓN: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_mul
-    mov x9, x0
-    ldr x8, [sp], #16
-    // Operación DIVISIÓN: detectar tipo de división
-    mov x0, x9
-    mov x1, x8
-    bl double_div
-    mov x2, x0
+    // Operación SUMA de enteros
+    add x2, x9, x8
     str x2, [x11]
 
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- CALCULO FINAL (SIMAULACION CÁLCULO REAL ) ---
-    // Imprimir string literal '\n--- CALCULO FINAL (SIMAULACION C\xC3\x81LCULO REAL ) ---'
-    adrp x0, STRLIT_74
-    add x0, x0, :lo12:STRLIT_74
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor=Resultado científico: 
-# # AST node: UNKNOWN iptr=0x604189627602 children=0
-    // Imprimir string literal 'Resultado cient\xC3\xADfico: '
-    adrp x0, STRLIT_75
-    add x0, x0, :lo12:STRLIT_75
-    mov x1, #0
-    bl print_string
-
-    adrp x1, GV_resultadoFinal
-    add x1, x1, :lo12:GV_resultadoFinal
-    ldr x1, [x1]
-    mov w0, #2
-    bl string_value_of_any
-    mov x9, x0
-    mov x0, x9
-    mov x1, #1
-    bl print_string
-    mov x0, x9
-    bl free
-
-    // ===== Fin System.out.println =====
-
-    // Declaración con expresión compleja: radioCirculoCm = expresión
-    adrp x11, GV_radioCirculoCm
-    add x11, x11, :lo12:GV_radioCirculoCm
-    // Cargar número flotante literal 10.0 en registro x8
-    adrp x8, NUMLIT_6
-    ldr x8, [x8, :lo12:NUMLIT_6]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'codigoAscii' en registro x8
-    adrp x8, GV_codigoAscii
-    add x8, x8, :lo12:GV_codigoAscii
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'valorEntero' en registro x9
-    adrp x9, GV_valorEntero
-    add x9, x9, :lo12:GV_valorEntero
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación SUMA: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_add
-    mov x9, x0
-    ldr x8, [sp], #16
-    // Operación DIVISIÓN: detectar tipo de división
-    mov x0, x9
-    mov x1, x8
-    bl double_div
-    mov x2, x0
-    str x2, [x11]
-
-    // Declaración con expresión compleja: areaCirculoCm2 = expresión
-    adrp x11, GV_areaCirculoCm2
-    add x11, x11, :lo12:GV_areaCirculoCm2
-    // Cargar variable global 'radioCirculoCm' en registro x8
-    adrp x8, GV_radioCirculoCm
-    add x8, x8, :lo12:GV_radioCirculoCm
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'radioCirculoCm' en registro x8
-    adrp x8, GV_radioCirculoCm
-    add x8, x8, :lo12:GV_radioCirculoCm
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'PI' en registro x9
-    adrp x9, GV_PI
-    add x9, x9, :lo12:GV_PI
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación MULTIPLICACIÓN: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_mul
-    mov x9, x0
-    ldr x8, [sp], #16
-    // Operación MULTIPLICACIÓN: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_mul
-    mov x2, x0
-    str x2, [x11]
-
-    // Declaración con expresión compleja: perimetroCirculoCm = expresión
-    adrp x11, GV_perimetroCirculoCm
-    add x11, x11, :lo12:GV_perimetroCirculoCm
-    // Cargar variable global 'radioCirculoCm' en registro x8
-    adrp x8, GV_radioCirculoCm
-    add x8, x8, :lo12:GV_radioCirculoCm
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'PI' en registro x8
-    adrp x8, GV_PI
-    add x8, x8, :lo12:GV_PI
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar entero literal 2 en registro x9
-    mov x9, #2
-    ldr x8, [sp], #16
-    // Operación MULTIPLICACIÓN: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_mul
-    mov x9, x0
-    ldr x8, [sp], #16
-    // Operación MULTIPLICACIÓN: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_mul
-    mov x2, x0
-    str x2, [x11]
-
-    // Declaración con casting automático: baseRectCm = a (int->double)
-    adrp x1, GV_baseRectCm
-    add x1, x1, :lo12:GV_baseRectCm
-    adrp x2, GV_a
-    add x2, x2, :lo12:GV_a
-    ldr x2, [x2]
-    scvtf d2, x2
-    str d2, [x1]
-
-    // Declaración con casting automático: alturaRectCm = b (int->double)
-    adrp x1, GV_alturaRectCm
-    add x1, x1, :lo12:GV_alturaRectCm
-    adrp x2, GV_b
-    add x2, x2, :lo12:GV_b
-    ldr x2, [x2]
-    scvtf d2, x2
-    str d2, [x1]
-
-    // Declaración con expresión compleja: areaRectCm2 = expresión
-    adrp x11, GV_areaRectCm2
-    add x11, x11, :lo12:GV_areaRectCm2
-    // Cargar variable global 'alturaRectCm' en registro x8
-    adrp x8, GV_alturaRectCm
-    add x8, x8, :lo12:GV_alturaRectCm
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'baseRectCm' en registro x9
-    adrp x9, GV_baseRectCm
-    add x9, x9, :lo12:GV_baseRectCm
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación MULTIPLICACIÓN: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_mul
-    mov x2, x0
-    str x2, [x11]
-
-    // Declaración con expresión compleja: perimetroRectCm = expresión
-    adrp x11, GV_perimetroRectCm
-    add x11, x11, :lo12:GV_perimetroRectCm
-    // Cargar variable global 'alturaRectCm' en registro x8
-    adrp x8, GV_alturaRectCm
-    add x8, x8, :lo12:GV_alturaRectCm
-    ldr x8, [x8]
-    str x8, [sp, #-16]!
-    // Cargar variable global 'baseRectCm' en registro x9
-    adrp x9, GV_baseRectCm
-    add x9, x9, :lo12:GV_baseRectCm
-    ldr x9, [x9]
-    ldr x8, [sp], #16
-    // Operación SUMA: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_add
-    mov x8, x0
-    str x8, [sp, #-16]!
-    // Cargar entero literal 2 en registro x9
-    mov x9, #2
-    ldr x8, [sp], #16
-    // Operación MULTIPLICACIÓN: detectar tipo automáticamente
-    mov x0, x9
-    mov x1, x8
-    bl double_mul
-    mov x2, x0
-    str x2, [x11]
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n--- FIGURAS GEOMETRICAS ---
-    // Imprimir string literal '\n--- FIGURAS GEOMETRICAS ---'
-    adrp x0, STRLIT_76
-    add x0, x0, :lo12:STRLIT_76
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # #   expresion tipo=0
-# # # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # # #   expresion tipo=0
-# # # # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # # # #   expresion tipo=0
-# # # # # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # # # # #   expresion tipo=0
-# # # # # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # # # # #   prim tipo=9 valor=Circulo -> radio=
-# # # # # # # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# # # # # # #   id nombre=radioCirculoCm
-# # # # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # # # #   prim tipo=9 valor= cm, area=
-# # # # # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# # # # #   id nombre=areaCirculoCm2
-# # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # #   prim tipo=9 valor= cm^2, perimetro=
-# # # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# # #   id nombre=perimetroCirculoCm
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor= cm
-    // Imprimir string literal 'Circulo -> radio='
-    adrp x0, STRLIT_77
-    add x0, x0, :lo12:STRLIT_77
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'radioCirculoCm'
-    adrp x0, GV_radioCirculoCm
-    add x0, x0, :lo12:GV_radioCirculoCm
-    // tipo tag=8
-    mov x1, #8
-    mov x2, #0
-    bl print_any_gv
-
-    // Imprimir string literal ' cm, area='
-    adrp x0, STRLIT_78
-    add x0, x0, :lo12:STRLIT_78
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'areaCirculoCm2'
-    adrp x0, GV_areaCirculoCm2
-    add x0, x0, :lo12:GV_areaCirculoCm2
-    // tipo tag=8
-    mov x1, #8
-    mov x2, #0
-    bl print_any_gv
-
-    // Imprimir string literal ' cm^2, perimetro='
-    adrp x0, STRLIT_79
-    add x0, x0, :lo12:STRLIT_79
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'perimetroCirculoCm'
-    adrp x0, GV_perimetroCirculoCm
-    add x0, x0, :lo12:GV_perimetroCirculoCm
-    // tipo tag=8
-    mov x1, #8
-    mov x2, #0
-    bl print_any_gv
-
-    // Imprimir string literal ' cm'
-    adrp x0, STRLIT_80
-    add x0, x0, :lo12:STRLIT_80
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-#   expresion tipo=0
-# # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# #   expresion tipo=0
-# # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # #   expresion tipo=0
-# # # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # # #   expresion tipo=0
-# # # # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # # # #   expresion tipo=0
-# # # # # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # # # # #   expresion tipo=0
-# # # # # # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # # # # # #   expresion tipo=0
-# # # # # # # # AST node: EXPRESION_LENGUAJE iptr=0x60418962bfd1 children=2
-# # # # # # # #   expresion tipo=0
-# # # # # # # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # # # # # # #   prim tipo=9 valor=Rectangulo -> base=
-# # # # # # # # # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# # # # # # # # #   id nombre=baseRectCm
-# # # # # # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # # # # # #   prim tipo=9 valor= cm, altura=
-# # # # # # # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# # # # # # #   id nombre=alturaRectCm
-# # # # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # # # #   prim tipo=9 valor= cm, area=
-# # # # # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# # # # #   id nombre=areaRectCm2
-# # # # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# # # #   prim tipo=9 valor= cm^2, perimetro=
-# # # AST node: IDENTIFICADOR iptr=0x60418962c667 children=0
-# # #   id nombre=perimetroRectCm
-# # AST node: PRIMITIVO iptr=0x60418962c764 children=0
-# #   prim tipo=9 valor= cm
-    // Imprimir string literal 'Rectangulo -> base='
-    adrp x0, STRLIT_81
-    add x0, x0, :lo12:STRLIT_81
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'baseRectCm'
-    adrp x0, GV_baseRectCm
-    add x0, x0, :lo12:GV_baseRectCm
-    // tipo tag=8
-    mov x1, #8
-    mov x2, #0
-    bl print_any_gv
-
-    // Imprimir string literal ' cm, altura='
-    adrp x0, STRLIT_82
-    add x0, x0, :lo12:STRLIT_82
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'alturaRectCm'
-    adrp x0, GV_alturaRectCm
-    add x0, x0, :lo12:GV_alturaRectCm
-    // tipo tag=8
-    mov x1, #8
-    mov x2, #0
-    bl print_any_gv
-
-    // Imprimir string literal ' cm, area='
-    adrp x0, STRLIT_78
-    add x0, x0, :lo12:STRLIT_78
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'areaRectCm2'
-    adrp x0, GV_areaRectCm2
-    add x0, x0, :lo12:GV_areaRectCm2
-    // tipo tag=8
-    mov x1, #8
-    mov x2, #0
-    bl print_any_gv
-
-    // Imprimir string literal ' cm^2, perimetro='
-    adrp x0, STRLIT_79
-    add x0, x0, :lo12:STRLIT_79
-    mov x1, #0
-    bl print_string
-
-    // Imprimir variable global 'perimetroRectCm'
-    adrp x0, GV_perimetroRectCm
-    add x0, x0, :lo12:GV_perimetroRectCm
-    // tipo tag=8
-    mov x1, #8
-    mov x2, #0
-    bl print_any_gv
-
-    // Imprimir string literal ' cm'
-    adrp x0, STRLIT_80
-    add x0, x0, :lo12:STRLIT_80
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
-    // ===== System.out.println =====
-# AST node: PRIMITIVO iptr=0x60418962c764 children=0
-#   prim tipo=9 valor=\n=== FIN DEL SISTEMA ===
-    // Imprimir string literal '\n=== FIN DEL SISTEMA ==='
-    adrp x0, STRLIT_83
-    add x0, x0, :lo12:STRLIT_83
-    mov x1, #1
-    bl print_string
-
-    // ===== Fin System.out.println =====
-
+    b while_loop_38
+while_end_39:
+    // Fin WHILE
     .section .data
-    .align 8
-NUMLIT_1:
-    .quad 0x40091eb851eb851f
-
-    .align 8
-NUMLIT_2:
-    .quad 0x4005bf0a8b04919b
-
-    .align 8
-NUMLIT_3:
-    .quad 0x4016ae147ae147ae
-
-    .align 8
-NUMLIT_4:
-    .quad 0x4052f8f5c28f5c29
-
-    .align 8
-NUMLIT_5:
-    .quad 0x4000000000000000
-
-    .align 8
-NUMLIT_6:
-    .quad 0x4024000000000000
-
     .section .text
     mov x0, #0
     mov x8, #93

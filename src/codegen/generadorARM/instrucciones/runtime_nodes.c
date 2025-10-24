@@ -2,6 +2,7 @@
 #include "ast/nodos/expresiones/expresiones.h"
 #include "ast/nodos/instrucciones/instruccion/asignaciones/asignacion.h"
 #include "ast/nodos/expresiones/terminales/identificadores.h"
+#include "ast/nodos/instrucciones/instruccion/while.h"
 
 #include "codegen/generadorARM/common.h"
 #include "codegen/generadorARM/expresiones/emit_expr.h"
@@ -93,11 +94,16 @@ void arm_collect_nodes(AbstractExpresion* n, CodegenContext* ctx,
             if (*emitted_count_ptr > 0) {
                 int new_index = *emitted_count_ptr - 1;
                 if (new_index < *emitted_cap_ptr) {
-                    (*emitted_init_values_ptr)[new_index] = NULL;
+                    // NO sobrescribir el valor inicial si ya existe
+                    if ((*emitted_init_values_ptr)[new_index] == NULL) {
+                        (*emitted_init_values_ptr)[new_index] = NULL;
+                    }
                     if (emitted_types_ptr[new_index] == -1) {  // Solo establecer -1 si no se ha establecido ya
                         emitted_types_ptr[new_index] = -1;
                     }
-                    (*emitted_init_ids_ptr)[new_index] = 0;
+                    if ((*emitted_init_ids_ptr)[new_index] == 0) {
+                        (*emitted_init_ids_ptr)[new_index] = 0;
+                    }
                 }
             }
         }
@@ -131,13 +137,25 @@ void arm_collect_nodes(AbstractExpresion* n, CodegenContext* ctx,
             }
             printf("DEBUG: PROCESANDO declaración de variable '%s' tipo=%d\n", dv->nombre, dv->tipo);
             
-            if (*emitted_count_ptr >= *emitted_cap_ptr) {
-                *emitted_cap_ptr *= 2;
-                *emitted_names_ptr = (char**)realloc(*emitted_names_ptr, sizeof(char*) * (*emitted_cap_ptr));
-                *emitted_init_ids_ptr = (int*)realloc(*emitted_init_ids_ptr, sizeof(int) * (*emitted_cap_ptr));
-                *emitted_init_values_ptr = (char**)realloc(*emitted_init_values_ptr, sizeof(char*) * (*emitted_cap_ptr));
-            }
+            // NO hacer realloc aquí - arm_add_emitted_name ya maneja la capacidad
             arm_add_emitted_name(emitted_names_ptr, emitted_count_ptr, emitted_cap_ptr, dv->nombre);
+            
+            // Después de arm_add_emitted_name, sincronizar los otros arrays con la nueva capacidad
+            if (*emitted_count_ptr > *emitted_cap_ptr) {
+                *emitted_cap_ptr = *emitted_count_ptr;
+            }
+            
+            // Realloc solo los arrays que no maneja arm_add_emitted_name
+            int* new_init_ids = (int*)realloc(*emitted_init_ids_ptr, sizeof(int) * (*emitted_cap_ptr));
+            char** new_init_values = (char**)realloc(*emitted_init_values_ptr, sizeof(char*) * (*emitted_cap_ptr));
+            
+            if (!new_init_ids || !new_init_values) {
+                fprintf(stderr, "ERROR: No se pudo asignar memoria para arrays de variables\n");
+                exit(1);
+            }
+            
+            *emitted_init_ids_ptr = new_init_ids;
+            *emitted_init_values_ptr = new_init_values;
             
             // Inicializar los arrays correspondientes para la nueva variable
             if (*emitted_count_ptr > 0) {
@@ -643,6 +661,12 @@ void arm_emit_runtime_nodes(AbstractExpresion* n, CodegenContext* ctx, FILE* f,
         if (ctx->debug) fprintf(f, "# debug: emit runtime if statement\n");
         // Usar la nueva función especializada para IF/ELSE
         arm_emit_if_statement(ctx, n, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+        return;
+    }
+    if (n->interpret == interpretWhileExpresion) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime while statement\n");
+        // Usar la nueva función especializada para WHILE
+        arm_emit_while_statement(ctx, n, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
         return;
     }
     if (n->interpret == interpretCastExpresion) {

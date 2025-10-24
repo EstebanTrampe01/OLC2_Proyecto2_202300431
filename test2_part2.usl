@@ -1,0 +1,16 @@
+public static void main(String[] args) {
+    System.out.println("=== TEST CON IF/ELSE ===");
+    
+    String estudiante1 = "Ana";
+    int nota1 = 85;
+    
+    System.out.println("Estudiante: " + estudiante1);
+    System.out.println("Nota: " + nota1);
+    
+    // IF/ELSE simple
+    if (nota1 >= 90) {
+        System.out.println("Resultado: Apto para beca");
+    } else {
+        System.out.println("Resultado: No apto para beca");
+    }
+}

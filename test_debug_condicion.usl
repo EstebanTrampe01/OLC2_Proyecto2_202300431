@@ -1,0 +1,12 @@
+public static void main(String[] args) {
+    int contador = 3;
+    System.out.println("Contador inicial: " + contador);
+    
+    // Test directo de la condición
+    if (contador > 0) {
+        System.out.println("Condición verdadera - entrando al bloque");
+        System.out.println("En el bloque: " + contador);
+    } else {
+        System.out.println("Condición falsa");
+    }
+}

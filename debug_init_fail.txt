@@ -1,0 +1,4 @@
+DEBUG: PROCESANDO declaración de variable 'contador' tipo=5
+DEBUG: asignando INT strdup para 'contador' -> 0x639801e227b0
+DEBUG: generando variable 'contador' tipo=5 (emitted_types[0]=5)
+DEBUG: RHS de asignación 'contador' es tipo=0x6397f47ed03d

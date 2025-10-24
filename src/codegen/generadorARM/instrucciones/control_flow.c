@@ -69,7 +69,9 @@ void arm_emit_if_statement(CodegenContext* ctx, AbstractExpresion* ifNode, FILE*
     free(end_label);
 }
 
-void arm_emit_while_statement(CodegenContext* ctx, AbstractExpresion* whileNode, FILE* f) {
+void arm_emit_while_statement(CodegenContext* ctx, AbstractExpresion* whileNode, FILE* f, 
+                              AbstractExpresion** label_nodes, int* label_ids, int label_map_size,
+                              char** emitted_names, int* emitted_types, int emitted_count) {
     if (!whileNode || whileNode->interpret != interpretWhileExpresion) {
         return;
     }
@@ -96,7 +98,7 @@ void arm_emit_while_statement(CodegenContext* ctx, AbstractExpresion* whileNode,
     
     // Bloque del bucle
     fprintf(f, "    // Bloque WHILE\n");
-    arm_emit_runtime_nodes(whileExpr->body, ctx, f, NULL, NULL, 0, NULL, NULL, 0);
+    arm_emit_runtime_nodes(whileExpr->body, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
     
     // Saltar de vuelta al inicio del bucle
     fprintf(f, "    b %s\n", loop_label);

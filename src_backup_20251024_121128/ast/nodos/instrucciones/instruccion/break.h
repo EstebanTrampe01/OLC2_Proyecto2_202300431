@@ -1,0 +1,14 @@
+#ifndef BREAK_H
+#define BREAK_H
+
+#include "ast/AbstractExpresion.h"
+#include "context/context.h"
+#include "context/result.h"
+
+typedef struct {
+    AbstractExpresion base;
+} BreakExpresion;
+
+AbstractExpresion* nuevoBreakExpresion(void);
+
+#endif

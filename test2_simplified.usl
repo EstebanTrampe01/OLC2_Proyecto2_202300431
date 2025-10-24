@@ -1,0 +1,75 @@
+public static void main(String[] args) {
+    System.out.println("=== SISTEMA DE GESTION DE NOTAS SIMPLIFICADO ===");
+    
+    String estudiante1 = "Ana";
+    String estudiante2 = "Luis"; 
+    String estudiante3 = "Maria";
+    
+    int nota1 = 85;
+    int nota2 = 92;
+    int nota3 = 78;
+    
+    int edad1 = 20;
+    int edad2 = 19;
+    int edad3 = 21;
+    
+    System.out.println("Procesando 3 estudiantes individuales");
+    
+    // IF/ELSE simple
+    System.out.println("\n--- EVALUACION CON IF/ELSE ---");
+    System.out.println("Evaluando: " + estudiante1);
+    if (nota1 >= 90) {
+        System.out.println("Resultado: Apto para beca");
+    } else {
+        System.out.println("Resultado: No apto para beca");
+    }
+    
+    System.out.println("\nEvaluando: " + estudiante2);
+    if (nota2 >= 90) {
+        System.out.println("Resultado: Apto para beca");
+    } else {
+        System.out.println("Resultado: No apto para beca");
+    }
+    
+    // WHILE simple
+    System.out.println("\n--- PROCESAMIENTO CON WHILE ---");
+    System.out.println("Buscando estudiantes con nota >= 90:");
+    
+    int estudianteActual = 1;
+    int estudiantesDestacados = 0;
+    
+    while (estudianteActual <= 3) {
+        String nombreActual = "";
+        int notaActual = 0;
+        
+        if (estudianteActual == 1) {
+            nombreActual = estudiante1;
+            notaActual = nota1;
+        } else if (estudianteActual == 2) {
+            nombreActual = estudiante2;
+            notaActual = nota2;
+        } else if (estudianteActual == 3) {
+            nombreActual = estudiante3;
+            notaActual = nota3;
+        }
+        
+        System.out.println("Revisando estudiante " + estudianteActual + ": " + nombreActual);
+        
+        if (notaActual >= 90) {
+            System.out.println("Destacado encontrado: " + nombreActual + " con " + notaActual);
+            estudiantesDestacados = estudiantesDestacados + 1;
+        }
+        
+        estudianteActual = estudianteActual + 1;
+    }
+    
+    System.out.println("Total de estudiantes destacados: " + estudiantesDestacados);
+    
+    // Contador regresivo
+    System.out.println("\nContador regresivo:");
+    int contador = 3;
+    while (contador > 0) {
+        System.out.println("Quedan: " + contador + " estudiantes por procesar");
+        contador = contador - 1;
+    }
+}

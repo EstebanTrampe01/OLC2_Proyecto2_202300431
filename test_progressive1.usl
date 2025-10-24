@@ -1,0 +1,32 @@
+public static void main(String[] args) {
+    System.out.println("=== TEST PROGRESIVO ===");
+    
+    String estudiante1 = "Ana";
+    String estudiante2 = "Luis"; 
+    String estudiante3 = "Maria";
+    String estudiante4 = "Carlos";
+    String estudiante5 = "Sofia";
+    
+    int nota1 = 85;
+    int nota2 = 92;
+    int nota3 = 78;
+    int nota4 = 95;
+    int nota5 = 88;
+    
+    int edad1 = 20;
+    int edad2 = 19;
+    int edad3 = 21;
+    int edad4 = 20;
+    int edad5 = 22;
+    
+    System.out.println("Procesando 5 estudiantes individuales");
+    
+    // IF/ELSE simple
+    System.out.println("\n--- EVALUACION CON IF/ELSE ---");
+    System.out.println("Evaluando: " + estudiante1);
+    if (nota1 >= 90) {
+        System.out.println("Resultado: Apto para beca");
+    } else {
+        System.out.println("Resultado: No apto para beca");
+    }
+}

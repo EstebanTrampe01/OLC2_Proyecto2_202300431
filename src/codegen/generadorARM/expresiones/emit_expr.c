@@ -123,20 +123,14 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
             fprintf(f, "    ldr x8, [sp], #16\n");  // Recuperar segundo operando de la pila
             
             if (el->tablaOperaciones == &tablaOperacionesSuma) {
-                // Detectar si es operación con double (usar helper para operaciones complejas)
-                fprintf(f, "    // Operación SUMA: detectar tipo automáticamente\n");
-                fprintf(f, "    mov x0, x9\n");  // Pasar primer operando
-                fprintf(f, "    mov x1, x8\n");  // Pasar segundo operando
-                fprintf(f, "    bl double_add\n");  // Llamar helper que maneja tipos automáticamente
-                fprintf(f, "    mov x%d, x0\n", target_reg);  // Resultado en x0
+                // Suma de enteros - usar código ARM64 nativo
+                fprintf(f, "    // Operación SUMA de enteros\n");
+                fprintf(f, "    add x%d, x9, x8\n", target_reg);  // Suma nativa ARM64
                 return;
             } else if (el->tablaOperaciones == &tablaOperacionesResta) {
-                // Detectar si es operación con double (usar helper para operaciones complejas)
-                fprintf(f, "    // Operación RESTA: detectar tipo automáticamente\n");
-                fprintf(f, "    mov x0, x9\n");  // Pasar primer operando
-                fprintf(f, "    mov x1, x8\n");  // Pasar segundo operando
-                fprintf(f, "    bl double_sub\n");  // Llamar helper que maneja tipos automáticamente
-                fprintf(f, "    mov x%d, x0\n", target_reg);  // Resultado en x0
+                // Resta de enteros - usar código ARM64 nativo
+                fprintf(f, "    // Operación RESTA de enteros\n");
+                fprintf(f, "    sub x%d, x9, x8\n", target_reg);  // Resta nativa ARM64
                 return;
             } else if (el->tablaOperaciones == &tablaOperacionesMultiplicacion) {
                 // Detectar si es operación con double (usar helper para operaciones complejas)
