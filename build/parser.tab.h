@@ -45,7 +45,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 49 "src/entriesTools/parser.y"
+#line 50 "src/entriesTools/parser.y"
 
     #include "ast/AbstractExpresion.h"
     #include "ast/nodos/expresiones/expresiones.h"
@@ -137,8 +137,9 @@ extern int yydebug;
     TOKEN_RETURN = 328,            /* TOKEN_RETURN  */
     TOKEN_PUBLIC = 329,            /* TOKEN_PUBLIC  */
     TOKEN_STATIC = 330,            /* TOKEN_STATIC  */
-    NEG = 331,                     /* NEG  */
-    CAST = 332                     /* CAST  */
+    TOKEN_REPEAT = 331,            /* TOKEN_REPEAT  */
+    NEG = 332,                     /* NEG  */
+    CAST = 333                     /* CAST  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -147,7 +148,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 78 "src/entriesTools/parser.y"
+#line 79 "src/entriesTools/parser.y"
 
     AbstractExpresion* nodo;
     char* string;
@@ -155,7 +156,7 @@ union YYSTYPE
     ParamList* paramList;
     TipoDato tipoDato;
 
-#line 159 "build/parser.tab.h"
+#line 160 "build/parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

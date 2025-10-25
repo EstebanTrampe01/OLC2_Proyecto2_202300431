@@ -31,6 +31,7 @@ extern Result interpretExpresionLenguaje(AbstractExpresion*, Context*);
 extern Result interpretLlamadaFuncion(AbstractExpresion*, Context*);
 extern Result interpretPrimitivoExpresion(AbstractExpresion*, Context*);
 extern Result interpretInstrucciones(AbstractExpresion*, Context*);
+extern Result interpretRepeatExpresion(AbstractExpresion*, Context*);
 extern Result interpretBloqueExpresion(AbstractExpresion*, Context*);
 extern Result interpretIfExpresion(AbstractExpresion*, Context*);
 extern Result interpretCastExpresion(AbstractExpresion*, Context*);
@@ -1038,6 +1039,12 @@ void arm_emit_runtime_nodes(AbstractExpresion* n, CodegenContext* ctx, FILE* f,
         if (ctx->debug) fprintf(f, "# debug: emit runtime for statement\n");
         // Usar la función especializada para FOR
         arm_emit_for_statement(ctx, n, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+        return;
+    }
+    if (n->interpret == interpretRepeatExpresion) {
+        if (ctx->debug) fprintf(f, "# debug: emit runtime repeat statement\n");
+        // Usar la función especializada para REPEAT
+        arm_emit_repeat_statement(ctx, n, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
         return;
     }
     if (n->interpret == interpretSwitchExpresion) {

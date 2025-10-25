@@ -3,6 +3,7 @@
 #include "../../../ast/nodos/instrucciones/instruccion/if.h"
 #include "../../../ast/nodos/instrucciones/instruccion/while.h"
 #include "../../../ast/nodos/instrucciones/instruccion/for.h"
+#include "../../../ast/nodos/instrucciones/instruccion/repeat.h"
 #include "../../../ast/nodos/instrucciones/instruccion/switch.h"
 #include "../../../ast/nodos/instrucciones/instruccion/declaracion.h"
 #include "../../../ast/nodos/expresiones/expresiones.h"
@@ -302,5 +303,61 @@ void arm_emit_switch_statement(CodegenContext* ctx, AbstractExpresion* switchNod
     fprintf(f, "    // Fin SWITCH\n");
     
     // Liberar memoria de las etiquetas
+    free(end_label);
+}
+
+void arm_emit_repeat_statement(CodegenContext* ctx, AbstractExpresion* repeatNode, FILE* f,
+                               AbstractExpresion** label_nodes, int* label_ids, int label_map_size,
+                               char** emitted_names, int* emitted_types, int emitted_count) {
+    if (!repeatNode || repeatNode->interpret != interpretRepeatExpresion) {
+        return;
+    }
+    
+    RepeatExpresion* repeatExpr = (RepeatExpresion*)repeatNode;
+    
+    // Generar etiquetas únicas
+    char* loop_label = generate_label("repeat_loop");
+    char* end_label = generate_label("repeat_end");
+    
+    fprintf(f, "    // REPEAT statement\n");
+    
+    // Agregar etiquetas a las pilas para break y continue
+    extern void codegen_push_break_label(CodegenContext*, const char*);
+    extern void codegen_push_continue_label(CodegenContext*, const char*);
+    codegen_push_break_label(ctx, end_label);
+    codegen_push_continue_label(ctx, loop_label);
+    
+    // Evaluar el número de repeticiones y ponerlo en x10
+    fprintf(f, "    // Evaluar número de repeticiones\n");
+    arm_emit_eval_expr(ctx, repeatExpr->count, 10, f);
+    
+    // Inicializar contador en x11
+    fprintf(f, "    mov x11, #0\n");
+    
+    // Etiqueta de inicio del bucle
+    fprintf(f, "%s:\n", loop_label);
+    
+    // Comparar contador con número de repeticiones
+    fprintf(f, "    cmp x11, x10\n");
+    
+    // Saltar al final si ya se completaron todas las repeticiones
+    fprintf(f, "    b.ge %s\n", end_label);
+    
+    // Bloque del bucle
+    fprintf(f, "    // Bloque REPEAT\n");
+    arm_emit_runtime_nodes(repeatExpr->body, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+    
+    // Incrementar contador
+    fprintf(f, "    add x11, x11, #1\n");
+    
+    // Saltar de vuelta al inicio del bucle
+    fprintf(f, "    b %s\n", loop_label);
+    
+    // Etiqueta de fin
+    fprintf(f, "%s:\n", end_label);
+    fprintf(f, "    // Fin REPEAT\n");
+    
+    // Liberar memoria de las etiquetas
+    free(loop_label);
     free(end_label);
 }

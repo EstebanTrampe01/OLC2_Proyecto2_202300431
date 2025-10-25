@@ -1,0 +1,9 @@
+repeat 3 {
+    System.out.println("Hola mundo");
+}
+/*
+Salida:
+Hola mundo
+Hola mundo
+Hola mundo
+*/

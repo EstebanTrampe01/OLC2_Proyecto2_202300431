@@ -108,6 +108,7 @@ char_literal      '([^'\\]|\\.)+'
 "char"              return(TOKEN_DCHAR);
 "System.out.println" return(TOKEN_SYSTEM_OUT_PRINTLN);
 "System.out.print" return(TOKEN_SYSTEM_OUT_PRINT);
+"repeat"            return(TOKEN_REPEAT);
 
 {unsigned_integer}   {yylval.string = strdup(yytext); return(TOKEN_UNSIGNED_INTEGER);}
 {real_float_suffix}  { size_t l=yyleng-1; char* tmp=malloc(l+1); strncpy(tmp, yytext, l); tmp[l]='\0'; yylval.string=tmp; return(TOKEN_REAL_FLOAT); }

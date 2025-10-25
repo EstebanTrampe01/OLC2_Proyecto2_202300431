@@ -29,6 +29,7 @@
 #include "ast/nodos/instrucciones/instruccion/if.h"
 #include "ast/nodos/instrucciones/instruccion/while.h"
 #include "ast/nodos/instrucciones/instruccion/for.h"
+#include "ast/nodos/instrucciones/instruccion/repeat.h"
 #include "ast/nodos/instrucciones/instruccion/switch.h"
 #include "ast/nodos/instrucciones/instruccion/break.h"
 #include "ast/nodos/instrucciones/instruccion/continue.h"
@@ -97,10 +98,10 @@ TOKEN_DSTRING TOKEN_UNSIGNED_INTEGER TOKEN_REAL TOKEN_REAL_FLOAT TOKEN_STRING TO
 %token TOKEN_AND_ASSIGN TOKEN_OR_ASSIGN TOKEN_XOR_ASSIGN TOKEN_SHL_ASSIGN TOKEN_SHR_ASSIGN
 %token TOKEN_EQUAL TOKEN_NOT_EQUAL TOKEN_GREATER TOKEN_LESS TOKEN_GREATER_EQUAL TOKEN_LESS_EQUAL
 %token TOKEN_AND TOKEN_OR TOKEN_NOT
-%token TOKEN_IF TOKEN_ELSE TOKEN_SWITCH TOKEN_CASE TOKEN_DEFAULT TOKEN_BREAK TOKEN_WHILE TOKEN_FOR TOKEN_CONTINUE TOKEN_NEW TOKEN_RETURN TOKEN_PUBLIC TOKEN_STATIC
+%token TOKEN_IF TOKEN_ELSE TOKEN_SWITCH TOKEN_CASE TOKEN_DEFAULT TOKEN_BREAK TOKEN_WHILE TOKEN_FOR TOKEN_CONTINUE TOKEN_NEW TOKEN_RETURN TOKEN_PUBLIC TOKEN_STATIC TOKEN_REPEAT
 
 /* Tipo de los no-terminales que llevan valor */
-%type <nodo> s lSentencia instruccion expr imprimir lista_Expr bloque bloque_for declaracion_var primitivo asignacion if_statement switch_statement break_statement continue_statement case_list case_item instrucciones_case instruccion_case default_case instruccion_simple while_statement for_statement asignacion_elemento filas_lista fila_matriz lista_bloques2D bloque2D funcion_declaracion return_stmt llamada_funcion argumentos_opt join_variadic_args dims_expr_list atom unary postfix indices_una indices_multi main_declaracion case_labels
+%type <nodo> s lSentencia instruccion expr imprimir lista_Expr bloque bloque_for declaracion_var primitivo asignacion if_statement switch_statement break_statement continue_statement case_list case_item instrucciones_case instruccion_case default_case instruccion_simple while_statement for_statement repeat_statement asignacion_elemento filas_lista fila_matriz lista_bloques2D bloque2D funcion_declaracion return_stmt llamada_funcion argumentos_opt join_variadic_args dims_expr_list atom unary postfix indices_una indices_multi main_declaracion case_labels
 %type <nodo> var_decl final_var_decl for_each_statement incremento array_decl_local
 /* Eliminados head_nonfinal/head_final y dims_*; nueva estrategia centrada en prefix */
 %type <boolean> brackets_seq
@@ -155,6 +156,7 @@ instruccion: if_statement {$$ = $1;}
     | while_statement {$$ = $1;}
     | for_statement {$$ = $1;}
     | for_each_statement {$$ = $1;}
+    | repeat_statement {$$ = $1;}
     | imprimir ';' {$$ = $1; }
     | bloque {$$ = $1;}
     | declaracion_var ';' {$$ = $1;}
@@ -209,6 +211,10 @@ for_statement:
 | TOKEN_FOR '(' declaracion_var ';' expr ';' ')' instruccion_simple { AbstractExpresion* b=nuevoListaExpresiones(); agregarHijo(b,$8); $$=nuevoForExpresion($3,$5,NULL,nuevoBloqueExpresionConContextoPadre(b)); }
 | TOKEN_FOR '(' asignacion ';' expr ';' incremento ')' bloque { $$=nuevoForExpresion($3,$5,$7,$9); }
 | TOKEN_FOR '(' asignacion ';' expr ';' incremento ')' instruccion_simple { AbstractExpresion* b=nuevoListaExpresiones(); agregarHijo(b,$9); $$=nuevoForExpresion($3,$5,$7,nuevoBloqueExpresion(b)); }
+;
+
+repeat_statement:
+    TOKEN_REPEAT expr bloque_for { $$=nuevoRepeatExpresion($2,$3); }
 ;
 
 incremento:

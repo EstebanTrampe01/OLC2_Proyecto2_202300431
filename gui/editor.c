@@ -210,6 +210,101 @@ static void run_program_cb(GtkWidget *w, gpointer data){
 static void show_errors_cb(GtkWidget* w, gpointer data){ (void)w; EditorState* st=(EditorState*)data; gchar* combined = gui_run_calc_with_buffer(GTK_TEXT_VIEW(st->text_view)); gui_show_errors_dialog(st, combined); if(combined) g_free(combined); }
 static void show_symbols_cb(GtkWidget* w, gpointer data){ (void)w; EditorState* st=(EditorState*)data; gchar* combined = gui_run_calc_with_buffer(GTK_TEXT_VIEW(st->text_view)); gui_show_symbols_dialog(st, combined); if(combined) g_free(combined); }
 
+static void generate_s_cb(GtkWidget* w, gpointer data){
+	(void)w; EditorState* st=(EditorState*)data;
+	
+	// Guardar el contenido actual en un archivo temporal
+	GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(st->text_view));
+	GtkTextIter start, end;
+	gtk_text_buffer_get_start_iter(buf, &start);
+	gtk_text_buffer_get_end_iter(buf, &end);
+	gchar *text = gtk_text_buffer_get_text(buf, &start, &end, FALSE);
+	
+	// Crear archivo temporal
+	gchar *temp_file = g_strdup("/tmp/temp_usl.usl");
+	FILE *f = fopen(temp_file, "w");
+	if(!f) {
+		set_status(st, "Error creando archivo temporal");
+		g_free(text);
+		g_free(temp_file);
+		return;
+	}
+	fwrite(text, 1, strlen(text), f);
+	fclose(f);
+	g_free(text);
+	
+	// Ejecutar generador.sh para generar .s
+	gchar *command = g_strdup_printf("cd %s && ./generador.sh %s", g_get_current_dir(), temp_file);
+	gchar *output = NULL;
+	gint exit_status = 0;
+	GError *error = NULL;
+	
+	gboolean success = g_spawn_command_line_sync(command, &output, NULL, &exit_status, &error);
+	
+	if(!success || error) {
+		set_status(st, "Error ejecutando generador");
+		if(error) g_error_free(error);
+		g_free(command);
+		g_free(temp_file);
+		return;
+	}
+	
+	// Leer el archivo .s generado (en el directorio del proyecto)
+	gchar *s_file = g_strdup_printf("%s/out.s", g_get_current_dir());
+	if(g_file_test(s_file, G_FILE_TEST_EXISTS)) {
+		gchar *s_content = NULL;
+		gsize length = 0;
+		if(g_file_get_contents(s_file, &s_content, &length, &error)) {
+			// Mostrar el contenido en la pestaña de código .s
+			GtkWidget *s_view = gtk_bin_get_child(GTK_BIN(st->s_tab));
+			GtkTextBuffer *sbuf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(s_view));
+			gchar* shown = escape_for_gui_console(s_content);
+			gtk_text_buffer_set_text(sbuf, shown, -1);
+			g_free(shown);
+			g_free(s_content);
+			
+			// Cambiar a la pestaña de código .s
+			gint page_num = gtk_notebook_page_num(GTK_NOTEBOOK(st->notebook), st->s_tab);
+			gtk_notebook_set_current_page(GTK_NOTEBOOK(st->notebook), page_num);
+			
+			set_status(st, "Código ARM64 generado y mostrado");
+		} else {
+			set_status(st, "Error leyendo archivo .s");
+			if(error) g_error_free(error);
+		}
+	} else {
+		set_status(st, "Archivo .s no encontrado");
+	}
+	
+	g_free(command);
+	g_free(temp_file);
+	g_free(s_file);
+	if(output) g_free(output);
+}
+
+static void toggle_console_cb(GtkWidget* w, gpointer data){
+	(void)w; EditorState* st=(EditorState*)data;
+	
+	// Buscar el paned que contiene el notebook
+	GtkWidget *parent = gtk_widget_get_parent(st->notebook);
+	while(parent && !GTK_IS_PANED(parent)) {
+		parent = gtk_widget_get_parent(parent);
+	}
+	
+	if(GTK_IS_PANED(parent)) {
+		GtkPaned *paned = GTK_PANED(parent);
+		GtkWidget *child2 = gtk_paned_get_child2(paned);
+		
+		if(gtk_widget_get_visible(child2)) {
+			gtk_widget_hide(child2);
+			gtk_button_set_label(GTK_BUTTON(w), "👁 Mostrar Consola");
+		} else {
+			gtk_widget_show(child2);
+			gtk_button_set_label(GTK_BUTTON(w), "👁 Ocultar Consola");
+		}
+	}
+}
+
 /* Cargar CSS embebido o externo opcional (gui/style.css) */
 static void load_css(void){
 	GtkCssProvider *prov = gtk_css_provider_new();
@@ -255,9 +350,11 @@ static GtkWidget* build_header_bar(EditorState *st G_GNUC_UNUSED,
 								   GtkWidget **btn_open,
 								   GtkWidget **btn_save,
 								   GtkWidget **btn_run,
+								   GtkWidget **btn_generate_s,
 								   GtkWidget **btn_err,
 								   GtkWidget **btn_sym,
-								   GtkWidget **btn_ast){
+								   GtkWidget **btn_ast,
+								   GtkWidget **btn_toggle_console){
 	GtkWidget *hb = gtk_header_bar_new();
 	gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(hb), TRUE);
 	gtk_header_bar_set_title(GTK_HEADER_BAR(hb), "Editor USL");
@@ -266,17 +363,21 @@ static GtkWidget* build_header_bar(EditorState *st G_GNUC_UNUSED,
 	*btn_open = gtk_button_new_from_icon_name("document-open", GTK_ICON_SIZE_BUTTON);
 	*btn_save = gtk_button_new_from_icon_name("document-save", GTK_ICON_SIZE_BUTTON);
 	*btn_run  = gtk_button_new_with_label("▶ Ejecutar");
+	*btn_generate_s = gtk_button_new_with_label("📄 Generar .s");
 	*btn_err  = gtk_button_new_with_label("Errores");
 	*btn_sym  = gtk_button_new_with_label("Símbolos");
 	*btn_ast  = gtk_button_new_with_label("AST");
+	*btn_toggle_console = gtk_button_new_with_label("👁 Ocultar Consola");
 
 	gtk_widget_set_tooltip_text(*btn_new, "Nuevo (Ctrl+N)");
 	gtk_widget_set_tooltip_text(*btn_open, "Abrir (Ctrl+O)");
 	gtk_widget_set_tooltip_text(*btn_save, "Guardar (Ctrl+S)");
 	gtk_widget_set_tooltip_text(*btn_run, "Ejecutar (F5)");
+	gtk_widget_set_tooltip_text(*btn_generate_s, "Generar código ARM64 (.s)");
 	gtk_widget_set_tooltip_text(*btn_err,  "Tabla de Errores (F9)");
 	gtk_widget_set_tooltip_text(*btn_sym,  "Tabla de Símbolos (F10)");
 	gtk_widget_set_tooltip_text(*btn_ast,  "Generar AST (F6)");
+	gtk_widget_set_tooltip_text(*btn_toggle_console, "Ocultar/Mostrar Consola");
 
 	gtk_style_context_add_class(gtk_widget_get_style_context(*btn_run), "suggested-action");
 
@@ -285,8 +386,10 @@ static GtkWidget* build_header_bar(EditorState *st G_GNUC_UNUSED,
 	gtk_container_add(GTK_CONTAINER(box_left), *btn_open);
 	gtk_container_add(GTK_CONTAINER(box_left), *btn_save);
 	gtk_container_add(GTK_CONTAINER(box_left), *btn_run);
+	gtk_container_add(GTK_CONTAINER(box_left), *btn_generate_s);
 
 	GtkWidget *box_right = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+	gtk_container_add(GTK_CONTAINER(box_right), *btn_toggle_console);
 	gtk_container_add(GTK_CONTAINER(box_right), *btn_err);
 	gtk_container_add(GTK_CONTAINER(box_right), *btn_sym);
 	gtk_container_add(GTK_CONTAINER(box_right), *btn_ast);
@@ -303,8 +406,8 @@ static void activate(GtkApplication* app, gpointer user_data){
 	gtk_window_set_default_size(GTK_WINDOW(st->window), 950, 620);
 
 	/* Header bar moderno */
-	GtkWidget *btn_new=NULL,*btn_open=NULL,*btn_save=NULL,*btn_run=NULL,*btn_err=NULL,*btn_sym=NULL,*btn_ast=NULL;
-	GtkWidget *hb = build_header_bar(st, &btn_new,&btn_open,&btn_save,&btn_run,&btn_err,&btn_sym,&btn_ast);
+	GtkWidget *btn_new=NULL,*btn_open=NULL,*btn_save=NULL,*btn_run=NULL,*btn_generate_s=NULL,*btn_err=NULL,*btn_sym=NULL,*btn_ast=NULL,*btn_toggle_console=NULL;
+	GtkWidget *hb = build_header_bar(st, &btn_new,&btn_open,&btn_save,&btn_run,&btn_generate_s,&btn_err,&btn_sym,&btn_ast,&btn_toggle_console);
 	gtk_window_set_titlebar(GTK_WINDOW(st->window), hb);
 
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -321,6 +424,10 @@ static void activate(GtkApplication* app, gpointer user_data){
 	gtk_container_add(GTK_CONTAINER(scroll_editor), st->text_view);
 	gtk_paned_pack1(GTK_PANED(paned), scroll_editor, TRUE, FALSE);
 
+	/* Crear notebook para las pestañas de consola */
+	st->notebook = gtk_notebook_new();
+	
+	/* Pestaña de consola principal */
 	st->console_view = gtk_text_view_new();
 	gtk_widget_set_name(st->console_view, "console-view");
 	gtk_text_view_set_monospace(GTK_TEXT_VIEW(st->console_view), TRUE);
@@ -328,7 +435,32 @@ static void activate(GtkApplication* app, gpointer user_data){
 	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(st->console_view), FALSE);
 	GtkWidget *scroll_console = gtk_scrolled_window_new(NULL, NULL);
 	gtk_container_add(GTK_CONTAINER(scroll_console), st->console_view);
-	gtk_paned_pack2(GTK_PANED(paned), scroll_console, TRUE, FALSE);
+	st->console_tab = scroll_console;
+	gtk_notebook_append_page(GTK_NOTEBOOK(st->notebook), st->console_tab, gtk_label_new("Consola"));
+	
+	/* Pestaña de código .s */
+	GtkWidget *s_view = gtk_text_view_new();
+	gtk_widget_set_name(s_view, "console-view");
+	gtk_text_view_set_monospace(GTK_TEXT_VIEW(s_view), TRUE);
+	gtk_text_view_set_editable(GTK_TEXT_VIEW(s_view), FALSE);
+	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(s_view), FALSE);
+	GtkWidget *scroll_s = gtk_scrolled_window_new(NULL, NULL);
+	gtk_container_add(GTK_CONTAINER(scroll_s), s_view);
+	st->s_tab = scroll_s;
+	gtk_notebook_append_page(GTK_NOTEBOOK(st->notebook), st->s_tab, gtk_label_new("Código .s"));
+	
+	/* Pestaña de salida QEMU */
+	GtkWidget *qemu_view = gtk_text_view_new();
+	gtk_widget_set_name(qemu_view, "console-view");
+	gtk_text_view_set_monospace(GTK_TEXT_VIEW(qemu_view), TRUE);
+	gtk_text_view_set_editable(GTK_TEXT_VIEW(qemu_view), FALSE);
+	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(qemu_view), FALSE);
+	GtkWidget *scroll_qemu = gtk_scrolled_window_new(NULL, NULL);
+	gtk_container_add(GTK_CONTAINER(scroll_qemu), qemu_view);
+	st->qemu_tab = scroll_qemu;
+	gtk_notebook_append_page(GTK_NOTEBOOK(st->notebook), st->qemu_tab, gtk_label_new("QEMU"));
+	
+	gtk_paned_pack2(GTK_PANED(paned), st->notebook, TRUE, FALSE);
 	gtk_paned_set_position(GTK_PANED(paned), 420);
 
 	/* Barra de estado */
@@ -341,9 +473,11 @@ static void activate(GtkApplication* app, gpointer user_data){
 	g_signal_connect(btn_open, "clicked", G_CALLBACK(open_file_cb), st);
 	g_signal_connect(btn_save, "clicked", G_CALLBACK(save_file_cb), st);
 	g_signal_connect(btn_run,  "clicked", G_CALLBACK(run_program_cb), st);
+	g_signal_connect(btn_generate_s, "clicked", G_CALLBACK(generate_s_cb), st);
 	g_signal_connect(btn_err,  "clicked", G_CALLBACK(show_errors_cb), st);
 	g_signal_connect(btn_sym,  "clicked", G_CALLBACK(show_symbols_cb), st);
 	g_signal_connect(btn_ast,  "clicked", G_CALLBACK(gui_generate_ast_report), st);
+	g_signal_connect(btn_toggle_console, "clicked", G_CALLBACK(toggle_console_cb), st);
 	GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(st->text_view));
 	g_signal_connect(buf, "modified-changed", G_CALLBACK(on_modified_changed), st);
 	g_signal_connect(st->window, "key-press-event", G_CALLBACK(on_key_press), st);
