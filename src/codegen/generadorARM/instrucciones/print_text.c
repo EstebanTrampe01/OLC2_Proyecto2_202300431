@@ -228,15 +228,16 @@ static int emit_print_part(CodegenContext* ctx, AbstractExpresion* n, int nl, ch
             for (int ii = 0; ii < emitted_count; ++ii) if (emitted_names[ii] && strcmp(emitted_names[ii], id->nombre) == 0) { tag = emitted_types[ii]; break; }
             if (tag == STRING) tag = 6; else if (tag == DOUBLE) tag = 2; else if (tag == FLOAT) tag = 3; else if (tag == BOOLEAN) tag = 4; else if (tag == CHAR) tag = 5; else tag = 1;
             if (id && id->nombre) {
-                // Obtener nombre único para variables FOR
-                extern char* arm_get_unique_var_name(const char* original_name);
-                char* unique_name = arm_get_unique_var_name(id->nombre);
-                
-                fprintf(ctx->out, "    adrp x1, GV_%s\n", unique_name);
-                fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", unique_name);
-                fprintf(ctx->out, "    ldr x1, [x1]\n");
-                
-                free(unique_name);
+                if (tag == 2) { // DOUBLE
+                    // Para variables double, cargar en x1 como bits para string_value_of_any
+                    fprintf(ctx->out, "    // Cargar variable double '%s' en x1 como bits\n", id->nombre);
+                    fprintf(ctx->out, "    adrp x1, GV_%s\n", id->nombre);
+                    fprintf(ctx->out, "    ldr x1, [x1, :lo12:GV_%s]\n", id->nombre);
+                } else {
+                    // Para otros tipos, usar arm_emit_eval_expr
+                    extern void arm_emit_eval_expr(CodegenContext*, AbstractExpresion*, int, FILE*);
+                    arm_emit_eval_expr(ctx, a, 1, ctx->out);
+                }
             }
         } else if (a && a->interpret == interpretExpresionLenguaje) {
             // Expresiones aritméticas o relacionales: evaluar y poner resultado en x1

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "../codegen.h"
 
 // Stack de variables FOR activas (alcance por bloque)
 typedef struct {
@@ -30,7 +31,7 @@ void arm_activate_for_variable(const char* name) {
     for_variables[index].name = strdup(name);
     for_variables[index].is_active = 1;
     
-    printf("DEBUG: Variable FOR '%s' ACTIVADA (alcance por bloque)\n", name);
+    debug_printf("DEBUG: Variable FOR '%s' ACTIVADA (alcance por bloque)\n", name);
 }
 
 // Función para desactivar una variable FOR (salir del bloque)
@@ -47,7 +48,7 @@ void arm_deactivate_for_variable(const char* name) {
     }
     for_variables[index].is_active = 0;
     
-    printf("DEBUG: Variable FOR '%s' DESACTIVADA (fin de alcance)\n", name);
+    debug_printf("DEBUG: Variable FOR '%s' DESACTIVADA (fin de alcance)\n", name);
 }
 
 // Función para verificar si una variable FOR está activa
@@ -64,7 +65,7 @@ int arm_is_for_variable_active(const char* name) {
 // Función para agregar un mapeo de nombres
 static void add_name_mapping(const char* original, const char* unique) {
     if (mapping_count >= mapping_capacity) {
-        mapping_capacity = (mapping_capacity == 0) ? 16 : mapping_capacity * 2;
+        mapping_capacity = (mapping_capacity == 0) ? 32 : mapping_capacity * 2;
         name_mappings = realloc(name_mappings, sizeof(NameMapping) * mapping_capacity);
     }
     
@@ -88,7 +89,7 @@ void arm_add_emitted_name(char*** names_ptr, int* count_ptr, int* cap_ptr, const
         
         // Usar nombre original (alcance por bloque)
         unique_name = strdup(name);
-        printf("DEBUG: Variable FOR '%s' registrada con ALCANCE POR BLOQUE\n", name);
+        debug_printf("DEBUG: Variable FOR '%s' registrada con ALCANCE POR BLOQUE\n", name);
     } else {
         // Variable normal, usar nombre original
         unique_name = strdup(name);
@@ -103,7 +104,7 @@ void arm_add_emitted_name(char*** names_ptr, int* count_ptr, int* cap_ptr, const
     }
     
     if (count >= cap) {
-        cap = (cap == 0) ? 16 : cap * 2;  // Aumentar capacidad inicial de 8 a 16
+        cap = (cap == 0) ? 32 : cap * 2;  // Aumentar capacidad inicial de 16 a 32 para test4.usl
         char** new_names = (char**)realloc(names, sizeof(char*) * cap);
         if (!new_names) {
             fprintf(stderr, "ERROR: No se pudo asignar memoria para nombres de variables\n");
@@ -127,26 +128,26 @@ void arm_add_emitted_name(char*** names_ptr, int* count_ptr, int* cap_ptr, const
 char* arm_get_unique_var_name(const char* original_name) {
     if (!original_name) return NULL;
     
-    printf("DEBUG: arm_get_unique_var_name llamado con '%s'\n", original_name);
+    debug_printf("DEBUG: arm_get_unique_var_name llamado con '%s'\n", original_name);
     
     // Para variables de FOR, verificar si están activas
     if (strlen(original_name) == 1 && ((original_name[0] >= 'a' && original_name[0] <= 'z') || (original_name[0] >= 'A' && original_name[0] <= 'Z'))) {
         if (arm_is_for_variable_active(original_name)) {
             // Variable FOR activa, usar nombre original
             char* result = strdup(original_name);
-            printf("DEBUG: Variable FOR activa '%s' -> '%s'\n", original_name, result);
+            debug_printf("DEBUG: Variable FOR activa '%s' -> '%s'\n", original_name, result);
             return result;
         } else {
             // Variable FOR no activa, usar nombre original (se reiniciará)
             char* result = strdup(original_name);
-            printf("DEBUG: Variable FOR no activa '%s' -> '%s'\n", original_name, result);
+            debug_printf("DEBUG: Variable FOR no activa '%s' -> '%s'\n", original_name, result);
             return result;
         }
     }
     
     // Variable normal, usar nombre original
     char* result = strdup(original_name);
-    printf("DEBUG: Variable normal '%s' -> '%s'\n", original_name, result);
+    debug_printf("DEBUG: Variable normal '%s' -> '%s'\n", original_name, result);
     return result;
 }
 

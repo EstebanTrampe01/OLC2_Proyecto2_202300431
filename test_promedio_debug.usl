@@ -1,0 +1,20 @@
+public static void main(String[] args) {
+    System.out.println("=== DEBUG PROMEDIO FOREACH ===");
+    int[] notas = {85, 92, 78, 95, 88};
+    int suma = 0;
+    int contadorNotas = 0;
+    
+    System.out.println("Inicial: suma=" + String.valueOf(suma) + ", contador=" + String.valueOf(contadorNotas));
+    
+    for (int nota : notas) {
+        System.out.println("Antes: suma=" + String.valueOf(suma) + ", nota=" + String.valueOf(nota));
+        suma = suma + nota;
+        contadorNotas = contadorNotas + 1;
+        System.out.println("Después: suma=" + String.valueOf(suma) + ", contador=" + String.valueOf(contadorNotas));
+    }
+    
+    System.out.println("Final: suma=" + String.valueOf(suma) + ", contador=" + String.valueOf(contadorNotas));
+    float promedio = (float)suma / contadorNotas;
+    System.out.println("Promedio: " + String.valueOf(promedio));
+}
+

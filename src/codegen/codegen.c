@@ -2,11 +2,27 @@
 #include "codegen.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include "literals.h"
 #include "native_impls.h"
 #include "codegen/generadorARM/common.h"
 #include "codegen/generadorARM/expresiones/emit_expr.h"
 #include "codegen/generadorARM/instrucciones/runtime_nodes.h"
+
+// Función de debug condicional
+static int debug_enabled = 0;
+
+void enable_debug_output() {
+    debug_enabled = 1;
+}
+
+void debug_printf(const char* format, ...) {
+    if (!debug_enabled) return;
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
+}
 // AST node headers used by codegen
 #include "../ast/nodos/instrucciones/instruccion/asignaciones/asignacion.h"
 #include "../ast/nodos/expresiones/terminales/primitivos.h"
@@ -48,8 +64,29 @@ CodegenContext* nuevo_codegen_context(FILE* out) {
     CodegenContext* ctx = malloc(sizeof(CodegenContext));
     if (!ctx) return NULL;
     ctx->out = out;
+    ctx->debug = 0;
+    
+    // Inicializar sistema de pila de etiquetas para break
+    ctx->break_stack_capacity = 10;
+    ctx->break_stack_size = 0;
+    ctx->break_labels = malloc(sizeof(char*) * ctx->break_stack_capacity);
+    if (!ctx->break_labels) {
+        free(ctx);
+        return NULL;
+    }
+    
+    // Inicializar sistema de pila de etiquetas para continue
+    ctx->continue_stack_capacity = 10;
+    ctx->continue_stack_size = 0;
+    ctx->continue_labels = malloc(sizeof(char*) * ctx->continue_stack_capacity);
+    if (!ctx->continue_labels) {
+        free(ctx->break_labels);
+        free(ctx);
+        return NULL;
+    }
     ctx->symbol_ctx = NULL;
-    ctx->debug = getenv("CODEGEN_DEBUG") ? 1 : 0;
+    // Debug solo se activa con variable de entorno CODEGEN_DEBUG=1
+    ctx->debug = (getenv("CODEGEN_DEBUG") && strcmp(getenv("CODEGEN_DEBUG"), "1") == 0) ? 1 : 0;
     return ctx;
 }
 // Recursively emit code to evaluate an expression and place its result in x<target_reg>.
@@ -94,7 +131,7 @@ void codegen_programa(CodegenContext* ctx, AbstractExpresion* root) {
     int assign_cap = 16; int assign_size = 0;
     AbstractExpresion** assign_nodes = malloc(sizeof(AbstractExpresion*) * assign_cap);
 
-    int emitted_cap = 32; int emitted_count = 0;  // Aumentar de 16 a 32
+    int emitted_cap = 64; int emitted_count = 0;  // Aumentar de 32 a 64 para test4.usl
     char** emitted_names = malloc(sizeof(char*) * emitted_cap);
     int* emitted_init_ids = malloc(sizeof(int) * emitted_cap);
     char** emitted_init_values = malloc(sizeof(char*) * emitted_cap); // store textual initializer for GV_<name>_str emission
@@ -118,9 +155,10 @@ void codegen_programa(CodegenContext* ctx, AbstractExpresion* root) {
     for (int i = 0; i < emitted_count; ++i) {
         if (!emitted_names[i]) continue;
         int t = (emitted_types && i>=0) ? emitted_types[i] : -1;
-        printf("DEBUG: generando variable '%s' tipo=%d (emitted_types[%d]=%d)\n", emitted_names[i], t, i, emitted_types ? emitted_types[i] : -999);
+        debug_printf("DEBUG: generando variable '%s' tipo=%d (emitted_types[%d]=%d)\n", emitted_names[i], t, i, emitted_types ? emitted_types[i] : -999);
         if (t == DOUBLE) {
             // if we have a textual initializer, use .double, else emit zero
+            fprintf(f, "    .align 8\n");  // Alinear variables double en límite de 8 bytes
             if (emitted_init_values[i]) fprintf(f, "GV_%s: .double %s\n\n", emitted_names[i], emitted_init_values[i]);
             else fprintf(f, "GV_%s: .double 0.0\n\n", emitted_names[i]);
         } else if (t == FLOAT) {
@@ -203,12 +241,12 @@ void codegen_programa(CodegenContext* ctx, AbstractExpresion* root) {
     // Solo liberamos los arrays en sí
     for (int i=0;i<emitted_count;++i) { 
         if (emitted_names[i]) {
-            printf("DEBUG: liberando emitted_names[%d] = %p\n", i, emitted_names[i]);
+            debug_printf("DEBUG: liberando emitted_names[%d] = %p\n", i, emitted_names[i]);
             free(emitted_names[i]); 
         }
         // NO liberar emitted_init_values[i] - estos punteros apuntan a memoria del AST
         if (emitted_init_values[i]) {
-            printf("DEBUG: NO liberando emitted_init_values[%d] = %p (es memoria del AST o ya liberada)\n", i, emitted_init_values[i]);
+            debug_printf("DEBUG: NO liberando emitted_init_values[%d] = %p (es memoria del AST o ya liberada)\n", i, emitted_init_values[i]);
         }
     }
     free(emitted_names);
@@ -220,6 +258,83 @@ void codegen_programa(CodegenContext* ctx, AbstractExpresion* root) {
 
 void liberar_codegen_context(CodegenContext* ctx) {
     if (!ctx) return;
+    
+    // Liberar pila de etiquetas break
+    if (ctx->break_labels) {
+        for (int i = 0; i < ctx->break_stack_size; i++) {
+            if (ctx->break_labels[i]) {
+                free(ctx->break_labels[i]);
+            }
+        }
+        free(ctx->break_labels);
+    }
+    
+    // Liberar pila de etiquetas continue
+    if (ctx->continue_labels) {
+        for (int i = 0; i < ctx->continue_stack_size; i++) {
+            if (ctx->continue_labels[i]) {
+                free(ctx->continue_labels[i]);
+            }
+        }
+        free(ctx->continue_labels);
+    }
+    
     // NO cerramos ctx->out porque el llamador puede cerrarlo
     free(ctx);
+}
+
+// Sistema de pila de etiquetas para break
+void codegen_push_break_label(CodegenContext* ctx, const char* label) {
+    if (!ctx || !label) return;
+    
+    // Redimensionar si es necesario
+    if (ctx->break_stack_size >= ctx->break_stack_capacity) {
+        ctx->break_stack_capacity *= 2;
+        ctx->break_labels = realloc(ctx->break_labels, sizeof(char*) * ctx->break_stack_capacity);
+    }
+    
+    // Agregar la etiqueta a la pila
+    ctx->break_labels[ctx->break_stack_size] = strdup(label);
+    ctx->break_stack_size++;
+}
+
+void codegen_pop_break_label(CodegenContext* ctx) {
+    if (!ctx || ctx->break_stack_size <= 0) return;
+    
+    // Liberar la etiqueta del tope
+    ctx->break_stack_size--;
+    if (ctx->break_labels[ctx->break_stack_size]) {
+        free(ctx->break_labels[ctx->break_stack_size]);
+        ctx->break_labels[ctx->break_stack_size] = NULL;
+    }
+}
+
+const char* codegen_get_current_break_label(CodegenContext* ctx) {
+    if (!ctx || ctx->break_stack_size <= 0) return NULL;
+    return ctx->break_labels[ctx->break_stack_size - 1];
+}
+
+// Sistema de pila de etiquetas para continue
+void codegen_push_continue_label(CodegenContext* ctx, const char* label) {
+    if (!ctx || !label) return;
+    if (ctx->continue_stack_size >= ctx->continue_stack_capacity) {
+        ctx->continue_stack_capacity *= 2;
+        ctx->continue_labels = realloc(ctx->continue_labels, sizeof(char*) * ctx->continue_stack_capacity);
+    }
+    ctx->continue_labels[ctx->continue_stack_size] = strdup(label);
+    ctx->continue_stack_size++;
+}
+
+void codegen_pop_continue_label(CodegenContext* ctx) {
+    if (!ctx || ctx->continue_stack_size <= 0) return;
+    ctx->continue_stack_size--;
+    if (ctx->continue_labels[ctx->continue_stack_size]) {
+        free(ctx->continue_labels[ctx->continue_stack_size]);
+        ctx->continue_labels[ctx->continue_stack_size] = NULL;
+    }
+}
+
+const char* codegen_get_current_continue_label(CodegenContext* ctx) {
+    if (!ctx || ctx->continue_stack_size <= 0) return NULL;
+    return ctx->continue_labels[ctx->continue_stack_size - 1];
 }

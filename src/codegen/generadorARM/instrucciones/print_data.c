@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "codegen/literals.h"
+#include "../../codegen.h"
 
 #include "ast/nodos/expresiones/listaExpresiones.h"
 #include "ast/nodos/expresiones/cast.h"
@@ -71,9 +72,9 @@ static void register_print_strlits(AbstractExpresion* n) {
             char* stripped = NULL;
             if (L>=2 && raw[0]=='"' && raw[L-1]=='"') stripped = strndup(raw+1, L-2);
             else stripped = strdup(raw);
-            printf("DEBUG: registrando STRLIT en print_data: '%s' (longitud=%zu)\n", stripped, strlen(stripped));
+            debug_printf("DEBUG: registrando STRLIT en print_data: '%s' (longitud=%zu)\n", stripped, strlen(stripped));
             int id = codegen_register_strlit(NULL, stripped);
-            printf("DEBUG: STRLIT registrado con id=%d\n", id);
+            debug_printf("DEBUG: STRLIT registrado con id=%d\n", id);
             free(stripped);
         }
         return;

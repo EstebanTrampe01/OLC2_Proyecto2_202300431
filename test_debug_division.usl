@@ -1,0 +1,10 @@
+public static void main(String[] args) {
+    System.out.println("=== DEBUG DIVISION ===");
+    int a = 10;
+    double b = 2.0;
+    double resultado = a / b;
+    System.out.println("a = " + String.valueOf(a));
+    System.out.println("b = " + String.valueOf(b));
+    System.out.println("resultado = " + String.valueOf(resultado));
+}
+

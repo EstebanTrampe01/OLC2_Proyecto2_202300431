@@ -11,7 +11,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEBUG=0
-if [[ "${1:-}" == "--debug" ]]; then DEBUG=1; shift; fi
+if [[ "${1:-}" == "--debug" || "${1:-}" == "-d" ]]; then DEBUG=1; shift; fi
 USL_FILE="${1:-test.usl}"
 OUT_S="out.s"
 OUT_BIN="out_arm64"

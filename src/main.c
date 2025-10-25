@@ -26,6 +26,11 @@ int main(int argc, char** argv) {
     const char* astOut = NULL;
     const char* codegenOut = NULL;
     int silent = 0;
+    
+    // Activar debug si se especifica la variable de entorno
+    if (getenv("CODEGEN_DEBUG") && strcmp(getenv("CODEGEN_DEBUG"), "1") == 0) {
+        enable_debug_output();
+    }
     for(int i=1;i<argc;i++){
         if(strncmp(argv[i], "--ast-out=", 10)==0){ astOut = argv[i]+10; }
         else if(strncmp(argv[i], "--codegen-out=", 14)==0){ codegenOut = argv[i]+14; }

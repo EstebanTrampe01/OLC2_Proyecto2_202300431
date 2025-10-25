@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "codegen/literals.h"
+#include "../../codegen.h"
 
 #include "ast/nodos/expresiones/terminales/primitivos.h"
 #include "ast/nodos/expresiones/terminales/identificadores.h"
@@ -26,7 +27,7 @@ void emit_asignacion_text(CodegenContext* ctx, AbstractExpresion* asignNode) {
     if (ctx->debug) fprintf(ctx->out, "# debug: procesando asignación RHS tipo=%p\n", (void*)rhs->interpret);
     
     // Debug: mostrar qué tipo de expresión es el RHS
-    printf("DEBUG: RHS de asignación '%s' es tipo=%p\n", a->nombre, (void*)rhs->interpret);
+    debug_printf("DEBUG: RHS de asignación '%s' es tipo=%p\n", a->nombre, (void*)rhs->interpret);
     
     // Manejar expresiones de casting
     if (rhs->interpret == interpretCastExpresion) {
@@ -188,7 +189,7 @@ void emit_asignacion_text(CodegenContext* ctx, AbstractExpresion* asignNode) {
             fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", a->nombre);  // Completar dirección de la variable
             // Buscar el valor flotante en los literales numéricos registrados
             int id = codegen_find_numlit(p->valor ? p->valor : "0.0");
-            printf("DEBUG: buscando literal '%s' para FLOAT, id=%d\n", p->valor ? p->valor : "0.0", id);
+            debug_printf("DEBUG: buscando literal '%s' para FLOAT, id=%d\n", p->valor ? p->valor : "0.0", id);
             if (id > 0) {
                 fprintf(ctx->out, "    adrp x2, NUMLIT_%d\n", id);  // Cargar dirección alta del número literal
                 fprintf(ctx->out, "    ldr d2, [x2, :lo12:NUMLIT_%d]\n", id);  // Cargar valor double en registro d2
@@ -210,7 +211,7 @@ void emit_asignacion_text(CodegenContext* ctx, AbstractExpresion* asignNode) {
             fprintf(ctx->out, "    add x1, x1, :lo12:GV_%s\n", a->nombre);  // Completar dirección de la variable
             // Buscar el valor doble en los literales numéricos registrados
             int id = codegen_find_numlit(p->valor ? p->valor : "0.0");
-            printf("DEBUG: buscando literal '%s' para DOUBLE, id=%d\n", p->valor ? p->valor : "0.0", id);
+            debug_printf("DEBUG: buscando literal '%s' para DOUBLE, id=%d\n", p->valor ? p->valor : "0.0", id);
             if (id > 0) {
                 fprintf(ctx->out, "    adrp x2, NUMLIT_%d\n", id);  // Cargar dirección alta del número literal
                 fprintf(ctx->out, "    ldr d2, [x2, :lo12:NUMLIT_%d]\n", id);  // Cargar valor doble en registro d2

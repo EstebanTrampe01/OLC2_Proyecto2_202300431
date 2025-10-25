@@ -1,0 +1,102 @@
+=== SISTEMA DE GESTION DE NOTAS INDIVIDUAL ===
+Procesando 5 estudiantes individuales
+
+--- EVALUACION CON IF/ELSE ---
+Evaluando: Ana
+Clasificacion: NOTABLE
+Resultado: No apto para beca
+
+Evaluando: Luis
+Clasificacion: NOTABLE
+Resultado: Apto para beca
+
+Evaluando: Maria
+Clasificacion: BIEN
+
+--- PROCESAMIENTO CON WHILE ---
+Buscando estudiantes con nota >= 90:
+Revisando estudiante 1: Ana
+Revisando estudiante 2: Luis
+Destacado encontrado: Luis con 92
+Revisando estudiante 3: Maria
+Revisando estudiante 4: Carlos
+Destacado encontrado: Carlos con 95
+Revisando estudiante 5: Sofia
+Total de estudiantes destacados: 2
+
+Contador regresivo:
+Quedan: 5 estudiantes por procesar
+Quedan: 4 estudiantes por procesar
+Quedan: 3 estudiantes por procesar
+Quedan: 2 estudiantes por procesar
+Quedan: 1 estudiantes por procesar
+
+Busqueda de estudiante joven con buena nota:
+Estudiante joven destacado: Luis (Edad: 19, Nota: 92)
+Estudiante joven destacado: Carlos (Edad: 20, Nota: 95)
+
+--- PROCESAMIENTO CON FOR CLASICO ---
+Listado numerado:
+1. Ana - Nota: 85
+2. Luis - Nota: 92
+3. Maria - Nota: 78
+4. Carlos - Nota: 95
+5. Sofia - Nota: 88
+
+Proceso inverso:
+Procesando posicion: 5
+Procesando posicion: 4
+Procesando posicion: 3
+Procesando posicion: 2
+Procesando posicion: 1
+
+Tabla de multiplicar (1-3 x 1-4):
+1 x 1 = 1
+1 x 2 = 2
+1 x 3 = 3
+1 x 4 = 4
+2 x 1 = 2
+2 x 2 = 4
+2 x 3 = 6
+2 x 4 = 8
+3 x 1 = 3
+3 x 2 = 6
+3 x 3 = 9
+3 x 4 = 12
+
+--- FOREACH CON ARRAY SIMPLE ---
+Procesando notas con forEach:
+Nota 1: 85
+Nota 2: 92
+Nota 3: 78
+Nota 4: 95
+Nota 5: 88
+Promedio calculado con forEach: 87.6
+
+Conteo de categorias con forEach:
+Nota alta encontrada: 92
+Nota baja encontrada: 78
+Nota alta encontrada: 95
+Total notas altas (>=90): 2
+Total notas bajas (<80): 1
+
+--- CLASIFICACION CON SWITCH/CASE ---
+Analizando: Ana (Nota: 85)
+Categoria: MUY BUENO
+Accion: Continuar esfuerzo
+
+Analizando: Luis (Nota: 92)
+Categoria: EXCELENTE
+
+Analisis por edad:
+Ana - Categoria: Joven adulto
+
+--- DEMOSTRACION DE BREAK ---
+Busqueda con break (primera nota > 90):
+Verificando: Ana - 85
+Verificando: Luis - 92
+Encontrado! Luis supera 90 puntos
+Verificando: Maria - 78
+Verificando: Carlos - 95
+Encontrado! Carlos supera 90 puntos
+Verificando: Sofia

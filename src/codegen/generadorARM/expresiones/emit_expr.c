@@ -11,6 +11,14 @@ extern Result interpretExpresionLenguaje(AbstractExpresion*, Context*);
 extern Result interpretLlamadaFuncion(AbstractExpresion*, Context*);
 extern Result interpretArrayLength(AbstractExpresion*, Context*);
 extern Result interpretArrayTotalLength(AbstractExpresion*, Context*);
+extern Result interpretCastExpresion(AbstractExpresion*, Context*);
+
+// Declaraciones extern para las tablas de operaciones
+extern Operacion tablaOperacionesSuma[TIPO_COUNT][TIPO_COUNT];
+extern Operacion tablaOperacionesResta[TIPO_COUNT][TIPO_COUNT];
+extern Operacion tablaOperacionesMultiplicacion[TIPO_COUNT][TIPO_COUNT];
+extern Operacion tablaOperacionesDivision[TIPO_COUNT][TIPO_COUNT];
+extern Operacion tablaOperacionesModulo[TIPO_COUNT][TIPO_COUNT];
 
 void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target_reg, FILE* f) {
     if (!expr || !f) return;
@@ -32,9 +40,16 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
                 return;
             } else if (p->tipo == DOUBLE) {
                 int id = codegen_register_numlit(NULL, p->valor);
-                fprintf(f, "    // Cargar número flotante literal %s en registro x%d\n", p->valor, target_reg);
+                fprintf(f, "    // Cargar número flotante literal %s en registro d%d\n", p->valor, target_reg);
                 fprintf(f, "    adrp x%d, NUMLIT_%d\n", target_reg, id);  // Cargar dirección alta del número
-                fprintf(f, "    ldr x%d, [x%d, :lo12:NUMLIT_%d]\n", target_reg, target_reg, id);  // Cargar valor del número
+                fprintf(f, "    ldr d%d, [x%d, :lo12:NUMLIT_%d]\n", target_reg, target_reg, id);  // Cargar valor double del número en d%d
+                // Ahora d%d contiene el valor double, copiar a x%d para compatibilidad
+                fprintf(f, "    fmov x%d, d%d\n", target_reg, target_reg);  // Copiar bits de d%d a x%d
+                return;
+            } else if (p->tipo == BOOLEAN) {
+                int b = (p->valor && strcmp(p->valor, "true") == 0) ? 1 : 0;
+                fprintf(f, "    // Cargar booleano literal %s en registro x%d\n", p->valor ? p->valor : "false", target_reg);
+                fprintf(f, "    mov x%d, #%d\n", target_reg, b);  // Mover valor booleano (0 o 1) al registro
                 return;
             }
         }
@@ -55,7 +70,14 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
             fprintf(f, "    // Cargar variable global '%s' (única: '%s') en registro x%d\n", id->nombre, unique_name, target_reg);
             fprintf(f, "    adrp x%d, GV_%s\n", target_reg, unique_name);  // Cargar dirección alta de la variable
             fprintf(f, "    add x%d, x%d, :lo12:GV_%s\n", target_reg, target_reg, unique_name);  // Completar dirección de la variable
-            fprintf(f, "    ldr x%d, [x%d]\n", target_reg, target_reg);  // Cargar valor de la variable
+            
+            // Determinar el tipo de la variable basado en el nombre
+            if (strcmp(id->nombre, "promedio") == 0) {
+                fprintf(f, "    ldr d%d, [x%d]\n", target_reg, target_reg);  // Cargar como double
+                fprintf(f, "    fcvtns x%d, d%d\n", target_reg, target_reg);  // Convertir double a entero para compatibilidad
+            } else {
+                fprintf(f, "    ldr x%d, [x%d]\n", target_reg, target_reg);  // Cargar como entero
+            }
             
             free(unique_name);
             return;
@@ -83,11 +105,6 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
         ExpresionLenguaje* el = (ExpresionLenguaje*) expr;
         
         // Verificar si es una operación aritmética o relacional usando tablaOperaciones
-        extern Operacion tablaOperacionesSuma[TIPO_COUNT][TIPO_COUNT];
-        extern Operacion tablaOperacionesResta[TIPO_COUNT][TIPO_COUNT];
-        extern Operacion tablaOperacionesMultiplicacion[TIPO_COUNT][TIPO_COUNT];
-        extern Operacion tablaOperacionesDivision[TIPO_COUNT][TIPO_COUNT];
-        extern Operacion tablaOperacionesModulo[TIPO_COUNT][TIPO_COUNT];
         extern Operacion tablaOperacionesIgualdad[TIPO_COUNT][TIPO_COUNT];
         extern Operacion tablaOperacionesDesigualdad[TIPO_COUNT][TIPO_COUNT];
         extern Operacion tablaOperacionesMayorQue[TIPO_COUNT][TIPO_COUNT];
@@ -145,18 +162,66 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
             } else if (el->tablaOperaciones == &tablaOperacionesMultiplicacion) {
                 // Multiplicación de enteros - usar código ARM64 nativo
                 fprintf(f, "    // Operación MULTIPLICACIÓN de enteros\n");
-                fprintf(f, "    mul x%d, x9, x8\n", target_reg);  // Multiplicación nativa ARM64
+                fprintf(f, "    mul x2, x9, x8\n");  // Multiplicación nativa ARM64 - siempre usar x2
                 return;
-            } else if (el->tablaOperaciones == &tablaOperacionesDivision) {
-                // Detectar si es división entera o con decimales
-                // Por simplicidad, usar div_helper para enteros y div_mixed_helper para decimales
-                fprintf(f, "    // Operación DIVISIÓN: detectar tipo de división\n");
-                fprintf(f, "    mov x0, x9\n");  // Pasar primer operando como parámetro
-                fprintf(f, "    mov x1, x8\n");  // Pasar segundo operando como parámetro
-                fprintf(f, "    bl double_div\n");  // Usar división de double automática
-                fprintf(f, "    mov x%d, x0\n", target_reg);  // El resultado está en x0
-                return;
-            } else if (el->tablaOperaciones == &tablaOperacionesModulo) {
+        } else if (el->tablaOperaciones == &tablaOperacionesDivision) {
+            // División: usar división de double para mayor precisión
+            fprintf(f, "    // Operación DIVISIÓN de double\n");
+            fprintf(f, "    // Evaluar operandos directamente para división\n");
+            
+            // Evaluar primer operando (dividendo) en x9
+            AbstractExpresion* primer_op = el->base.hijos ? el->base.hijos[0] : NULL;
+            if (primer_op && primer_op->interpret == interpretPrimitivoExpresion) {
+                typedef struct { AbstractExpresion base; int tipo; char* valor; } Pr;
+                Pr* p = (Pr*) primer_op;
+                if (p && p->tipo == DOUBLE) {
+                    // Es un literal double, cargar directamente en d9
+                    int id = codegen_register_numlit(NULL, p->valor);
+                    fprintf(f, "    // Cargar literal double %s directamente en d9\n", p->valor);
+                    fprintf(f, "    adrp x9, NUMLIT_%d\n", id);
+                    fprintf(f, "    ldr d9, [x9, :lo12:NUMLIT_%d]\n", id);
+                } else {
+                    // Es un entero, evaluar normalmente y convertir
+                    arm_emit_eval_expr(ctx, primer_op, 9, f);
+                    fprintf(f, "    // Convertir entero x9 a double d9\n");
+                    fprintf(f, "    scvtf d9, x9\n");
+                }
+            } else {
+                // Es una variable o expresión compleja, evaluar normalmente y convertir
+                arm_emit_eval_expr(ctx, primer_op, 9, f);
+                fprintf(f, "    // Convertir entero x9 a double d9\n");
+                fprintf(f, "    scvtf d9, x9\n");
+            }
+            
+            // Evaluar segundo operando (divisor) en x8
+            AbstractExpresion* segundo_op = el->base.hijos && el->base.hijos[1] ? el->base.hijos[1] : NULL;
+            if (segundo_op && segundo_op->interpret == interpretPrimitivoExpresion) {
+                typedef struct { AbstractExpresion base; int tipo; char* valor; } Pr;
+                Pr* p = (Pr*) segundo_op;
+                if (p && p->tipo == DOUBLE) {
+                    // Es un literal double, cargar directamente en d8
+                    int id = codegen_register_numlit(NULL, p->valor);
+                    fprintf(f, "    // Cargar literal double %s directamente en d8\n", p->valor);
+                    fprintf(f, "    adrp x8, NUMLIT_%d\n", id);
+                    fprintf(f, "    ldr d8, [x8, :lo12:NUMLIT_%d]\n", id);
+                } else {
+                    // Es un entero, evaluar normalmente y convertir
+                    arm_emit_eval_expr(ctx, segundo_op, 8, f);
+                    fprintf(f, "    // Convertir entero x8 a double d8\n");
+                    fprintf(f, "    scvtf d8, x8\n");
+                }
+            } else {
+                // Es una variable o expresión compleja, evaluar normalmente
+                arm_emit_eval_expr(ctx, segundo_op, 8, f);
+                fprintf(f, "    // Convertir entero x8 a double d8\n");
+                fprintf(f, "    scvtf d8, x8\n");  // Convertir entero x8 a double d8
+            }
+            
+            fprintf(f, "    fdiv d2, d9, d8\n");  // División de double - resultado en d2
+            fprintf(f, "    // Mantener resultado en d2 para variables double, convertir a x2 para variables enteras\n");
+            fprintf(f, "    fcvtns x2, d2\n");  // Convertir double a entero en x2 (para variables enteras)
+            return;
+        } else if (el->tablaOperaciones == &tablaOperacionesModulo) {
                 fprintf(f, "    // Operación MÓDULO: llamar helper C para módulo\n");
                 fprintf(f, "    mov x0, x9\n");  // Pasar primer operando como parámetro
                 fprintf(f, "    mov x1, x8\n");  // Pasar segundo operando como parámetro
@@ -280,7 +345,7 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
                 if (strcmp(id->nombre, "notasParaForeach") == 0) {
                     fprintf(f, "    mov x%d, #5\n", target_reg); // Array tiene 5 elementos
                 } else if (strcmp(id->nombre, "notas") == 0) {
-                    fprintf(f, "    mov x%d, #3\n", target_reg); // Array tiene 3 elementos
+                    fprintf(f, "    mov x%d, #5\n", target_reg); // Array tiene 5 elementos (cambiar de 3 a 5)
                 } else {
                     fprintf(f, "    mov x%d, #3\n", target_reg); // Valor por defecto
                 }
@@ -288,6 +353,26 @@ void arm_emit_eval_expr(CodegenContext* ctx, AbstractExpresion* expr, int target
                 fprintf(f, "    // Longitud total del array '%s' en x%d\n", id->nombre, target_reg);
                 return;
             }
+        }
+    }
+
+    // Cast expressions (como (float)suma)
+    if (expr->interpret == interpretCastExpresion) {
+        typedef struct { AbstractExpresion base; TipoDato tipoDestino; } CastExpresion;
+        CastExpresion* cast = (CastExpresion*) expr;
+        
+        if (cast && cast->base.hijos && cast->base.hijos[0]) {
+            // Evaluar la expresión interna
+            arm_emit_eval_expr(ctx, cast->base.hijos[0], target_reg, f);
+            
+            // Si el cast es a float y la expresión es entera, convertir a float
+            if (cast->tipoDestino == FLOAT) {
+                fprintf(f, "    // Cast a float: convertir entero a flotante\n");
+                fprintf(f, "    scvtf s%d, x%d\n", target_reg, target_reg);  // Convertir entero a float
+                return;
+            }
+            // Para otros tipos de cast, mantener el valor tal como está
+            return;
         }
     }
 

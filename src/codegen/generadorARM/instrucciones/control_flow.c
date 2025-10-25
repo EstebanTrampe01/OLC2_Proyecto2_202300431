@@ -3,6 +3,7 @@
 #include "../../../ast/nodos/instrucciones/instruccion/if.h"
 #include "../../../ast/nodos/instrucciones/instruccion/while.h"
 #include "../../../ast/nodos/instrucciones/instruccion/for.h"
+#include "../../../ast/nodos/instrucciones/instruccion/switch.h"
 #include "../../../ast/nodos/instrucciones/instruccion/declaracion.h"
 #include "../../../ast/nodos/expresiones/expresiones.h"
 #include "../../../ast/nodos/expresiones/terminales/primitivos.h"
@@ -88,6 +89,12 @@ void arm_emit_while_statement(CodegenContext* ctx, AbstractExpresion* whileNode,
     
     fprintf(f, "    // WHILE statement\n");
     
+    // Agregar etiquetas a las pilas para break y continue
+    extern void codegen_push_break_label(CodegenContext*, const char*);
+    extern void codegen_push_continue_label(CodegenContext*, const char*);
+    codegen_push_break_label(ctx, end_label);
+    codegen_push_continue_label(ctx, loop_label);
+    
     // Etiqueta de inicio del bucle
     fprintf(f, "%s:\n", loop_label);
     
@@ -111,6 +118,12 @@ void arm_emit_while_statement(CodegenContext* ctx, AbstractExpresion* whileNode,
     fprintf(f, "%s:\n", end_label);
     fprintf(f, "    // Fin WHILE\n");
     
+    // Remover etiquetas de las pilas
+    extern void codegen_pop_break_label(CodegenContext*);
+    extern void codegen_pop_continue_label(CodegenContext*);
+    codegen_pop_break_label(ctx);
+    codegen_pop_continue_label(ctx);
+    
     // Liberar memoria de las etiquetas
     free(loop_label);
     free(end_label);
@@ -127,9 +140,16 @@ void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FIL
     
     // Generar etiquetas únicas
     char* loop_label = generate_label("for_loop");
+    char* increment_label = generate_label("for_increment");
     char* end_label = generate_label("for_end");
     
     fprintf(f, "    // FOR statement\n");
+    
+    // Agregar etiquetas a las pilas para break y continue
+    extern void codegen_push_break_label(CodegenContext*, const char*);
+    extern void codegen_push_continue_label(CodegenContext*, const char*);
+    codegen_push_break_label(ctx, end_label);
+    codegen_push_continue_label(ctx, increment_label);
     
     // Inicialización (si existe)
     if (forExpr->initialization) {
@@ -174,6 +194,9 @@ void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FIL
     fprintf(f, "    // Bloque FOR\n");
     arm_emit_runtime_nodes(forExpr->body, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
     
+    // Etiqueta de incremento (donde salta continue)
+    fprintf(f, "%s:\n", increment_label);
+    
     // Incremento (si existe)
     if (forExpr->increment) {
         fprintf(f, "    // Incremento FOR\n");
@@ -187,6 +210,12 @@ void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FIL
     fprintf(f, "%s:\n", end_label);
     fprintf(f, "    // Fin FOR\n");
     
+    // Remover etiquetas de las pilas
+    extern void codegen_pop_break_label(CodegenContext*);
+    extern void codegen_pop_continue_label(CodegenContext*);
+    codegen_pop_break_label(ctx);
+    codegen_pop_continue_label(ctx);
+    
         // Desactivar variables FOR al salir del alcance por bloque
         extern void arm_deactivate_for_variable(const char* name);
         if (forExpr->initialization && forExpr->initialization->interpret == interpretDeclaracionVariable) {
@@ -199,5 +228,79 @@ void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FIL
     
     // Liberar memoria de las etiquetas
     free(loop_label);
+    free(increment_label);
+    free(end_label);
+}
+
+void arm_emit_switch_statement(CodegenContext* ctx, AbstractExpresion* switchNode, FILE* f, 
+                               AbstractExpresion** label_nodes, int* label_ids, int label_map_size,
+                               char** emitted_names, int* emitted_types, int emitted_count) {
+    if (!switchNode || switchNode->interpret != interpretSwitchExpresion) {
+        return;
+    }
+    
+    typedef struct { AbstractExpresion base; AbstractExpresion* expresion; AbstractExpresion* casos; AbstractExpresion* casoDefault; } SwitchExpresion;
+    SwitchExpresion* switchExpr = (SwitchExpresion*)switchNode;
+    
+    // Generar etiquetas únicas
+    char* end_label = generate_label("switch_end");
+    
+    fprintf(f, "    // SWITCH statement\n");
+    
+    // Evaluar la expresión del switch y poner resultado en x9
+    arm_emit_eval_expr(ctx, switchExpr->expresion, 9, f);
+    
+    // Procesar cada caso
+    if (switchExpr->casos) {
+        for (size_t i = 0; i < switchExpr->casos->numHijos; i++) {
+            typedef struct { AbstractExpresion base; AbstractExpresion* valor; AbstractExpresion* instrucciones; int tieneBreak; } CaseExpresion;
+            CaseExpresion* caso = (CaseExpresion*)switchExpr->casos->hijos[i];
+            
+            if (caso && caso->valor) {
+                // Generar etiqueta para este caso
+                char* case_label = generate_label("case");
+                char* next_case_label = generate_label("next_case");
+                
+                // Evaluar el valor del caso y poner resultado en x8
+                arm_emit_eval_expr(ctx, caso->valor, 8, f);
+                
+                // Comparar con el valor del switch
+                fprintf(f, "    cmp x9, x8\n");
+                fprintf(f, "    b.eq %s\n", case_label);
+                fprintf(f, "    b %s\n", next_case_label);
+                
+                // Etiqueta del caso
+                fprintf(f, "%s:\n", case_label);
+                
+                // Ejecutar las instrucciones del caso
+                if (caso->instrucciones) {
+                    arm_emit_runtime_nodes(caso->instrucciones, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+                }
+                
+                // Si tiene break, saltar al final
+                if (caso->tieneBreak) {
+                    fprintf(f, "    b %s\n", end_label);
+                }
+                
+                // Etiqueta del siguiente caso
+                fprintf(f, "%s:\n", next_case_label);
+                
+                free(case_label);
+                free(next_case_label);
+            }
+        }
+    }
+    
+    // Procesar caso default si existe
+    if (switchExpr->casoDefault) {
+        fprintf(f, "    // DEFAULT case\n");
+        arm_emit_runtime_nodes(switchExpr->casoDefault, ctx, f, label_nodes, label_ids, label_map_size, emitted_names, emitted_types, emitted_count);
+    }
+    
+    // Etiqueta de fin
+    fprintf(f, "%s:\n", end_label);
+    fprintf(f, "    // Fin SWITCH\n");
+    
+    // Liberar memoria de las etiquetas
     free(end_label);
 }

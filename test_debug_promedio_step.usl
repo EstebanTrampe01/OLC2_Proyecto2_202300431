@@ -1,0 +1,12 @@
+public static void main(String[] args) {
+    System.out.println("=== DEBUG PROMEDIO STEP BY STEP ===");
+    int suma = 438;
+    System.out.println("suma = " + String.valueOf(suma));
+    
+    double divisor = 5.0;
+    System.out.println("divisor = " + String.valueOf(divisor));
+    
+    double resultado = suma / divisor;
+    System.out.println("resultado = " + String.valueOf(resultado));
+}
+

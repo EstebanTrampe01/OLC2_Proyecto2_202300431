@@ -1,0 +1,30 @@
+public static void main(String[] args) {
+    System.out.println("Test SWITCH complejo:");
+    int nota = 85;
+    int categoria = nota / 10;
+    System.out.println("Analizando nota: " + String.valueOf(nota));
+    switch (categoria) {
+        case 10:
+        case 9:
+            System.out.println("Categoria: EXCELENTE");
+            System.out.println("Accion: Mantener nivel");
+            break;
+        case 8:
+            System.out.println("Categoria: MUY BUENO");
+            System.out.println("Accion: Continuar esfuerzo");
+            break;
+        case 7:
+            System.out.println("Categoria: BUENO");
+            System.out.println("Accion: Mejorar tecnicas");
+            break;
+        case 6:
+            System.out.println("Categoria: SUFICIENTE");
+            System.out.println("Accion: Reforzar conocimientos");
+            break;
+        default:
+            System.out.println("Categoria: INSUFICIENTE");
+            System.out.println("Accion: Apoyo urgente");
+            break;
+    }
+}
+

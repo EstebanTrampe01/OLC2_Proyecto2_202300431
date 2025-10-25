@@ -1,0 +1,59 @@
+public static void main(String[] args) {
+    System.out.println("=== TEST SWITCH COMPLETO ===");
+    
+    String estudiante1 = "Ana";
+    int nota1 = 85;
+    int edad1 = 20;
+    
+    System.out.println("Procesando estudiante individual");
+    
+    // SWITCH/CASE
+    System.out.println("\n--- CLASIFICACION CON SWITCH/CASE ---");
+    
+    // Switch para nota1
+    System.out.println("Analizando: " + estudiante1 + " (Nota: " + String.valueOf(nota1) + ")");
+    int categoria1 = nota1 / 10;
+    switch (categoria1) {
+        case 10:
+        case 9:
+            System.out.println("Categoria: EXCELENTE");
+            System.out.println("Accion: Mantener nivel");
+            break;
+        case 8:
+            System.out.println("Categoria: MUY BUENO");
+            System.out.println("Accion: Continuar esfuerzo");
+            break;
+        case 7:
+            System.out.println("Categoria: BUENO");
+            System.out.println("Accion: Mejorar tecnicas");
+            break;
+        case 6:
+            System.out.println("Categoria: SUFICIENTE");
+            System.out.println("Accion: Reforzar conocimientos");
+            break;
+        default:
+            System.out.println("Categoria: INSUFICIENTE");
+            System.out.println("Accion: Apoyo urgente");
+            break;
+    }
+    
+    System.out.println("\nAnalisis por edad:");
+    switch (edad1) {
+        case 18:
+        case 19:
+            System.out.println(estudiante1 + " - Categoria: Muy joven");
+            break;
+        case 20:
+        case 21:
+            System.out.println(estudiante1 + " - Categoria: Joven adulto");
+            break;
+        case 22:
+        case 23:
+            System.out.println(estudiante1 + " - Categoria: Adulto joven");
+            break;
+        default:
+            System.out.println(estudiante1 + " - Categoria: Adulto");
+            break;
+    }
+}
+

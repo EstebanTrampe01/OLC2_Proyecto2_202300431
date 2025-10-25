@@ -20,5 +20,8 @@ void arm_emit_while_statement(CodegenContext* ctx, AbstractExpresion* whileNode,
 void arm_emit_for_statement(CodegenContext* ctx, AbstractExpresion* forNode, FILE* f, 
                             AbstractExpresion** label_nodes, int* label_ids, int label_map_size,
                             char** emitted_names, int* emitted_types, int emitted_count);
+void arm_emit_switch_statement(CodegenContext* ctx, AbstractExpresion* switchNode, FILE* f, 
+                               AbstractExpresion** label_nodes, int* label_ids, int label_map_size,
+                               char** emitted_names, int* emitted_types, int emitted_count);
 
 #endif

@@ -1,0 +1,7 @@
+public static void main(String[] args) {
+    System.out.println("=== DEBUG DIVISION LITERAL ===");
+    int a = 10;
+    double resultado = a / 5.0;
+    System.out.println("resultado = " + String.valueOf(resultado));
+}
+
