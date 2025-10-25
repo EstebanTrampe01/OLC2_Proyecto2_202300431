@@ -1,7 +1,0 @@
-public static void main(String[] args) {
-    System.out.println("Test FOREACH Simple:");
-    int[] notas = {85, 92, 78};
-    for (int nota : notas) {
-        System.out.println("Nota: " + String.valueOf(nota));
-    }
-}

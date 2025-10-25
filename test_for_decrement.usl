@@ -1,7 +1,0 @@
-public static void main(String[] args) {
-    System.out.println("Test FOR con decremento:");
-    
-    for (int i = 5; i >= 1; i--) {
-        System.out.println("Procesando posicion: " + String.valueOf(i));
-    }
-}

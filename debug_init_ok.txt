@@ -1,3 +1,0 @@
-DEBUG: PROCESANDO declaración de variable 'contador' tipo=5
-DEBUG: asignando INT strdup para 'contador' -> 0x616e04c79090
-DEBUG: generando variable 'contador' tipo=5 (emitted_types[0]=5)

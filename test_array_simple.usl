@@ -1,8 +1,0 @@
-public static void main(String[] args) {
-    System.out.println("Test Array Simple:");
-    int[] notas = {85, 92, 78};
-    System.out.println("Array creado con " + String.valueOf(notas.length) + " elementos");
-    System.out.println("Primera nota: " + String.valueOf(notas[0]));
-    System.out.println("Segunda nota: " + String.valueOf(notas[1]));
-    System.out.println("Tercera nota: " + String.valueOf(notas[2]));
-}

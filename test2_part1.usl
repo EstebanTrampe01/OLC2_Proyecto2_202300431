@@ -1,9 +1,0 @@
-public static void main(String[] args) {
-    System.out.println("=== TEST SIMPLE ===");
-    
-    String estudiante1 = "Ana";
-    int nota1 = 85;
-    
-    System.out.println("Estudiante: " + estudiante1);
-    System.out.println("Nota: " + nota1);
-}

@@ -1,7 +1,0 @@
-public static void main(String[] args) {
-    System.out.println("Test asignación compuesta:");
-    int suma = 0;
-    int nota = 5;
-    suma = suma + nota;
-    System.out.println("Suma: " + String.valueOf(suma));
-}

@@ -1,9 +1,0 @@
-public static void main(String[] args) {
-    System.out.println("=== TEST PROMEDIO SIMPLE ===");
-    int suma = 438;
-    System.out.println("Suma: " + String.valueOf(suma));
-    double promedio = suma / 5.0;
-    System.out.println("Promedio: " + String.valueOf(promedio));
-}
-
-
